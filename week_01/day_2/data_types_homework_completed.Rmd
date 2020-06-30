@@ -1,0 +1,220 @@
+---
+title: "Data Types Homework"
+output:
+  html_document: 
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Make sure you create a new project in which to do this homework!
+
+# Part 1
+
+In this part, you will compare several ways of storing the same data. 
+
+<br>
+**Question 1.**  
+
+Create a vector called `stock_prices` with the following data points: 23, 27, 23, 21, 34, 24, 25, 30, 37, 30.
+
+Create a vector called `day_of_week`, which repeats Monday to Friday twice. i.e.
+'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'.
+
+#Answer - Question 1 
+
+```{r}
+stock_prices <- c(23, 27, 23, 21, 34, 24, 25, 30, 37, 30)
+day_of_week <- rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), times = 2)
+day_of_week
+```
+
+<br> 
+
+**Question 2.**
+
+Create a vector called `day_of_week_factor`, which has the same data as `day_of_week`, but is of `factor` type.
+
+Create a vector called `named_stock_prices`, which contains the stock prices, named by days of the week. 
+
+#Answer - Question 2 
+
+```{r}
+day_of_week_factor <- as.factor(day_of_week)
+
+named_stock_prices <- as.factor(day_of_week_factor)
+
+```
+
+
+<br>
+
+**Question 3.**  
+
+Make a data frame called `stock_data` containing the stock price and day of the week information, and `View()` the result.
+
+#Answer - Question 3 
+
+```{r}
+stock_data <- data.frame(stock_prices, day_of_week)
+View(stock_data)
+
+```
+
+
+<br>
+
+**Question 4.**  
+
+Make a list called `stock_list` with named elements as follows: the vector of `stock_prices`, the vector `day_of_week`, and the data frame you made in question 3. Choose sensible names for the list elements. 
+
+#Answer - Question 3
+
+```{r}
+stock_list <- list(stock_prices = stock_prices, day_of_week = day_of_week, stock_data = stock_data)
+stock_list
+```
+
+<br>
+
+# Part 2
+
+In this part, you will practice selecting elements from vectors, data frames, matrices and lists.
+
+For Part 2, you need the code you've written for Part 1. If you've really struggled with this and can't do it, then the code for Part 1 is listed underneath the hidden button below. Do try your hardest first though before using the code below! 
+
+<details>
+<summary>**Part 1 code (if stuck)**</summary>
+```{r}
+stock_prices <- c(23, 27, 23, 21, 34, 24, 25, 30, 37, 30)
+
+day_of_week <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
+
+day_of_week_factor <- as.factor(day_of_week)
+
+stock_data <- data.frame(stock_prices = stock_prices, day_of_week = day_of_week)
+
+stock_list <- list(stock_prices = stock_prices, day_of_week = day_of_week, stock_data = stock_data)
+```
+</details>
+<br>
+
+**Question 1.**
+
+Select the 4th, 5th and 6th stock prices from `stock_prices`.
+
+Select the stock prices greater than 30 from `stock_prices`.
+
+#Answer - Question 1
+
+```{r}
+stock_prices[4:6]
+stock_prices_greater_than_30 <- stock_prices > 30
+stock_prices[stock_prices_greater_than_30]
+```
+
+
+<br>
+
+**Question 2.**
+
+Select the `day_of_week` column from the `stock_data` data frame.
+
+Select the rows of the `stock_data` data frame where the `stock_prices` are less than 25.
+
+Select the 1st column of `stock_data`.
+
+Select the 3rd row of `stock_data`.
+
+Select the 3rd element in the 1st column of `stock_data`.
+
+#Answer - Question 2
+
+```{r}
+stock_data$day_of_week
+```
+
+```{r}
+stock_prices_less_than_25 <- stock_prices < 25
+stock_data[stock_prices_less_than_25, ]
+```
+
+```{r}
+stock_data[ , 1]
+stock_data[3, ]
+stock_data[3, 1]
+```
+
+<br>
+
+**Question 4.** 
+
+Select the data frame from within the list of stocks.
+
+#Answer - Question 4
+
+```{r}
+stock_list[["stock_data"]]
+```
+
+
+<br>
+
+
+# Extension
+
+Download the `tidyquant` library.
+
+1. Use it to get stock prices from a company of your choice from the current year. You'll need to look up the help file to do this.
+
+2. Edit the data frame to keep only the `date` and `close` columns.
+
+3. Subset to find the rows at which the `close` price is higher than average.
+
+#Answer - Extension
+
+```{r}
+install.packages("tidyquant")
+library(tidyquant)
+```
+
+```{r}
+?tidyquant
+
+tq_get_options()
+#Get Facebook's share prices
+FB_stock_prices <- tq_get("FB")
+FB_stock_prices
+```
+
+```{r}
+#Remove all columns apart from "date" [2] abd "close" [6]
+FB_stock_prices_edited <- FB_stock_prices[-c(1, 3, 4, 5, 7, 8)] 
+FB_stock_prices_edited 
+```
+
+```{r}
+#find mean of close price
+close_column <- FB_stock_prices_edited[2]
+close_column
+close_column_mean <- sum(close_column) / length(close_column)
+close_column_mean
+```
+
+```{r}
+#print out all rows that are higher than close_column_mean
+
+close_column_greater_than_mean <- close_column > close_column_mean
+
+FB_stock_prices[close_column_greater_than_mean, ]
+
+```
+
+
+
+
