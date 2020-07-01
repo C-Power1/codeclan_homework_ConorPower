@@ -93,22 +93,22 @@ highest_percent_beer
 ?temp
 
 #Data Frame structure
-#str(temp)
+str(temp)
 
 # Summary of Temp - displaying variable of the matrix and other info
-#summary(temp)
+summary(temp)
 
-#Ways of viewing dataframe as a whole
-#matrix(temp)
+#Ways of viewing matrix as a whole
+matrix(temp)
 
 
-#View(temp)
+View(temp)
 ```
 
 
 ```{r}
 months_of_year <- colnames(temp) 
-#months_of_year
+months_of_year
 
 #The mean temp of all the temperatures in January 1910 - 2015
 jan_temp_mean <- mean(temp[, 1])
@@ -133,6 +133,11 @@ average_temp_each_month <- apply(temp, 2, mean)
 # GAME OF THRONES
 
 ```{r}
+?game_of_thrones
+```
+
+
+```{r}
 summary(game_of_thrones)
 list(game_of_thrones)
 
@@ -145,6 +150,9 @@ length(got_chara)
 got_chara[5]
 ```
 
+```{r}
+?styler
+```
 
 
 
