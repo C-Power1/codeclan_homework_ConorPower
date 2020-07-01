@@ -1,0 +1,203 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+install.packages("devtools")
+devtools::install_github('codeclan/CodeClanData')
+library(CodeClanData)
+
+install.packages("styler")
+library(styler)
+
+```
+
+# BEER DATAFRAME
+
+```{r}
+
+?beer 
+
+#Data Frame structure
+str(beer)
+
+# Summary of Beer - displaying variable types of the dataframe and other info: numberical (percent, carbohydrates); character (brand, calories, brewery)
+summary(beer)
+
+#Ways of viewing dataframe as a whole
+data.frame(beer)
+
+View(beer)
+```
+
+
+```{r}
+
+#Mean of percent of alcohol = 5.12
+mean(beer$percent)
+
+#Mean of carbohydrates = 11.99
+mean(beer$carbohydrates)
+
+```
+
+```{r}
+
+# The "calories" variable is a character type variable but the data itself can be converted to numerical thus its mean could be found as below. I had to convert it to vector from a data frame first using as.vector function I found online.
+
+calories_vect <- as.vector(beer["calories"])
+class(calories_vect)
+
+
+calories_vect <- beer[["calories"]]
+class(calories_vect)
+
+calories_as_num <- as.numeric(calories_vect)
+calories_as_num
+class(calories_as_num)
+
+
+calories_mean <- mean(calories_as_num)
+calories_mean
+
+#Mean of calories for all beers is 154.7
+```
+
+```{r}
+
+#Brands that have a higher than average amount of carbohydrates
+
+above_av_carb_brands <- subset(beer, beer$carbohydrates > mean(beer$carbohydrates))
+above_av_carb_brands
+
+#Brands that have a less than average amount of carbohydrates
+
+below_av_carb_brands <- subset(beer, beer$carbohydrates < mean(beer$carbohydrates))
+below_av_carb_brands
+
+
+
+#Beer with highest percentage of alcohol is Flying Dog Double Dog\xca as below
+
+high_percent <- max(beer$percent)
+highest_percent_beer <- subset(beer, beer$percent == high_percent)
+highest_percent_beer
+
+
+```
+
+#TEMP MATRIX
+
+```{r}
+?temp
+
+#Data Frame structure
+#str(temp)
+
+# Summary of Temp - displaying variable of the matrix and other info
+#summary(temp)
+
+#Ways of viewing dataframe as a whole
+#matrix(temp)
+
+
+#View(temp)
+```
+
+
+```{r}
+months_of_year <- colnames(temp) 
+#months_of_year
+
+#The mean temp of all the temperatures in January 1910 - 2015
+jan_temp_mean <- mean(temp[, 1])
+
+#I wanted  to find the max temparture of all the months 1910 - 2015. After googling and using ?apply. I found the apply function and was able to return what I wanted, as below
+
+
+max_temp_each_month <- apply(temp, 2, max)
+
+high_max_temp_each_month <- max(max_temp_each_month)
+
+#Average max temperture for each month below:
+
+max_av_temp_each_month <- mean(max_temp_each_month)
+
+#Average Temperature for each month
+
+average_temp_each_month <- apply(temp, 2, mean)
+
+```
+
+# GAME OF THRONES
+
+```{r}
+summary(game_of_thrones)
+list(game_of_thrones)
+
+#Summary() and list() allowed me to see that there was 434 characters in the Game of Thrones list as well as the below:
+
+got_chara <- game_of_thrones$characters
+length(got_chara)
+
+
+got_chara[5]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

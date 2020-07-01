@@ -47,7 +47,7 @@ Create a vector called `named_stock_prices`, which contains the stock prices, na
 ```{r}
 day_of_week_factor <- as.factor(day_of_week)
 
-named_stock_prices <- as.factor(day_of_week_factor)
+named_stock_prices <- as.factor(day_of_week_factor) #incorrect - come back to this 
 
 ```
 
@@ -78,6 +78,7 @@ Make a list called `stock_list` with named elements as follows: the vector of `s
 ```{r}
 stock_list <- list(stock_prices = stock_prices, day_of_week = day_of_week, stock_data = stock_data)
 stock_list
+View(stock_list)
 ```
 
 <br>
@@ -199,7 +200,7 @@ FB_stock_prices_edited
 ```
 
 ```{r}
-#find mean of close price
+#find mean of close price - incorrect look back over 
 close_column <- FB_stock_prices_edited[2]
 close_column
 close_column_mean <- sum(close_column) / length(close_column)
@@ -207,11 +208,11 @@ close_column_mean
 ```
 
 ```{r}
-#print out all rows that are higher than close_column_mean
+#print out all rows that are higher than close_column_mean incorrect look back over 
 
 close_column_greater_than_mean <- close_column > close_column_mean
 
-FB_stock_prices[close_column_greater_than_mean, ]
+FB_stock_prices[close_column_greater_than_mean, ] 
 
 ```
 
