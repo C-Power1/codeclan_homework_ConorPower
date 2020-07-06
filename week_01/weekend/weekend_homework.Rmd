@@ -170,12 +170,16 @@ print_characters(my_list)
 ```
 
 
-# 2.4.2
+# 2.4.2 
+
+# I have had several goes at this question but still having a trouble returning the correct answer 
 
 ```{r}
-my_list_length <- length(my_list)
+my_list_length <- lengths(my_list)
 
 my_list_length
+
+
 
 ```
 
@@ -184,24 +188,18 @@ my_list_length
 paste_characters_greater_than_1 <- function(x){
   
   
-  for(i in 1:my_list_length){ 
+  for(input in my_list){ 
     
-    if (length(my_list[i]) < 1){
-    
-  if (is.character(my_list[i]) == TRUE){
-    
-    (paste(my_list[i], sep = ""))
+  if (is.character(input) == TRUE & lengths(my_list) > 1){
     
   }
-    }
+    print(paste(input, collapse = ""))
   }
-}
+  }
+
 
 paste_characters_greater_than_1(my_list)
-
 ```
-
-
 
 
 
