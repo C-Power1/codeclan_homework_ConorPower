@@ -92,6 +92,7 @@ size_category <- ifelse(sizes >= 10, "Big", "Small")
 
 size_category
 
+
 ```
 
 #2.3.2
@@ -199,10 +200,22 @@ paste_characters_greater_than_1 <- function(x){
 
 
 paste_characters_greater_than_1(my_list)
+
 ```
 
 
-
+#correct solution
+```{r}
+for (input in my_list) {
+  if (is.character(input)) {
+    if (length(input) > 1) {
+      print(paste(input, collapse = " "))
+    } else {
+      print(input)
+    }
+  }
+}
+```
 
 
 

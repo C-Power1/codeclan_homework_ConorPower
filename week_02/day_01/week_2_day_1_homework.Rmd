@@ -1,0 +1,212 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(readr)
+library(openxlsx)
+library(readxl)
+library(jsonlite)
+library(CodeClanData)
+```
+
+# 1
+
+```{r}
+state_income_data <- read_csv("data/state_income_data.csv")
+
+state_income_data
+
+View(state_income_data)
+```
+
+# 2
+
+# Wasn't sure what was exactly required for this question so I wrote in pseudo-code how to specify column names when using read_csv()
+
+```{r}
+read_csv("directory/file name.csv",
+col_names = c("column_name1",
+              "column_name2",
+              "column_name3",
+              "column_name4"))
+```
+
+# col_names() allows you to give the each column a name. I changed the 'vs' column to a logical by using cols(col_logical())
+
+#3
+
+```{r}
+
+cars <- read_csv("data/cars.csv", cols(
+  X1 = col_character(),
+  mpg = col_double(),
+  cyl = col_double(),
+  disp = col_double(),
+  hp = col_double(),
+  vs = col_logical()
+  ), col_names = TRUE
+  )
+
+cars
+
+View(cars)
+```
+
+
+#4 scotland.txt was a txt file that used semi-colons to separate variables so read_delim was the most suitable to use. Specified 'delim = ";"' and 'skip = 2" (to make it easier to read)
+
+```{r}
+
+scotland <- read_delim("data/scotland.txt", delim = ";", skip = 2,
+               col_names = c("Rank",
+                             "Locality",
+                             "Population",
+                             "Status",
+                             "Council Area"))
+
+
+View(scotland)
+
+```
+
+#5 
+
+# How to read text into a one element character vector in pseudo-code
+
+```{r}
+
+read_file("directory/file.txt")
+
+```
+
+#6 
+
+# The read_csv function was most suitable to use, I needed to specify values for 'skip_empty_rows', 'n_max' and 'skip' for it to work 
+
+```{r}
+
+steam_200k_sample <- read_csv("data/steam-200k-sample.csv",
+                                skip_empty_rows = TRUE, n_max = 10, skip = 4)
+
+class(steam_200k_sample)
+
+steam_200k_sample
+
+View(steam_200k_sample)
+
+
+
+```
+
+#7 
+
+# As the file is .tsv, read_tsv is the most suitable function
+
+```{r}
+historic_eu_payments <- read_tsv("data/historic_eu_payments.tsv")
+View(historic_eu_payments)
+```
+
+#8
+
+# How to read lines of text into a multi-element text vector in pseudo-code
+
+```{r}
+read_lines("directory/file.txt")
+```
+
+
+#9
+
+# fromJSON allows the file to be read via URL, then parse_json() to interpret JSON file and convert to create make_me_ana1.  AFter this fromJSON can be used - which would return a data frame usually. In this case the 3 elements are all character vectors (same type) so it returns a list. 
+
+```{r}
+make_me_ana <- read_file("http://makemeanalyst.com/wp-content/uploads/2017/06/sample_json.txt")
+
+#make_me_ana
+
+make_me_ana1 <- parse_json(make_me_ana)
+
+make_me_ana1
+
+make_me_ana2 <- fromJSON(make_me_ana)
+
+make_me_ana2
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

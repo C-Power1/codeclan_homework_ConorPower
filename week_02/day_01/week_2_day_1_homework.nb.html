@@ -1749,263 +1749,137 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<p>#2.2 if Statements and functions</p>
-<p>#2.2.1</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlfYnlfMTVfYWRkXzQgPC0gZnVuY3Rpb24oeCl7XG4gIFxuICByZXR1cm4oeCoxNSArIDQpXG59XG5cbm11bHRpX2J5XzE1X2FkZF80KDEpXG5gYGAifQ== -->
-<pre class="r"><code>multi_by_15_add_4 &lt;- function(x){
-  
-  return(x*15 + 4)
-}
-
-multi_by_15_add_4(1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE5XG4ifQ== -->
-<pre><code>[1] 19</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlfYnlfMTVfYWRkXzQoMilcbmBgYCJ9 -->
-<pre class="r"><code>multi_by_15_add_4(2)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDM0XG4ifQ== -->
-<pre><code>[1] 34</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlfYnlfMTVfYWRkXzQoMylcbmBgYCJ9 -->
-<pre class="r"><code>multi_by_15_add_4(3)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQ5XG4ifQ== -->
-<pre><code>[1] 49</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#2.2.2</p>
-<p>#This requires creating a character vector called “birds”. The function reads as “if x is in (%in%) the”birds&quot; vector (so true) then paste “bird” and if not (so false) then paste “not a bird”</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmlyZHMgPC0gYyhcImdvb3NlXCIsIFwiZHVja1wiLCBcInBpZ2VvblwiKVxuXG5pZGVudGlmeV9iaXJkIDwtIGZ1bmN0aW9uKHgpe1xuICBcbiAgaWYgKHggJWluJSBiaXJkcyl7XG4gICAgXG4gICAgcmV0dXJuKHBhc3RlKFwiYmlyZFwiKSlcbiAgfVxuICBcbiAgZWxzZXtcbiAgICBcbiAgICByZXR1cm4ocGFzdGUoXCJub3QgYSBiaXJkXCIpKVxuICB9XG59XG5cbmlkZW50aWZ5X2JpcmQoXCJnb29zZVwiKVxuXG5pZGVudGlmeV9iaXJkKFwiYXBwbGVcIilcblxuaWRlbnRpZnlfYmlyZCg1KVxuXG5pZGVudGlmeV9iaXJkKFwic2VhZ3VsbFwiKVxuYGBgIn0= -->
-<pre class="r"><code>birds &lt;- c(&quot;goose&quot;, &quot;duck&quot;, &quot;pigeon&quot;)
-
-identify_bird &lt;- function(x){
-  
-  if (x %in% birds){
-    
-    return(paste(&quot;bird&quot;))
-  }
-  
-  else{
-    
-    return(paste(&quot;not a bird&quot;))
-  }
-}
-
-identify_bird(&quot;goose&quot;)
-
-identify_bird(&quot;apple&quot;)
-
-identify_bird(5)
-
-identify_bird(&quot;seagull&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkob3Blbnhsc3gpXG5saWJyYXJ5KHJlYWR4bClcbmxpYnJhcnkoanNvbmxpdGUpXG5saWJyYXJ5KENvZGVDbGFuRGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>library(readr)
+library(openxlsx)
+library(readxl)
+library(jsonlite)
+library(CodeClanData)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>#2.2.3</p>
-<div id="the-function-reads-as-if-x-is-a-numeric-value-so-true-then-perform-x-multiplied-by-10-if-x-is-not-a-numeric-value-so-false-then-paste-invalid-input" class="section level1">
-<h1>The function reads as if x is a numeric value (so TRUE) then perform x multiplied by 10, if x is not a numeric value (so FALSE) then paste “Invalid input”</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4/bnVtZXJpY1xuXG5tdWx0aXBseV9ieV8xMCA8LSBmdW5jdGlvbih4KXtcbiAgXG4gIGlmIChpcy5udW1lcmljKHgpID09IFRSVUUpe1xuICAgIHJldHVybih4KjEwKVxuICAgIFxuICB9XG4gIFxuICBlbHNleyhpcy5udW1lcmljKHgpID09IEZBTFNFKVxuICAgIFxuICAgIHJldHVybihwYXN0ZShcIkludmFsaWQgaW5wdXRcIikpXG4gICAgXG4gIH1cbn1cblxubXVsdGlwbHlfYnlfMTAoMilcbm11bHRpcGx5X2J5XzEwKDUuMylcbm11bHRpcGx5X2J5XzEwKFwieFwiKVxubXVsdGlwbHlfYnlfMTAoNylcbmBgYCJ9 -->
-<pre class="r"><code>
-?numeric
-
-multiply_by_10 &lt;- function(x){
-  
-  if (is.numeric(x) == TRUE){
-    return(x*10)
-    
-  }
-  
-  else{(is.numeric(x) == FALSE)
-    
-    return(paste(&quot;Invalid input&quot;))
-    
-  }
-}
-
-multiply_by_10(2)
-multiply_by_10(5.3)
-multiply_by_10(&quot;x&quot;)
-multiply_by_10(7)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#2.3.1</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGlmZWxzZShib29sZWFuIGV4cHJlc3Npb24sIHZhbHVlIGlmIFRSVUUsIHZhbHVlIGlmIEZBTFNFKVxuXG4jaWYgc2hvZSBzaXplIChlbGVtZW50KSBpbiBcInNpemVzXCIgdmVjdG9yIGlzIGVxdWFsIG9yIGdyZWF0ZXIgdGhhbiAxMCB0aGVuIHNob2Ugc2l6ZSBpcyBcIkJpZ1wiIGFuZCBpZiBzaG9lIHNpemUgaW4gXCJzaXplc1wiIHZlY3RvciBpcyBlcXVhbCBvciBsZXNzIHRoYW4gMTAgdGhlbiBzaG9lIGlzIFwiU21hbGxcIlxuXG4/aWZlbHNlIFxuXG5zaXplcyA8LSBjKDEzLCAxNSwgMTAsIDgsIDIyKVxuXG5zaXplX2NhdGVnb3J5IDwtIGlmZWxzZShzaXplcyA+PSAxMCwgXCJCaWdcIiwgXCJTbWFsbFwiKVxuXG5zaXplX2NhdGVnb3J5XG5gYGAifQ== -->
-<pre class="r"><code>
-# ifelse(boolean expression, value if TRUE, value if FALSE)
-
-#if shoe size (element) in &quot;sizes&quot; vector is equal or greater than 10 then shoe size is &quot;Big&quot; and if shoe size in &quot;sizes&quot; vector is equal or less than 10 then shoe is &quot;Small&quot;
-
-?ifelse 
-
-sizes &lt;- c(13, 15, 10, 8, 22)
-
-size_category &lt;- ifelse(sizes &gt;= 10, &quot;Big&quot;, &quot;Small&quot;)
-
-size_category</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQmlnXCIgICBcIkJpZ1wiICAgXCJCaWdcIiAgIFwiU21hbGxcIiBcIkJpZ1wiICBcbiJ9 -->
-<pre><code>[1] &quot;Big&quot;   &quot;Big&quot;   &quot;Big&quot;   &quot;Small&quot; &quot;Big&quot;  </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#2.3.2</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5mcnVpdCA8LSBjKFwiYXBwbGVcIiwgXCJhcHBsZVwiLCBcImJhbmFuYVwiLCBcImNoZXJyeVwiLCBcImNoZXJyeVwiKVxuXG5mcnVpdF9yZWNvZGUgPC0gZHBseXI6OnJlY29kZShmcnVpdCAsIFwiYXBwbGVcIiA9IFwiYWxwYWNhXCIsIFwiYmFuYW5hXCIgPSBcImJvbm9ib1wiLCBcImNoZXJyeVwiID0gXCJjaGlwbXVua1wiKVxuXG5mcnVpdFxuXG5mcnVpdF9yZWNvZGVcbmBgYCJ9 -->
-<pre class="r"><code>
-fruit &lt;- c(&quot;apple&quot;, &quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;cherry&quot;)
-
-fruit_recode &lt;- dplyr::recode(fruit , &quot;apple&quot; = &quot;alpaca&quot;, &quot;banana&quot; = &quot;bonobo&quot;, &quot;cherry&quot; = &quot;chipmunk&quot;)
-
-fruit
-
-fruit_recode</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#2.3.2</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cbndpZmVfYWdlIDwtIGMoMjlMLCAzMEwsIDM2TCwgMzFMLCAyMkwpXG5cbmh1c2JhbmRfYWdlIDwtIGMoMjhMLCAzNUwsIDMyTCwgMzFMLCAyOUwpXG5cbmh1c2JhbmRfd2lmZV92ZWN0b3IgPC0gZHBseXI6OmNhc2Vfd2hlbihcblxuICB3aWZlX2FnZSA8IGh1c2JhbmRfYWdlIH4gXCJIdXNiYW5kIG9sZGVyXCIsXG5cbiAgaHVzYmFuZF9hZ2UgPCB3aWZlX2FnZSB+IFwiV2lmZSBvbGRlclwiLFxuXG4gIHdpZmVfYWdlID09IGh1c2JhbmRfYWdlIH4gXCJzYW1lIGFnZVwiXG4gIFxuKVxuXG5odXNiYW5kX3dpZmVfdmVjdG9yXG5gYGAifQ== -->
-<pre class="r"><code>
-
-wife_age &lt;- c(29L, 30L, 36L, 31L, 22L)
-
-husband_age &lt;- c(28L, 35L, 32L, 31L, 29L)
-
-husband_wife_vector &lt;- dplyr::case_when(
-
-  wife_age &lt; husband_age ~ &quot;Husband older&quot;,
-
-  husband_age &lt; wife_age ~ &quot;Wife older&quot;,
-
-  wife_age == husband_age ~ &quot;same age&quot;
-  
-)
-
-husband_wife_vector</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiV2lmZSBvbGRlclwiICAgIFwiSHVzYmFuZCBvbGRlclwiIFwiV2lmZSBvbGRlclwiICAgIFwic2FtZSBhZ2VcIiAgICAgIFwiSHVzYmFuZCBvbGRlclwiXG4ifQ== -->
-<pre><code>[1] &quot;Wife older&quot;    &quot;Husband older&quot; &quot;Wife older&quot;    &quot;same age&quot;      &quot;Husband older&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
 <div id="section" class="section level1">
-<h1>2.4</h1>
+<h1>1</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhdGVfaW5jb21lX2RhdGEgPC0gcmVhZF9jc3YoXCJkYXRhL3N0YXRlX2luY29tZV9kYXRhLmNzdlwiKVxuXG5zdGF0ZV9pbmNvbWVfZGF0YVxuXG5WaWV3KHN0YXRlX2luY29tZV9kYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>state_income_data &lt;- read_csv(&quot;data/state_income_data.csv&quot;)
+
+state_income_data
+
+View(state_income_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="section-1" class="section level1">
-<h1>2.4.1</h1>
+<h1>2</h1>
+</div>
+<div id="wasnt-sure-what-was-exactly-required-for-this-question-so-i-wrote-in-pseudo-code-how-to-specify-column-names-when-using-read_csv" class="section level1">
+<h1>Wasn’t sure what was exactly required for this question so I wrote in pseudo-code how to specify column names when using read_csv()</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5teV9saXN0IDwtIGxpc3QoXG4gIDQsXG4gIFwiYXBwbGVcIixcbiAgMTAuNSxcbiAgYyhcImlzXCIsIFwiYW5cIiwgXCJhcHBsZVwiKSxcbiAgXCJhcHBsZVwiLFxuICBjKFwiaVwiLCBcImxpa2VcIiwgXCJhcHBsZXNcIiksXG4gIDhcbilcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVhZF9jc3YoXCJkaXJlY3RvcnkvZmlsZSBuYW1lLmNzdlwiLFxuY29sX25hbWVzID0gYyhcImNvbHVtbl9uYW1lMVwiLFxuICAgICAgICAgICAgICBcImNvbHVtbl9uYW1lMlwiLFxuICAgICAgICAgICAgICBcImNvbHVtbl9uYW1lM1wiLFxuICAgICAgICAgICAgICBcImNvbHVtbl9uYW1lNFwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>read_csv(&quot;directory/file name.csv&quot;,
+col_names = c(&quot;column_name1&quot;,
+              &quot;column_name2&quot;,
+              &quot;column_name3&quot;,
+              &quot;column_name4&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="col_names-allows-you-to-give-the-each-column-a-name.-i-changed-the-vs-column-to-a-logical-by-using-colscol_logical" class="section level1">
+<h1>col_names() allows you to give the each column a name. I changed the ‘vs’ column to a logical by using cols(col_logical())</h1>
+<p>#3</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#4 scotland.txt was a txt file that used semi-colons to separate variables so read_delim was the most suitable to use. Specified ‘delim = “;”’ and ’skip = 2&quot; (to make it easier to read)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#5</p>
+</div>
+<div id="how-to-read-text-into-a-one-element-character-vector-in-pseudo-code" class="section level1">
+<h1>How to read text into a one element character vector in pseudo-code</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#6</p>
+</div>
+<div id="the-read_csv-function-was-most-suitable-to-use-i-needed-to-specify-values-for-skip_empty_rows-n_max-and-skip-for-it-to-work" class="section level1">
+<h1>The read_csv function was most suitable to use, I needed to specify values for ‘skip_empty_rows’, ‘n_max’ and ‘skip’ for it to work</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zdGVhbV8yMDBrX3NhbXBsZSA8LSByZWFkX2NzdihcImRhdGEvc3RlYW0tMjAway1zYW1wbGUuY3N2XCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNraXBfZW1wdHlfcm93cyA9IFRSVUUsIG5fbWF4ID0gMTAsIHNraXAgPSA0KVxuXG5jbGFzcyhzdGVhbV8yMDBrX3NhbXBsZSlcblxuc3RlYW1fMjAwa19zYW1wbGVcblxuVmlldyhzdGVhbV8yMDBrX3NhbXBsZSlcblxuXG5cbmBgYCJ9 -->
 <pre class="r"><code>
-my_list &lt;- list(
-  4,
-  &quot;apple&quot;,
-  10.5,
-  c(&quot;is&quot;, &quot;an&quot;, &quot;apple&quot;),
-  &quot;apple&quot;,
-  c(&quot;i&quot;, &quot;like&quot;, &quot;apples&quot;),
-  8
-)
+steam_200k_sample &lt;- read_csv(&quot;data/steam-200k-sample.csv&quot;,
+                                skip_empty_rows = TRUE, n_max = 10, skip = 4)
+
+class(steam_200k_sample)
+
+steam_200k_sample
+
+View(steam_200k_sample)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#7</p>
+</div>
+<div id="as-the-file-is-.tsv-read_tsv-is-the-most-suitable-function" class="section level1">
+<h1>As the file is .tsv, read_tsv is the most suitable function</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdG9yaWNfZXVfcGF5bWVudHMgPC0gcmVhZF90c3YoXCJkYXRhL2hpc3RvcmljX2V1X3BheW1lbnRzLnRzdlwiKVxuVmlldyhoaXN0b3JpY19ldV9wYXltZW50cylcbmBgYCJ9 -->
+<pre class="r"><code>historic_eu_payments &lt;- read_tsv(&quot;data/historic_eu_payments.tsv&quot;)
+View(historic_eu_payments)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#8</p>
+</div>
+<div id="how-to-read-lines-of-text-into-a-multi-element-text-vector-in-pseudo-code" class="section level1">
+<h1>How to read lines of text into a multi-element text vector in pseudo-code</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVhZF9saW5lcyhcImRpcmVjdG9yeS9maWxlLnR4dFwiKVxuYGBgIn0= -->
+<pre class="r"><code>read_lines(&quot;directory/file.txt&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#9</p>
+</div>
+<div id="fromjson-allows-the-file-to-be-read-via-url-then-parse_json-to-interpret-json-file-and-convert-to-create-make_me_ana1.-after-this-fromjson-can-be-used---which-would-return-a-data-frame-usually.-in-this-case-the-3-elements-are-all-character-vectors-same-type-so-it-returns-a-list." class="section level1">
+<h1>fromJSON allows the file to be read via URL, then parse_json() to interpret JSON file and convert to create make_me_ana1. AFter this fromJSON can be used - which would return a data frame usually. In this case the 3 elements are all character vectors (same type) so it returns a list.</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFrZV9tZV9hbmEgPC0gcmVhZF9maWxlKFwiaHR0cDovL21ha2VtZWFuYWx5c3QuY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE3LzA2L3NhbXBsZV9qc29uLnR4dFwiKVxuXG4jbWFrZV9tZV9hbmFcblxubWFrZV9tZV9hbmExIDwtIHBhcnNlX2pzb24obWFrZV9tZV9hbmEpXG5cbm1ha2VfbWVfYW5hMVxuXG5tYWtlX21lX2FuYTIgPC0gZnJvbUpTT04obWFrZV9tZV9hbmEpXG5cbm1ha2VfbWVfYW5hMlxuXG5cblxuYGBgIn0= -->
+<pre class="r"><code>make_me_ana &lt;- read_file(&quot;http://makemeanalyst.com/wp-content/uploads/2017/06/sample_json.txt&quot;)
+
+#make_me_ana
+
+make_me_ana1 &lt;- parse_json(make_me_ana)
+
+make_me_ana1
+
+make_me_ana2 &lt;- fromJSON(make_me_ana)
+
+make_me_ana2
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIFRoZSBmdW5jdGlvbiBiZWxvdyB3YXMgY3JlYXRlZCB1c2luZyBhIGZvciBsb29wLiBJdCByZWFkcyBmb3IgZXZlcnkgaW5wdXQgKGl0ZW0pIGluIHRoZSAnbXlfbGlzdCcgbGlzdCwgaWYgdGhlICdpbnB1dCcgaXMgYSBjaGFyYWN0ZXIgKFRSVUUpLCBwcmludCB0aGUgJ2lucHV0Jy4gXG5cblxucHJpbnRfY2hhcmFjdGVycyA8LSBmdW5jdGlvbih4KXtcbiAgXG4gIFxuICBmb3IoaW5wdXQgaW4gbXlfbGlzdCl7IFxuICAgIFxuICBpZiAoaXMuY2hhcmFjdGVyKGlucHV0KSA9PSBUUlVFKXtcbiAgICBcbiAgICAocHJpbnQoaW5wdXQpKVxuICB9XG4gIH1cbn1cblxucHJpbnRfY2hhcmFjdGVycyhteV9saXN0KVxuYGBgIn0= -->
-<pre class="r"><code>
-# The function below was created using a for loop. It reads for every input (item) in the 'my_list' list, if the 'input' is a character (TRUE), print the 'input'. 
-
-
-print_characters &lt;- function(x){
-  
-  
-  for(input in my_list){ 
-    
-  if (is.character(input) == TRUE){
-    
-    (print(input))
-  }
-  }
-}
-
-print_characters(my_list)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="section-2" class="section level1">
-<h1>2.4.2</h1>
-</div>
-<div id="i-have-had-several-goes-at-this-question-but-still-having-a-trouble-returning-the-correct-answer" class="section level1">
-<h1>I have had several goes at this question but still having a trouble returning the correct answer</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfbGlzdF9sZW5ndGggPC0gbGVuZ3RocyhteV9saXN0KVxuXG5teV9saXN0X2xlbmd0aFxuXG5cblxuYGBgIn0= -->
-<pre class="r"><code>my_list_length &lt;- lengths(my_list)
-
-my_list_length
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5wYXN0ZV9jaGFyYWN0ZXJzX2dyZWF0ZXJfdGhhbl8xIDwtIGZ1bmN0aW9uKHgpe1xuICBcbiAgXG4gIGZvcihpbnB1dCBpbiBteV9saXN0KXsgXG4gICAgXG4gIGlmIChpcy5jaGFyYWN0ZXIoaW5wdXQpID09IFRSVUUgJiBsZW5ndGhzKG15X2xpc3QpID4gMSl7XG4gICAgXG4gIH1cbiAgICBwcmludChwYXN0ZShpbnB1dCwgY29sbGFwc2UgPSBcIlwiKSlcbiAgfVxuICB9XG5cblxucGFzdGVfY2hhcmFjdGVyc19ncmVhdGVyX3RoYW5fMShteV9saXN0KVxuXG5gYGAifQ== -->
-<pre class="r"><code>
-paste_characters_greater_than_1 &lt;- function(x){
-  
-  
-  for(input in my_list){ 
-    
-  if (is.character(input) == TRUE &amp; lengths(my_list) &gt; 1){
-    
-  }
-    print(paste(input, collapse = &quot;&quot;))
-  }
-  }
-
-
-paste_characters_greater_than_1(my_list)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#correct solution</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yIChpbnB1dCBpbiBteV9saXN0KSB7XG4gIGlmIChpcy5jaGFyYWN0ZXIoaW5wdXQpKSB7XG4gICAgaWYgKGxlbmd0aChpbnB1dCkgPiAxKSB7XG4gICAgICBwcmludChwYXN0ZShpbnB1dCwgY29sbGFwc2UgPSBcIiBcIikpXG4gICAgfSBlbHNlIHtcbiAgICAgIHByaW50KGlucHV0KVxuICAgIH1cbiAgfVxufVxuYGBgIn0= -->
-<pre class="r"><code>for (input in my_list) {
-  if (is.character(input)) {
-    if (length(input) &gt; 1) {
-      print(paste(input, collapse = &quot; &quot;))
-    } else {
-      print(input)
-    }
-  }
-}</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIzIuMiBpZiBTdGF0ZW1lbnRzIGFuZCBmdW5jdGlvbnMgCgojMi4yLjEKCmBgYHtyfQptdWx0aV9ieV8xNV9hZGRfNCA8LSBmdW5jdGlvbih4KXsKICAKICByZXR1cm4oeCoxNSArIDQpCn0KCm11bHRpX2J5XzE1X2FkZF80KDEpCgptdWx0aV9ieV8xNV9hZGRfNCgyKQoKbXVsdGlfYnlfMTVfYWRkXzQoMykKYGBgCgojMi4yLjIKCiNUaGlzIHJlcXVpcmVzIGNyZWF0aW5nIGEgY2hhcmFjdGVyIHZlY3RvciBjYWxsZWQgImJpcmRzIi4gVGhlIGZ1bmN0aW9uIHJlYWRzIGFzICJpZiB4IGlzIGluICglaW4lKSB0aGUgImJpcmRzIiB2ZWN0b3IgKHNvIHRydWUpIHRoZW4gcGFzdGUgImJpcmQiIGFuZCBpZiBub3QgKHNvIGZhbHNlKSB0aGVuIHBhc3RlICJub3QgYSBiaXJkIgoKYGBge3J9CmJpcmRzIDwtIGMoImdvb3NlIiwgImR1Y2siLCAicGlnZW9uIikKCmlkZW50aWZ5X2JpcmQgPC0gZnVuY3Rpb24oeCl7CiAgCiAgaWYgKHggJWluJSBiaXJkcyl7CiAgICAKICAgIHJldHVybihwYXN0ZSgiYmlyZCIpKQogIH0KICAKICBlbHNlewogICAgCiAgICByZXR1cm4ocGFzdGUoIm5vdCBhIGJpcmQiKSkKICB9Cn0KCmlkZW50aWZ5X2JpcmQoImdvb3NlIikKCmlkZW50aWZ5X2JpcmQoImFwcGxlIikKCmlkZW50aWZ5X2JpcmQoNSkKCmlkZW50aWZ5X2JpcmQoInNlYWd1bGwiKQpgYGAKCiMyLjIuMwoKIyBUaGUgZnVuY3Rpb24gcmVhZHMgYXMgaWYgeCBpcyBhIG51bWVyaWMgdmFsdWUgKHNvIFRSVUUpIHRoZW4gcGVyZm9ybSB4IG11bHRpcGxpZWQgYnkgMTAsIGlmIHggaXMgbm90IGEgbnVtZXJpYyB2YWx1ZSAoc28gRkFMU0UpIHRoZW4gcGFzdGUgIkludmFsaWQgaW5wdXQiCmBgYHtyfQoKP251bWVyaWMKCm11bHRpcGx5X2J5XzEwIDwtIGZ1bmN0aW9uKHgpewogIAogIGlmIChpcy5udW1lcmljKHgpID09IFRSVUUpewogICAgcmV0dXJuKHgqMTApCiAgICAKICB9CiAgCiAgZWxzZXsoaXMubnVtZXJpYyh4KSA9PSBGQUxTRSkKICAgIAogICAgcmV0dXJuKHBhc3RlKCJJbnZhbGlkIGlucHV0IikpCiAgICAKICB9Cn0KCm11bHRpcGx5X2J5XzEwKDIpCm11bHRpcGx5X2J5XzEwKDUuMykKbXVsdGlwbHlfYnlfMTAoIngiKQptdWx0aXBseV9ieV8xMCg3KQpgYGAKCiMyLjMuMSAKCmBgYHtyfQoKIyBpZmVsc2UoYm9vbGVhbiBleHByZXNzaW9uLCB2YWx1ZSBpZiBUUlVFLCB2YWx1ZSBpZiBGQUxTRSkKCiNpZiBzaG9lIHNpemUgKGVsZW1lbnQpIGluICJzaXplcyIgdmVjdG9yIGlzIGVxdWFsIG9yIGdyZWF0ZXIgdGhhbiAxMCB0aGVuIHNob2Ugc2l6ZSBpcyAiQmlnIiBhbmQgaWYgc2hvZSBzaXplIGluICJzaXplcyIgdmVjdG9yIGlzIGVxdWFsIG9yIGxlc3MgdGhhbiAxMCB0aGVuIHNob2UgaXMgIlNtYWxsIgoKP2lmZWxzZSAKCnNpemVzIDwtIGMoMTMsIDE1LCAxMCwgOCwgMjIpCgpzaXplX2NhdGVnb3J5IDwtIGlmZWxzZShzaXplcyA+PSAxMCwgIkJpZyIsICJTbWFsbCIpCgpzaXplX2NhdGVnb3J5CgoKYGBgCgojMi4zLjIKCmBgYHtyfQoKZnJ1aXQgPC0gYygiYXBwbGUiLCAiYXBwbGUiLCAiYmFuYW5hIiwgImNoZXJyeSIsICJjaGVycnkiKQoKZnJ1aXRfcmVjb2RlIDwtIGRwbHlyOjpyZWNvZGUoZnJ1aXQgLCAiYXBwbGUiID0gImFscGFjYSIsICJiYW5hbmEiID0gImJvbm9ibyIsICJjaGVycnkiID0gImNoaXBtdW5rIikKCmZydWl0CgpmcnVpdF9yZWNvZGUKYGBgCgojMi4zLjIgCgpgYGB7cn0KCgp3aWZlX2FnZSA8LSBjKDI5TCwgMzBMLCAzNkwsIDMxTCwgMjJMKQoKaHVzYmFuZF9hZ2UgPC0gYygyOEwsIDM1TCwgMzJMLCAzMUwsIDI5TCkKCmh1c2JhbmRfd2lmZV92ZWN0b3IgPC0gZHBseXI6OmNhc2Vfd2hlbigKCiAgd2lmZV9hZ2UgPCBodXNiYW5kX2FnZSB+ICJIdXNiYW5kIG9sZGVyIiwKCiAgaHVzYmFuZF9hZ2UgPCB3aWZlX2FnZSB+ICJXaWZlIG9sZGVyIiwKCiAgd2lmZV9hZ2UgPT0gaHVzYmFuZF9hZ2UgfiAic2FtZSBhZ2UiCiAgCikKCmh1c2JhbmRfd2lmZV92ZWN0b3IKYGBgCgojIDIuNCAKCiMgMi40LjEgCgpgYGB7cn0KCm15X2xpc3QgPC0gbGlzdCgKICA0LAogICJhcHBsZSIsCiAgMTAuNSwKICBjKCJpcyIsICJhbiIsICJhcHBsZSIpLAogICJhcHBsZSIsCiAgYygiaSIsICJsaWtlIiwgImFwcGxlcyIpLAogIDgKKQoKYGBgCgoKCmBgYHtyfQoKIyBUaGUgZnVuY3Rpb24gYmVsb3cgd2FzIGNyZWF0ZWQgdXNpbmcgYSBmb3IgbG9vcC4gSXQgcmVhZHMgZm9yIGV2ZXJ5IGlucHV0IChpdGVtKSBpbiB0aGUgJ215X2xpc3QnIGxpc3QsIGlmIHRoZSAnaW5wdXQnIGlzIGEgY2hhcmFjdGVyIChUUlVFKSwgcHJpbnQgdGhlICdpbnB1dCcuIAoKCnByaW50X2NoYXJhY3RlcnMgPC0gZnVuY3Rpb24oeCl7CiAgCiAgCiAgZm9yKGlucHV0IGluIG15X2xpc3QpeyAKICAgIAogIGlmIChpcy5jaGFyYWN0ZXIoaW5wdXQpID09IFRSVUUpewogICAgCiAgICAocHJpbnQoaW5wdXQpKQogIH0KICB9Cn0KCnByaW50X2NoYXJhY3RlcnMobXlfbGlzdCkKYGBgCgoKIyAyLjQuMiAKCiMgSSBoYXZlIGhhZCBzZXZlcmFsIGdvZXMgYXQgdGhpcyBxdWVzdGlvbiBidXQgc3RpbGwgaGF2aW5nIGEgdHJvdWJsZSByZXR1cm5pbmcgdGhlIGNvcnJlY3QgYW5zd2VyIAoKYGBge3J9Cm15X2xpc3RfbGVuZ3RoIDwtIGxlbmd0aHMobXlfbGlzdCkKCm15X2xpc3RfbGVuZ3RoCgoKCmBgYAoKYGBge3J9CgpwYXN0ZV9jaGFyYWN0ZXJzX2dyZWF0ZXJfdGhhbl8xIDwtIGZ1bmN0aW9uKHgpewogIAogIAogIGZvcihpbnB1dCBpbiBteV9saXN0KXsgCiAgICAKICBpZiAoaXMuY2hhcmFjdGVyKGlucHV0KSA9PSBUUlVFICYgbGVuZ3RocyhteV9saXN0KSA+IDEpewogICAgCiAgfQogICAgcHJpbnQocGFzdGUoaW5wdXQsIGNvbGxhcHNlID0gIiIpKQogIH0KICB9CgoKcGFzdGVfY2hhcmFjdGVyc19ncmVhdGVyX3RoYW5fMShteV9saXN0KQoKYGBgCgoKI2NvcnJlY3Qgc29sdXRpb24KYGBge3J9CmZvciAoaW5wdXQgaW4gbXlfbGlzdCkgewogIGlmIChpcy5jaGFyYWN0ZXIoaW5wdXQpKSB7CiAgICBpZiAobGVuZ3RoKGlucHV0KSA+IDEpIHsKICAgICAgcHJpbnQocGFzdGUoaW5wdXQsIGNvbGxhcHNlID0gIiAiKSkKICAgIH0gZWxzZSB7CiAgICAgIHByaW50KGlucHV0KQogICAgfQogIH0KfQpgYGAKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkocmVhZHIpCmxpYnJhcnkob3Blbnhsc3gpCmxpYnJhcnkocmVhZHhsKQpsaWJyYXJ5KGpzb25saXRlKQpsaWJyYXJ5KENvZGVDbGFuRGF0YSkKYGBgCgojIDEKCmBgYHtyfQpzdGF0ZV9pbmNvbWVfZGF0YSA8LSByZWFkX2NzdigiZGF0YS9zdGF0ZV9pbmNvbWVfZGF0YS5jc3YiKQoKc3RhdGVfaW5jb21lX2RhdGEKClZpZXcoc3RhdGVfaW5jb21lX2RhdGEpCmBgYAoKIyAyCgojIFdhc24ndCBzdXJlIHdoYXQgd2FzIGV4YWN0bHkgcmVxdWlyZWQgZm9yIHRoaXMgcXVlc3Rpb24gc28gSSB3cm90ZSBpbiBwc2V1ZG8tY29kZSBob3cgdG8gc3BlY2lmeSBjb2x1bW4gbmFtZXMgd2hlbiB1c2luZyByZWFkX2NzdigpCgpgYGB7cn0KcmVhZF9jc3YoImRpcmVjdG9yeS9maWxlIG5hbWUuY3N2IiwKY29sX25hbWVzID0gYygiY29sdW1uX25hbWUxIiwKICAgICAgICAgICAgICAiY29sdW1uX25hbWUyIiwKICAgICAgICAgICAgICAiY29sdW1uX25hbWUzIiwKICAgICAgICAgICAgICAiY29sdW1uX25hbWU0IikpCmBgYAoKIyBjb2xfbmFtZXMoKSBhbGxvd3MgeW91IHRvIGdpdmUgdGhlIGVhY2ggY29sdW1uIGEgbmFtZS4gSSBjaGFuZ2VkIHRoZSAndnMnIGNvbHVtbiB0byBhIGxvZ2ljYWwgYnkgdXNpbmcgY29scyhjb2xfbG9naWNhbCgpKQoKIzMKCmBgYHtyfQoKY2FycyA8LSByZWFkX2NzdigiZGF0YS9jYXJzLmNzdiIsIGNvbHMoCiAgWDEgPSBjb2xfY2hhcmFjdGVyKCksCiAgbXBnID0gY29sX2RvdWJsZSgpLAogIGN5bCA9IGNvbF9kb3VibGUoKSwKICBkaXNwID0gY29sX2RvdWJsZSgpLAogIGhwID0gY29sX2RvdWJsZSgpLAogIHZzID0gY29sX2xvZ2ljYWwoKQogICksIGNvbF9uYW1lcyA9IFRSVUUKICApCgpjYXJzCgpWaWV3KGNhcnMpCmBgYAoKCiM0IHNjb3RsYW5kLnR4dCB3YXMgYSB0eHQgZmlsZSB0aGF0IHVzZWQgc2VtaS1jb2xvbnMgdG8gc2VwYXJhdGUgdmFyaWFibGVzIHNvIHJlYWRfZGVsaW0gd2FzIHRoZSBtb3N0IHN1aXRhYmxlIHRvIHVzZS4gU3BlY2lmaWVkICdkZWxpbSA9ICI7IicgYW5kICdza2lwID0gMiIgKHRvIG1ha2UgaXQgZWFzaWVyIHRvIHJlYWQpCgpgYGB7cn0KCnNjb3RsYW5kIDwtIHJlYWRfZGVsaW0oImRhdGEvc2NvdGxhbmQudHh0IiwgZGVsaW0gPSAiOyIsIHNraXAgPSAyLAogICAgICAgICAgICAgICBjb2xfbmFtZXMgPSBjKCJSYW5rIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiTG9jYWxpdHkiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICJQb3B1bGF0aW9uIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiU3RhdHVzIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiQ291bmNpbCBBcmVhIikpCgoKVmlldyhzY290bGFuZCkKCmBgYAoKIzUgCgojIEhvdyB0byByZWFkIHRleHQgaW50byBhIG9uZSBlbGVtZW50IGNoYXJhY3RlciB2ZWN0b3IgaW4gcHNldWRvLWNvZGUKCmBgYHtyfQoKcmVhZF9maWxlKCJkaXJlY3RvcnkvZmlsZS50eHQiKQoKYGBgCgojNiAKCiMgVGhlIHJlYWRfY3N2IGZ1bmN0aW9uIHdhcyBtb3N0IHN1aXRhYmxlIHRvIHVzZSwgSSBuZWVkZWQgdG8gc3BlY2lmeSB2YWx1ZXMgZm9yICdza2lwX2VtcHR5X3Jvd3MnLCAnbl9tYXgnIGFuZCAnc2tpcCcgZm9yIGl0IHRvIHdvcmsgCgpgYGB7cn0KCnN0ZWFtXzIwMGtfc2FtcGxlIDwtIHJlYWRfY3N2KCJkYXRhL3N0ZWFtLTIwMGstc2FtcGxlLmNzdiIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2tpcF9lbXB0eV9yb3dzID0gVFJVRSwgbl9tYXggPSAxMCwgc2tpcCA9IDQpCgpjbGFzcyhzdGVhbV8yMDBrX3NhbXBsZSkKCnN0ZWFtXzIwMGtfc2FtcGxlCgpWaWV3KHN0ZWFtXzIwMGtfc2FtcGxlKQoKCgpgYGAKCiM3IAoKIyBBcyB0aGUgZmlsZSBpcyAudHN2LCByZWFkX3RzdiBpcyB0aGUgbW9zdCBzdWl0YWJsZSBmdW5jdGlvbgoKYGBge3J9Cmhpc3RvcmljX2V1X3BheW1lbnRzIDwtIHJlYWRfdHN2KCJkYXRhL2hpc3RvcmljX2V1X3BheW1lbnRzLnRzdiIpClZpZXcoaGlzdG9yaWNfZXVfcGF5bWVudHMpCmBgYAoKIzgKCiMgSG93IHRvIHJlYWQgbGluZXMgb2YgdGV4dCBpbnRvIGEgbXVsdGktZWxlbWVudCB0ZXh0IHZlY3RvciBpbiBwc2V1ZG8tY29kZQoKYGBge3J9CnJlYWRfbGluZXMoImRpcmVjdG9yeS9maWxlLnR4dCIpCmBgYAoKCiM5CgojIGZyb21KU09OIGFsbG93cyB0aGUgZmlsZSB0byBiZSByZWFkIHZpYSBVUkwsIHRoZW4gcGFyc2VfanNvbigpIHRvIGludGVycHJldCBKU09OIGZpbGUgYW5kIGNvbnZlcnQgdG8gY3JlYXRlIG1ha2VfbWVfYW5hMS4gIEFGdGVyIHRoaXMgZnJvbUpTT04gY2FuIGJlIHVzZWQgLSB3aGljaCB3b3VsZCByZXR1cm4gYSBkYXRhIGZyYW1lIHVzdWFsbHkuIEluIHRoaXMgY2FzZSB0aGUgMyBlbGVtZW50cyBhcmUgYWxsIGNoYXJhY3RlciB2ZWN0b3JzIChzYW1lIHR5cGUpIHNvIGl0IHJldHVybnMgYSBsaXN0LiAKCmBgYHtyfQptYWtlX21lX2FuYSA8LSByZWFkX2ZpbGUoImh0dHA6Ly9tYWtlbWVhbmFseXN0LmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxNy8wNi9zYW1wbGVfanNvbi50eHQiKQoKI21ha2VfbWVfYW5hCgptYWtlX21lX2FuYTEgPC0gcGFyc2VfanNvbihtYWtlX21lX2FuYSkKCm1ha2VfbWVfYW5hMQoKbWFrZV9tZV9hbmEyIDwtIGZyb21KU09OKG1ha2VfbWVfYW5hKQoKbWFrZV9tZV9hbmEyCgoKCmBgYAoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo=</div>
 
 
 
@@ -2052,7 +1926,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("weekend_homework.Rmd");
+  window.initializeSourceEmbed("week_2_day_1_homework.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
