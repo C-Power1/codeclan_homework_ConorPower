@@ -1,0 +1,6 @@
+"0","```r
+mean_ed_temp <- mean(named_ed_temp)
+mean_ed_rain <- mean(named_ed_rain)
+mean_ed_temp
+mean_ed_rain
+```"

@@ -1,0 +1,5 @@
+"0","```r
+```r
+max_temp <- read_table(\data/maxtemp.txt\)
+```
+```"

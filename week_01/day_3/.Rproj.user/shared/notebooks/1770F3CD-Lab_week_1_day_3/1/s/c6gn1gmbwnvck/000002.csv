@@ -1,0 +1,11 @@
+"0","```r
+#Matrices
+
+fortnight_forecast <- matrix(c(16, 16, 17, 16, 16, 15, 16, 17, 18, 17, 18, 18, 19, 18), 2, 7)
+
+
+colnames(fortnight_forecast) <- c(\"Wed\", \"Thurs\", \"Fri\", \"Sat\", \"Sun\", \"Mon\", \"Tues\")
+rownames(fortnight_forecast) <- c(\"Week 1\", \"Week 2\")
+
+fortnight_forecast
+```"

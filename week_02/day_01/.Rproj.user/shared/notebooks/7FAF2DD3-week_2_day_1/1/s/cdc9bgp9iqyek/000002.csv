@@ -1,0 +1,7 @@
+"0","```r
+```r
+
+surnames <- read_lines(\data/surnames.txt\)
+surnames
+```
+```"

@@ -1,0 +1,2 @@
+"0",""
+"0","wrestlers_db_connect <- dbConnect(drv = PostgreSQL(max.con = 2), user = remote_wrestlers_postgresql_username, password = remote_wrestlers_postgresql_password, dbname = ""mvhbdgdk"", host = ""34.245.37.126"")"

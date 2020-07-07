@@ -1,0 +1,9 @@
+"0","```r
+```r
+tv <- read_tsv(\data/tv.txt\,
+               col_names = c(\hours_of_tv_watched\,
+                             \marital_status\,
+                             \age\,
+                             \year_of_education\))
+```
+```"

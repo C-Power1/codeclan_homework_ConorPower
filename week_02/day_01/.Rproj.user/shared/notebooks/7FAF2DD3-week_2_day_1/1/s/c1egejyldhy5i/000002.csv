@@ -1,0 +1,10 @@
+"0","```r
+```r
+
+# read_csv(\put directory path here\) 
+
+dog_bites <- read_csv(\data/dog_bites.csv\)
+
+View(dog_bites)
+```
+```"

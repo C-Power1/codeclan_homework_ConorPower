@@ -1,0 +1,7 @@
+"0","```r
+```r
+populism <- read_xlsx(\data/populism.xlsx\)
+populism
+View(populism)
+```
+```"

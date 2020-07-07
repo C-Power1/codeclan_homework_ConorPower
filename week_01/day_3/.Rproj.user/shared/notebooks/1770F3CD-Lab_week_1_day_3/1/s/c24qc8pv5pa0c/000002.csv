@@ -1,0 +1,11 @@
+"0","```r
+#question 1
+ed_temp <- c(13, 17, 16, 17, 16)
+ed_rain <- c(95, 7, 91, 33, 40)
+ed_cloud <- c(\"cloudy\", \"cloudy\", \"cloudly\", \"cloudy\", \"cloudy with sunny intervals\")
+days
+
+class(ed_temp) 
+class(ed_rain)
+class(ed_cloud)
+```"

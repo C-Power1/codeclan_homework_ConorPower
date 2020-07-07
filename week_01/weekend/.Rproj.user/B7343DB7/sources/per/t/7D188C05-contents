@@ -1,0 +1,252 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#2.2 if Statements and functions 
+
+#2.2.1
+
+```{r}
+multi_by_15_add_4 <- function(x){
+  
+  return(x*15 + 4)
+}
+
+multi_by_15_add_4(1)
+
+multi_by_15_add_4(2)
+
+multi_by_15_add_4(3)
+```
+
+#2.2.2
+
+#This requires creating a character vector called "birds". The function reads as "if x is in (%in%) the "birds" vector (so true) then paste "bird" and if not (so false) then paste "not a bird"
+
+```{r}
+birds <- c("goose", "duck", "pigeon")
+
+identify_bird <- function(x){
+  
+  if (x %in% birds){
+    
+    return(paste("bird"))
+  }
+  
+  else{
+    
+    return(paste("not a bird"))
+  }
+}
+
+identify_bird("goose")
+
+identify_bird("apple")
+
+identify_bird(5)
+
+identify_bird("seagull")
+```
+
+#2.2.3
+
+# The function reads as if x is a numeric value (so TRUE) then perform x multiplied by 10, if x is not a numeric value (so FALSE) then paste "Invalid input"
+```{r}
+
+?numeric
+
+multiply_by_10 <- function(x){
+  
+  if (is.numeric(x) == TRUE){
+    return(x*10)
+    
+  }
+  
+  else{(is.numeric(x) == FALSE)
+    
+    return(paste("Invalid input"))
+    
+  }
+}
+
+multiply_by_10(2)
+multiply_by_10(5.3)
+multiply_by_10("x")
+multiply_by_10(7)
+```
+
+#2.3.1 
+
+```{r}
+
+# ifelse(boolean expression, value if TRUE, value if FALSE)
+
+#if shoe size (element) in "sizes" vector is equal or greater than 10 then shoe size is "Big" and if shoe size in "sizes" vector is equal or less than 10 then shoe is "Small"
+
+?ifelse 
+
+sizes <- c(13, 15, 10, 8, 22)
+
+size_category <- ifelse(sizes >= 10, "Big", "Small")
+
+size_category
+
+
+```
+
+#2.3.2
+
+```{r}
+
+fruit <- c("apple", "apple", "banana", "cherry", "cherry")
+
+fruit_recode <- dplyr::recode(fruit , "apple" = "alpaca", "banana" = "bonobo", "cherry" = "chipmunk")
+
+fruit
+
+fruit_recode
+```
+
+#2.3.2 
+
+```{r}
+
+
+wife_age <- c(29L, 30L, 36L, 31L, 22L)
+
+husband_age <- c(28L, 35L, 32L, 31L, 29L)
+
+husband_wife_vector <- dplyr::case_when(
+
+  wife_age < husband_age ~ "Husband older",
+
+  husband_age < wife_age ~ "Wife older",
+
+  wife_age == husband_age ~ "same age"
+  
+)
+
+husband_wife_vector
+```
+
+# 2.4 
+
+# 2.4.1 
+
+```{r}
+
+my_list <- list(
+  4,
+  "apple",
+  10.5,
+  c("is", "an", "apple"),
+  "apple",
+  c("i", "like", "apples"),
+  8
+)
+
+```
+
+
+
+```{r}
+
+# The function below was created using a for loop. It reads for every input (item) in the 'my_list' list, if the 'input' is a character (TRUE), print the 'input'. 
+
+
+print_characters <- function(x){
+  
+  
+  for(input in my_list){ 
+    
+  if (is.character(input) == TRUE){
+    
+    (print(input))
+  }
+  }
+}
+
+print_characters(my_list)
+```
+
+
+# 2.4.2 
+
+# I have had several goes at this question but still having a trouble returning the correct answer 
+
+```{r}
+my_list_length <- lengths(my_list)
+
+my_list_length
+
+
+
+```
+
+```{r}
+
+paste_characters_greater_than_1 <- function(x){
+  
+  
+  for(input in my_list){ 
+    
+  if (is.character(input) == TRUE & lengths(my_list) > 1){
+    
+  }
+    print(paste(input, collapse = ""))
+  }
+  }
+
+
+paste_characters_greater_than_1(my_list)
+
+```
+
+
+#correct solution
+```{r}
+for (input in my_list) {
+  if (is.character(input)) {
+    if (length(input) > 1) {
+      print(paste(input, collapse = " "))
+    } else {
+      print(input)
+    }
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

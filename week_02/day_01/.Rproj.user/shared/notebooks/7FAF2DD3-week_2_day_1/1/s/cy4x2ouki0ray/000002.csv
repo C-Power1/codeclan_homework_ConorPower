@@ -1,0 +1,7 @@
+"0","```r
+```r
+beer <- read_delim(\data/beer.txt\, delim = \;\)
+
+beer
+```
+```"

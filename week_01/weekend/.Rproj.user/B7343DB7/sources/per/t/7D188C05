@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1593776220755.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2324449025",
+    "id" : "7D188C05",
+    "lastKnownWriteTime" : 1594027629,
+    "last_content_update" : 1594027629489,
+    "path" : "~/Documents/codeclan_homework_ConorPower/week_01/weekend/weekend_homework.Rmd",
+    "project_path" : "weekend_homework.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "231,0",
+        "scrollLine" : "193",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

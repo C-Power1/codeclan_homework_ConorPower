@@ -1,0 +1,5 @@
+"0","```r
+day_of_week_factor <- as.factor(day)
+day_of_week_factor
+
+```"

@@ -1,0 +1,5 @@
+"0","```r
+```r
+play_areas <- read_csv(\data/play_areas.csv\, skip = 3)
+```
+```"

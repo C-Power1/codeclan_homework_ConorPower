@@ -1,0 +1,7 @@
+"0","```r
+```r
+example_list <- parse_json(example_1)
+
+example_list
+```
+```"

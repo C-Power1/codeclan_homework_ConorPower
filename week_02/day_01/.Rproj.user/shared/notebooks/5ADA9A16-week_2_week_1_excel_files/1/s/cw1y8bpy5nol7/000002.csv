@@ -1,0 +1,14 @@
+"0","```r
+```r
+seedmix_sheet2 <- read_excel(\data/edinburgh_seedmix.xlsx\, sheet = 4)
+seedmix_sheet2
+
+
+seedmix_sheet3 <- read_excel(\data/edinburgh_seedmix.xlsx\, sheet = \South Neighbourhood\)
+seedmix_sheet3
+
+
+
+excel_sheets(\data/edinburgh_seedmix.xlsx\) #lists all sheet names in .xlsx file 
+```
+```"

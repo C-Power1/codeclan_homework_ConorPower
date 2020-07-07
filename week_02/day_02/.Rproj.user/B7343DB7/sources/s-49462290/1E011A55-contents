@@ -1,0 +1,8 @@
+postgresql_username <- "user"
+postgresql_password <- "password"
+
+remote_omni_postgresql_username <- "cjitjeca"
+remote_omni_postgresql_password <- "dt1SkrwzsAMBGQnyKaNG-nSKFoo9snlP" 
+
+remote_wrestlers_postgresql_username <- "mvhbdgdk"
+remote_wrestlers_postgresql_password <- "Ejn5vEqOUfCA1Cxg1rqkh9NY5VbKKAIm"

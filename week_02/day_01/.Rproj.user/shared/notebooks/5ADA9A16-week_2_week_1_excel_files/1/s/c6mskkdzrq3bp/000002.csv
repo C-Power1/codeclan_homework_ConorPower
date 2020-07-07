@@ -1,0 +1,14 @@
+"0","```r
+```r
+iris
+
+flowers <- split(iris, iris$Sepal.Length)
+
+write.xlsx(flowers, file = \flowers.xlsx\)
+
+excel_sheets(\flowers.xlsx\)
+
+
+read_xlsx(\flowers.xlsx\, sheet = 10)
+```
+```"

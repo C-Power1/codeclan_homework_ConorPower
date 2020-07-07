@@ -1,0 +1,5 @@
+"0","```r
+
+seedmix_sheet3 <- read_excel(\"data/edinburgh_seedmix.xlsx\", sheet = \"North Neighbourhood\")
+seedmix_sheet3
+```"

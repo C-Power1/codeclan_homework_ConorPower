@@ -1,0 +1,14 @@
+"0","```r
+#question 2 
+named_ed_temp <- ed_temp
+names(named_ed_temp) <- days
+named_ed_temp
+
+named_ed_rain <- ed_rain
+names(named_ed_rain) <- days
+named_ed_rain
+
+named_ed_cloud <- ed_cloud
+names(named_ed_cloud) <- days
+named_ed_cloud
+```"

@@ -1,0 +1,9 @@
+"0","```r
+```r
+bands <- read_tsv(\data/indie_bands.txt\)
+
+bands
+
+View(bands)
+```
+```"

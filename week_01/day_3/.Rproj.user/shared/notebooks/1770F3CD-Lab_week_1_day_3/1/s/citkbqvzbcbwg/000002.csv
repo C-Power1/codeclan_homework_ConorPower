@@ -1,0 +1,7 @@
+"0","```r
+
+fortnight_forecast[2, 3]
+fortnight_forecast[\"Week 2\", ]
+fortnight_forecast[ , 1]
+
+```"

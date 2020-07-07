@@ -1,0 +1,12 @@
+"0","```r
+
+av_temp <- rowMeans(fortnight_forecast)
+av_temp
+av_temp_week_1 <- mean(fortnight_forecast [1, ])
+av_temp_week_1
+av_temp_week_2 <- mean(fortnight_forecast [2, ])
+av_temp_week_2
+
+av_temp_each_day <- colMeans(fortnight_forecast)
+
+```"

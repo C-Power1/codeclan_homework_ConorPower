@@ -1,0 +1,8 @@
+"0","```r
+
+students
+
+                            #directory  
+write.xlsx(students, file = \"students.xlsx\", colNames = TRUE, borders = \"columns\")
+
+```"

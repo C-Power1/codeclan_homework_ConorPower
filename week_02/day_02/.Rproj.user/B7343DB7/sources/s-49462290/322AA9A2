@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1594142635152.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1912591705",
+    "id" : "322AA9A2",
+    "lastKnownWriteTime" : 1594151332,
+    "last_content_update" : 1594151332812,
+    "path" : "~/Documents/codeclan_homework_ConorPower/week_02/day_02/week_2_day_2_homework_postresql.Rmd",
+    "project_path" : "week_2_day_2_homework_postresql.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "110,38",
+        "scrollLine" : "91",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

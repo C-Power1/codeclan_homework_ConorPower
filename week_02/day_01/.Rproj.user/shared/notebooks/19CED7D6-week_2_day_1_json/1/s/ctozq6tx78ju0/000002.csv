@@ -1,0 +1,8 @@
+"0","```r
+```r
+example_1 <- read_file(\data/example.json\)
+
+example_1
+
+```
+```"

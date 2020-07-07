@@ -1,0 +1,17 @@
+"0","```r
+test_results <- c(6, 7, 9, 7, 9, 3, 9, 7, 3, 8, 10, 5, 5, 9, 7, 5, 9, 8, 9, 5)
+
+number_results <-length(test_results)
+
+average_result <- mean(test_results)
+
+first_result <- test_results[1]
+last_result <- test_results[length(test_results)]
+
+table_results <- table(test_results)
+
+percent_results <- test_results * 10
+
+higher_than_8_results <- test_results >= 8
+length(test_results[higher_than_8_results])
+```"

@@ -1,0 +1,9 @@
+"0","```r
+```r
+weekly_sst <- read_table(\https://www.cpc.ncep.noaa.gov/data/indices/wksst8110.for\,
+                         skip = 4,
+                         col_names = c(\weekday\, \Nino12\, \Nino3\, \Nino34\, \Nino4\))
+
+weekly_sst
+```
+```"

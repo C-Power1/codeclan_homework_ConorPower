@@ -1,0 +1,167 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+#1.1 Local PostgreSQL Connections
+
+# Sourcing in my credentials file.
+
+```{r}
+
+home_location <- Sys.getenv("HOME")
+credentials_location <- paste0(home_location, "/credentials.R")
+source(credentials_location)
+
+```
+
+# Loading in required library.
+
+```{r}
+
+library(RPostgreSQL)
+
+```
+
+# Connecting the local wrestling database to R
+
+```{r}
+
+my_db_connection <- dbConnect(drv = PostgreSQL(max.con = 2), user = postgresql_username, password = postgresql_password, dbname = 'wrestling', host = 'localhost')
+
+```
+
+# Removing username and password 
+
+```{r}
+
+rm(postgresql_username, postgresql_password)
+
+```
+
+# Returning list of table(s) name(s) in database
+```{r}
+
+dbListTables(conn = my_db_connection)
+
+```
+
+# Returning column (field) name(s) in table 
+
+```{r}
+
+dbListFields(conn = my_db_connection, name = "wrestlers")
+
+```
+
+# Querying the data in wrestlers db and column data types
+
+```{r}
+
+wrestlers_data <- dbGetQuery(conn = my_db_connection, statement = "SELECT * FROM wrestlers")
+wrestlers_data
+
+# Column data types: id (INT); born (VARCHAR); name (VARCHAR); gender (VARCHAR); win_percent (REAL); total_matches (INT);
+
+```
+
+#Closing db connection
+
+```{r}
+dbDisconnect(conn = my_db_connection)
+```
+
+# 1.2 Remote PostgreSQL connecitons 
+
+# Sourcing in my credentials file. 
+
+```{r}
+
+home_location <- Sys.getenv("HOME")
+credentials_location <- paste0(home_location, "/credentials.R")
+source(credentials_location)
+
+```
+
+# Connecting remote wrestlers db after adding password and username to credentials.R.
+
+```{r}
+
+wrestlers_db_connect <- dbConnect(drv = PostgreSQL(max.con = 2), user = remote_wrestlers_postgresql_username, password = remote_wrestlers_postgresql_password, dbname = "mvhbdgdk", host = "34.245.37.126")
+```
+
+# Removing username and password.
+
+```{r}
+
+rm(postgresql_username, postgresql_password)
+
+```
+
+# Querying the data in wrestlers db
+
+```{r}
+
+remote_wrestlers_data <- dbGetQuery(conn = wrestlers_db_connect, statement = "SELECT * FROM wrestlers")
+remote_wrestlers_data
+```
+
+#Closing db connection
+
+```{r}
+dbDisconnect(conn = my_db_connection) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
