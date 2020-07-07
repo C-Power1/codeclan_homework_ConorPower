@@ -108,7 +108,7 @@ remote_wrestlers_data
 #Closing db connection
 
 ```{r}
-dbDisconnect(conn = my_db_connection)
+dbDisconnect(conn = my_db_connection) 
 ```
 
 
