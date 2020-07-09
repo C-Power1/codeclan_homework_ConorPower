@@ -109,7 +109,7 @@ WHERE
 
 ```
 
-# Viewing the pay_details table
+# 4. Viewing the pay_details table
 
 ```{sql connection=db_connect}
 
@@ -117,7 +117,7 @@ SELECT * FROM pay_details
 
 ```
 
-# Finding the number of pay_detail records without a local account number
+# 5. Finding the number of pay_detail records without a local account number
 
 ```{sql connection=db_connect}
 
@@ -131,7 +131,7 @@ WHERE
 
 ```
 
-# Finding pay_details records lacking both a local_account_no and iban number. No records have both missing.
+# 6. Finding pay_details records lacking both a local_account_no and iban number. No records have both missing.
 
 ```{sql connection=db_connect}
 
@@ -144,7 +144,7 @@ WHERE
 
 ```
 
-# List of employees first names and last names ordered alphabetically by their last name (put any nulls last).
+# 7. List of employees first names and last names ordered alphabetically by their last name (put any nulls last).
 
 ```{sql connection=db_connect}
 
@@ -158,7 +158,7 @@ ORDER BY
 
 ```
 
-# List of employees first names, last names and countries, ordered alphabetically first by their country and second by their last name.
+# 8. List of employees first names, last names and countries, ordered alphabetically first by their country and second by their last name.
 
 ```{sql connection=db_connect}
 
@@ -175,7 +175,7 @@ ORDER BY
   
 ```
 
-# List of the top 10 highest paid employees.
+# 9. List of the top 10 highest paid employees.
 
 ```{sql connection=db_connect}
 
@@ -190,7 +190,7 @@ LIMIT
 
 ```
 
-# Finding the first name, last name and salary of the lowest paid of the employees in Hungary
+# 10. Finding the first name, last name and salary of the lowest paid of the employees in Hungary
 
 ```{sql connection=db_connect}
 
@@ -207,7 +207,7 @@ WHERE
 
 ```
 
-# Finding how many employees have first names beginning with F
+# 11. Finding how many employees have first names beginning with F
 
 ```{sql connection=db_connect}
 
@@ -221,7 +221,7 @@ WHERE
 
 ```
 
-#Finding full detials of employees who have a 'yahoo" email address
+# 12. Finding full detials of employees who have a 'yahoo" email address
 
 ```{sql connection=db_connect}
 
@@ -234,7 +234,7 @@ WHERE
 
 ```
 
-# Finding the number of pension enrolled employees not based in either France or Germany
+# 13. Finding the number of pension enrolled employees not based in either France or Germany
 
 ```{sql connection=db_connect}
 
@@ -249,7 +249,7 @@ WHERE
 
 ```
 
-# Finding breakdown of the numbers of employees enrolled, not enrolled and whose enrollment status is unknown in the corporation pension scheme.
+# 14. Finding breakdown of the numbers of employees enrolled, not enrolled and whose enrollment status is unknown in the corporation pension scheme.
 
 ```{sql connection=db_connect}
 
@@ -264,7 +264,7 @@ GROUP BY
 
 ```
 
-# Finding the maximum salary among employees in the Engineering department who work 1.0 full-time equivalent hours
+# 15. Finding the maximum salary among employees in the Engineering department who work 1.0 full-time equivalent hours
 
 ```{sql connection=db_connect}
 SELECT 
@@ -279,7 +279,7 @@ LIMIT
   1
 ```
 
-# Finding count by department of the employees who started work with the corporation in 2003.
+# 16. Finding count by department of the employees who started work with the corporation in 2003.
 
 ```{sql connection=db_connect}
 
@@ -297,7 +297,7 @@ GROUP BY
 
 ```
 
-# Disconnecting from omni_employees database
+# 17. Disconnecting from omni_employees database
 
 ```{r}
 
