@@ -1,0 +1,9 @@
+"0","```sql
+
+SELECT  
+COUNT(*) AS total_start_2001
+FROM employees
+WHERE start_date BETWEEN '2001-01-01' AND '2001-12-31'
+
+
+```"

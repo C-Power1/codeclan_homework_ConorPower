@@ -1,0 +1,11 @@
+"0","```sql
+
+SELECT 
+COUNT
+  (*) AS portuguese_employees_num
+FROM 
+  employees
+WHERE 
+  country = 'Portugal' 
+
+```"

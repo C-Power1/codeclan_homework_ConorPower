@@ -1,0 +1,12 @@
+"0","```sql
+
+SELECT 
+  first_name,
+  last_name,
+  country
+FROM 
+  employees
+WHERE 
+  department = 'Legal'
+
+```"

@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT 
+  *
+FROM 
+  employees
+WHERE 
+  department = 'Human Resources'
+
+```"

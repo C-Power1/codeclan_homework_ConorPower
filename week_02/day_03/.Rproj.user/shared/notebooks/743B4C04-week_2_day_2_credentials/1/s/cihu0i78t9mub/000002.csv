@@ -1,0 +1,5 @@
+"0","```r
+```r
+dbListFields(conn = my_db_connection, name = \employees\)
+```
+```"

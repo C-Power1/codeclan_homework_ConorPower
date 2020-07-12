@@ -1,0 +1,14 @@
+"0","```sql
+
+SELECT 
+  first_name,
+  last_name,
+  salary
+FROM
+  employees
+WHERE 
+  country = 'Hungary'
+  ORDER BY 
+  salary ASC NULLS LAST
+
+```"

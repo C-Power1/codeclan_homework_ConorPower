@@ -1,0 +1,8 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE country = 'Libya'
+ORDER BY start_date ASC NULLS FIRST
+LIMIT 1
+```"

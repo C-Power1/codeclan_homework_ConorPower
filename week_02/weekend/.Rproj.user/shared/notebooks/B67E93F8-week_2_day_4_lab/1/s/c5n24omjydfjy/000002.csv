@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT
+  country,
+  AVG(salary) as av_salary_countries_plus_30
+FROM employees
+GROUP BY country
+HAVING COUNT(id) > 30
+ORDER BY av_salary_countries_plus_30 DESC
+```"

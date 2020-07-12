@@ -1,0 +1,11 @@
+"0","```sql
+
+SELECT 
+COUNT
+  (*) AS num_of_f_employees
+FROM 
+  employees
+WHERE 
+  first_name LIKE 'F%'
+
+```"

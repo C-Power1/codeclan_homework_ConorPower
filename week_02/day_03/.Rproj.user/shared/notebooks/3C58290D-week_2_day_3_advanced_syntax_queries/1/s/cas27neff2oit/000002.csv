@@ -1,0 +1,9 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE salary IS NOT NULL
+ORDER BY salary DESC NULLS LAST
+LIMIT 1
+
+```"

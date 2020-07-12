@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT
+country,
+COUNT(id) AS no_first_name_by_country
+FROM employees 
+WHERE first_name IS NULL
+GROUP BY country
+
+```"

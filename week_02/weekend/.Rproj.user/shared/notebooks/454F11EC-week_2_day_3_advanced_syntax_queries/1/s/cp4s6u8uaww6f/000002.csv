@@ -1,0 +1,9 @@
+"0","```sql
+SELECT
+department,
+COUNT(id) AS num_employees
+FROM employees 
+WHERE fte_hours BETWEEN 0.25 AND 0.5
+GROUP BY department 
+
+```"

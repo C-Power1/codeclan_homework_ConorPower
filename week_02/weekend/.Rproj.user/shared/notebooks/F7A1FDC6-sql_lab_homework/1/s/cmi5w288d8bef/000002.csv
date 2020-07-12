@@ -1,0 +1,11 @@
+"0","```sql
+
+SELECT 
+COUNT
+  (*) AS missing_local_account_num
+FROM 
+  pay_details
+WHERE 
+  local_account_no IS NULL 
+
+```"

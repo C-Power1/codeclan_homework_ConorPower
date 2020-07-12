@@ -1,0 +1,13 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE country = 'United States' AND fte_hours =
+    (SELECT fte_hours,
+      FROM employees
+      where fte_hours IS NOT NULL
+      GROUP BY fte_hours 
+      ORDER BY COUNT (fte_hours) DESC
+      LIMIT = 1)
+
+```"

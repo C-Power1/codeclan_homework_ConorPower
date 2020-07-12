@@ -1,0 +1,6 @@
+"0","```r
+```r
+check_saleem_email <- dbGetQuery(conn = my_db_connection, \SELECT * FROM employees\)
+check_saleem_email
+```
+```"

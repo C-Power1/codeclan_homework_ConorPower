@@ -1,0 +1,12 @@
+"0","```sql
+
+SELECT 
+  *
+FROM 
+  employees
+ORDER BY 
+  salary DESC NULLS LAST
+LIMIT 
+  10
+
+```"

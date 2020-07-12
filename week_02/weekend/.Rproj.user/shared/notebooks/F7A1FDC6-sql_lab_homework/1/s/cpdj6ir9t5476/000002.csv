@@ -1,0 +1,12 @@
+"0","```sql
+SELECT 
+  salary
+FROM 
+  employees
+WHERE 
+  department = 'Engineering' AND fte_hours = 1.0
+ORDER BY 
+  salary DESC NULLS LAST
+LIMIT 
+  1
+```"

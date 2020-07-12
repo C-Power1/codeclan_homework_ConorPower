@@ -1,0 +1,12 @@
+"0","```sql
+
+SELECT
+  pension_enrol,
+COUNT
+  (id) 
+FROM 
+  employees 
+GROUP BY 
+  pension_enrol 
+
+```"

@@ -1,0 +1,9 @@
+"0","```sql
+SELECT
+  country,
+  MIN(salary) as min_salary_pension_employees
+FROM employees
+WHERE pension_enrol = TRUE
+GROUP BY country
+HAVING MIN(salary) < 21000
+```"

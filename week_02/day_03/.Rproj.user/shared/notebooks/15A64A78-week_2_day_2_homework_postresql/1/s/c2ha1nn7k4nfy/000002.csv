@@ -1,0 +1,5 @@
+"0","```r
+
+remote_wrestlers_data <- dbGetQuery(conn = wrestlers_db_connect, statement = \"SELECT * FROM wrestlers\")
+remote_wrestlers_data
+```"

@@ -1,0 +1,12 @@
+"0","```sql
+
+SELECT 
+*
+FROM 
+  (animals AS a INNER JOIN care_schedule AS cs
+  ON a.id = cs.animal_id)
+INNER JOIN keepers AS k
+ON cs.keeper_id = k.id
+WHERE a.name = 'Ernest'
+
+```"

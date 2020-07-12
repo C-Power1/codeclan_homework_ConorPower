@@ -1,0 +1,7 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE fte_hours >= 0.25 AND fte_hours <= 0.5
+
+```"

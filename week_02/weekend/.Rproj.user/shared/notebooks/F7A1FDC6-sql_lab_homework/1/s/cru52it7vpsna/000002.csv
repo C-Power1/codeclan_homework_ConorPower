@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT 
+  *
+FROM 
+  employees
+WHERE 
+  email LIKE '%yahoo%'
+
+```"

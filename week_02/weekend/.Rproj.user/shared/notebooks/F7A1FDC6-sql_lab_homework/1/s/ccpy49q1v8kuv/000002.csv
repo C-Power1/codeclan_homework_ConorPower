@@ -1,0 +1,14 @@
+"0","```sql
+
+SELECT 
+  first_name
+  last_name,
+  country,
+  CONCAT(country, ' - ', first_name, ' ', last_name) AS country_and_names_alphabetically
+FROM 
+  employees
+ORDER BY 
+  country ASC NULLS LAST,
+  last_name ASC NULLS LAST
+  
+```"

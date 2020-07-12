@@ -1,0 +1,5 @@
+"0","```r
+```r
+db_connect <- dbConnect(drv = PostgreSQL(max.con = 1), user = remote_omni_postgresql_username, password = remote_omni_postgresql_password, dbname = \cjitjeca\, host = \34.245.37.126\)
+```
+```"

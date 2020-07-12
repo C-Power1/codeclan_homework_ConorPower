@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT
+department,
+COUNT(id) AS employees_on_scheme
+FROM employees 
+WHERE pension_enrol = TRUE
+GROUP BY department 
+
+```"

@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT
+  *
+FROM 
+  pay_details
+WHERE 
+  (local_account_no IS NULL) AND (iban IS NULL)
+
+```"

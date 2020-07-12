@@ -1,0 +1,8 @@
+"0","```sql
+
+SUM(salary) AS total_salary_spend
+FROM employees
+WHERE EXTRACT(YEAR FROM start_date) = 2018
+
+
+```"

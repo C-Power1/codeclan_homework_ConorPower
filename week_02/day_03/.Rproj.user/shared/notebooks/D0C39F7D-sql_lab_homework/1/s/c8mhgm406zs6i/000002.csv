@@ -1,0 +1,5 @@
+"0",""
+"0","home_location <- Sys.getenv(""HOME"")"
+"0","credentials_location <- paste0(home_location,""/credentials.R"")"
+"0","source(credentials_location)"
+"0",""

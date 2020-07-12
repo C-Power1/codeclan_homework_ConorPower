@@ -1,0 +1,7 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE country = 'Greece' AND last_name LIKE 'Mc%'
+
+```"

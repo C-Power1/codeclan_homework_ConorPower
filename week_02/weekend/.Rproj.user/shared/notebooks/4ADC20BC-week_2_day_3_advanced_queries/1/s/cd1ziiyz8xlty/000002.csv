@@ -1,0 +1,7 @@
+"0","```sql
+
+SELECT *
+FROM employees
+WHERE country NOT IN ('Finland', 'Argentina', 'Canada')
+
+```"

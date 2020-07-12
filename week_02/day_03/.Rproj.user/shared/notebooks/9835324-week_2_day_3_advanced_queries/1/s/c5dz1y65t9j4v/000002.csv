@@ -1,0 +1,4 @@
+"0","```r
+dbGetQuery(conn = db_connect,
+           statement = \"SELECT * FROM employees\")
+```"

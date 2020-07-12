@@ -1,0 +1,325 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#Loading the RPostgresql library 
+
+```{r}
+
+library(RPostgreSQL)
+
+```
+
+# Sourcing in my credentials file.
+
+```{r}
+
+home_location <- Sys.getenv("HOME")
+credentials_location <- paste0(home_location,"/credentials.R")
+source(credentials_location)
+
+```
+
+# Connecting the omni_employees database to R
+
+```{r}
+
+db_connect <- dbConnect(drv = PostgreSQL(),
+                        user = postgresql_username,
+                        password = postgresql_password,
+                        dbname = "omni_employees",
+                        host = "localhost")
+
+```
+
+#Removing username and password as connection has been established 
+
+```{r}
+
+rm(postgresql_username, 
+    postgresql_password)
+
+```
+
+
+# Listing the table names within the database
+
+```{r}
+
+dbListTables(conn = db_connect)
+
+```
+
+#Using dbGetQuery to view the employees table 
+
+```{r}
+dbGetQuery(conn = db_connect,
+           statement = "SELECT * FROM employees")
+```
+
+# Listing the column names within the employees database
+
+```{r}
+
+dbListFields(conn = db_connect,
+             name = "employees")
+
+```
+
+# 1. Finding all the employees who work in the ‘Human Resources’ department.
+
+```{sql connection=db_connect}
+
+SELECT 
+  *
+FROM 
+  employees
+WHERE 
+  department = 'Human Resources'
+
+```
+
+# 2. Finding the first name, last name, and country of the employees who work in the ‘Legal’ department.
+
+```{sql connection=db_connect}
+
+SELECT 
+  first_name,
+  last_name,
+  country
+FROM 
+  employees
+WHERE 
+  department = 'Legal'
+
+```
+
+# 3.Counting the number of empployees based in Portugal. 
+
+```{sql connection=db_connect}
+
+SELECT 
+COUNT
+  (*) AS portuguese_employees_num
+FROM 
+  employees
+WHERE 
+  country = 'Portugal' 
+
+```
+
+# 4. Viewing the pay_details table
+
+```{sql connection=db_connect}
+
+SELECT * FROM pay_details
+
+```
+
+# 5. Finding the number of pay_detail records without a local account number
+
+```{sql connection=db_connect}
+
+SELECT 
+COUNT
+  (*) AS missing_local_account_num
+FROM 
+  pay_details
+WHERE 
+  local_account_no IS NULL 
+
+```
+
+# 6. Finding pay_details records lacking both a local_account_no and iban number. No records have both missing.
+
+```{sql connection=db_connect}
+
+SELECT
+  *
+FROM 
+  pay_details
+WHERE 
+  (local_account_no IS NULL) AND (iban IS NULL)
+
+```
+
+# 7. List of employees first names and last names ordered alphabetically by their last name (put any nulls last).
+
+```{sql connection=db_connect}
+
+SELECT 
+  last_name,
+  CONCAT(first_name, ' ', last_name) AS names_alphabetically
+FROM 
+  employees
+ORDER BY 
+  last_name ASC NULLS LAST 
+
+```
+
+# 8. List of employees first names, last names and countries, ordered alphabetically first by their country and second by their last name.
+
+```{sql connection=db_connect}
+
+SELECT 
+  first_name
+  last_name,
+  country,
+  CONCAT(country, ' - ', first_name, ' ', last_name) AS country_and_names_alphabetically
+FROM 
+  employees
+ORDER BY 
+  country ASC NULLS LAST,
+  last_name ASC NULLS LAST
+  
+```
+
+# 9. List of the top 10 highest paid employees.
+
+```{sql connection=db_connect}
+
+SELECT 
+  *
+FROM 
+  employees
+ORDER BY 
+  salary DESC NULLS LAST
+LIMIT 
+  10
+
+```
+
+# 10. Finding the first name, last name and salary of the lowest paid of the employees in Hungary
+
+```{sql connection=db_connect}
+
+SELECT 
+  first_name,
+  last_name,
+  salary
+FROM
+  employees
+WHERE 
+  country = 'Hungary'
+  ORDER BY 
+  salary ASC NULLS LAST
+
+```
+
+# 11. Finding how many employees have first names beginning with F
+
+```{sql connection=db_connect}
+
+SELECT 
+COUNT
+  (*) AS num_of_f_employees
+FROM 
+  employees
+WHERE 
+  first_name LIKE 'F%'
+
+```
+
+# 12. Finding full detials of employees who have a 'yahoo" email address
+
+```{sql connection=db_connect}
+
+SELECT 
+  *
+FROM 
+  employees
+WHERE 
+  email LIKE '%yahoo%'
+
+```
+
+# 13. Finding the number of pension enrolled employees not based in either France or Germany
+
+```{sql connection=db_connect}
+
+SELECT 
+COUNT
+  (*) AS num_employees_in_pscheme_exc_fra_ger
+FROM 
+  employees
+WHERE 
+  (pension_enrol = TRUE) 
+  AND (country != 'France' AND country != 'Germany')
+
+```
+
+# 14. Finding breakdown of the numbers of employees enrolled, not enrolled and whose enrollment status is unknown in the corporation pension scheme.
+
+```{sql connection=db_connect}
+
+SELECT
+  pension_enrol,
+COUNT
+  (id) 
+FROM 
+  employees 
+GROUP BY 
+  pension_enrol 
+
+```
+
+# 15. Finding the maximum salary among employees in the Engineering department who work 1.0 full-time equivalent hours
+
+```{sql connection=db_connect}
+SELECT 
+  salary
+FROM 
+  employees
+WHERE 
+  department = 'Engineering' AND fte_hours = 1.0
+ORDER BY 
+  salary DESC NULLS LAST
+LIMIT 
+  1
+```
+
+# 16. Finding count by department of the employees who started work with the corporation in 2003.
+
+```{sql connection=db_connect}
+
+SELECT
+  department,
+COUNT
+  (id) AS num_2003_employees
+FROM 
+  employees 
+WHERE 
+  start_date 
+    BETWEEN '2003-01-01' AND '2003-12-31'
+GROUP BY 
+  department 
+
+```
+
+# 17. Disconnecting from omni_employees database
+
+```{r}
+
+dbDisconnect(db_connect)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

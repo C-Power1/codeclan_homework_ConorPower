@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1594231933521.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "691029525",
+    "id" : "7B58C24C",
+    "lastKnownWriteTime" : 1594290706,
+    "last_content_update" : 1594290706625,
+    "path" : "~/Documents/codeclan_homework_ConorPower/week_02/day_03/sql_lab_homework.Rmd",
+    "project_path" : "sql_lab_homework.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "298,0",
+        "scrollLine" : "261",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

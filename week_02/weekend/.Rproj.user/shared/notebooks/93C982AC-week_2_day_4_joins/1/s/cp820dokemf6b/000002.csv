@@ -1,0 +1,10 @@
+"0","```sql
+
+SELECT 
+a.*,
+d.*
+FROM animals AS a 
+RIGHT JOIN diets AS d 
+ON a.diet_id = d.id
+
+```"

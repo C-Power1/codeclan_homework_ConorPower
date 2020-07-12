@@ -1,0 +1,15 @@
+"0","```sql
+
+SELECT
+  department,
+COUNT
+  (id) AS num_2003_employees
+FROM 
+  employees 
+WHERE 
+  start_date 
+    BETWEEN '2003-01-01' AND '2003-12-31'
+GROUP BY 
+  department 
+
+```"

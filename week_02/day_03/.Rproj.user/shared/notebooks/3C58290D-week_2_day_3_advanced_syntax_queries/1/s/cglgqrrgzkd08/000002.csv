@@ -1,0 +1,11 @@
+"0","```sql
+
+SELECT 
+  id,
+  first_name,
+  last_name,
+  CONCAT(first_name, ' ', last_name) AS full_name
+FROM employees
+WHERE (first_name IS NOT NULL OR last_name IS NOT NULL) AND (first_name IS NOT NULL AND last_name IS NOT NULL)
+
+```"

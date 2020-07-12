@@ -1,0 +1,8 @@
+"0","```sql
+
+SELECT  
+MIN(salary) AS min_salary,
+MAX(salary) AS max_salary
+FROM employees
+
+```"

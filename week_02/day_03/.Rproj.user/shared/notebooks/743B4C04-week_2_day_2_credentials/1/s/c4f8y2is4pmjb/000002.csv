@@ -1,0 +1,6 @@
+"0","```r
+```r
+install.packages(\RPostgreSQL\)
+library(RPostgreSQL)
+```
+```"

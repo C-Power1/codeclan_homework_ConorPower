@@ -1,0 +1,8 @@
+"0","```r
+
+wrestlers_data <- dbGetQuery(conn = my_db_connection, statement = \"SELECT * FROM wrestlers\")
+wrestlers_data
+
+# Column data types: id (INT); born (VARCHAR); name (VARCHAR); gender (VARCHAR); win_percent (REAL); total_matches (INT);
+
+```"
