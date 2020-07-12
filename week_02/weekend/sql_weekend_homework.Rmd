@@ -1,0 +1,188 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#Loading Libraries.
+
+```{r}
+
+library(RPostgreSQL)
+
+```
+
+# Sourcing in my credentials file.
+
+```{r}
+
+home_location <- Sys.getenv("HOME")
+credentials_location <- paste0(home_location,"/credentials.R")
+source(credentials_location)
+
+```
+
+# Connecting the omni_employees database to R
+
+```{r}
+
+db_connect <- dbConnect(drv = PostgreSQL(), user = postgresql_username, password = postgresql_password, dbname = "acme_employees", host = "localhost")
+rm(postgresql_username, postgresql_password)
+
+```
+
+
+# MVP 
+
+# Using terminal I found that there are 11 records in teams, 200 records in employees and 9 records in feedbacks.
+
+
+
+```{sql connection=db_connect}
+
+SELECT * FROM feedbacks
+
+```
+
+# Creating a list of all employees with their first and last names combined together into one field called full_name. 
+
+```{sql connection=db_connect}
+
+SELECT 
+  id,
+  first_name,
+  last_name,
+  CONCAT(first_name, ' ', last_name) AS full_name
+FROM employees
+
+```
+
+# Retrieving the details of all employees, listing their team name, rather than their team_id.
+
+```{sql connection=db_connect}
+
+SELECT 
+  first_name,
+  last_name,
+  name
+FROM employees AS e
+INNER JOIN teams AS t
+ON e.team_id = t.id
+
+
+```
+
+# Breakdown of the number of employees per team, ordered by descending number of employees. Left join allows teams to be shown even if they have no employees (each team has at least 12 employees though).
+
+```{sql connection=db_connect}
+
+SELECT 
+  t.name,
+  COUNT(e.id) AS num_employees
+FROM employees AS e
+LEFT JOIN teams AS t
+ON e.team_id = t.id
+GROUP BY t.name
+ORDER BY num_employees DESC NULLS LAST
+
+```
+
+# Returning details of employees who have no email address or have '@' missing from their email address.
+
+```{sql connection=db_connect}
+
+SELECT 
+  *
+FROM employees
+WHERE (email IS NULL) OR (email NOT LIKE '%@%')
+```
+
+# Extension
+
+#2.1
+
+# Returning the employee who gave the most recent feedback - Tallulah Canedo on 26th June 2019.
+
+```{sql connection=db_connect}
+
+SELECT 
+  *
+FROM employees AS e
+LEFT JOIN feedbacks AS fb
+ON e.id = fb.id
+ORDER BY fb.date  DESC NULLS LAST
+LIMIT 1
+```
+
+# Returning the team_name of the team who have the most employees where first_name = one single letter.
+
+```{sql connection=db_connect}
+
+SELECT
+  t.name
+FROM employees AS e
+INNER JOIN teams AS t
+ON e.team_id = t.id
+WHERE CHAR_LENGTH(e.first_name) = 1
+GROUP BY t.name
+ORDER BY COUNT(t.name) DESC
+LIMIT 1
+
+
+```
+
+
+```{r}
+
+dbDisconnect(db_connect)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
