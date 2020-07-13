@@ -1,0 +1,147 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#Loading libraries
+
+```{r}
+library(tidyverse)
+library(readr)
+```
+
+# Reading in csv file 
+```{r}
+starbucks <- read_csv("data/starbucks_drinkMenu_expanded.csv")
+starbucks
+```
+
+
+# 1. Returning the dimensions, variable types and variable names etc.
+
+```{r}
+
+head(starbucks)
+
+dim(starbucks)
+
+names(starbucks)
+
+glimpse(starbucks)
+
+view(starbucks)
+
+```
+
+# 2. Dropping any drink details where calories is n/a (0)
+
+```{r}
+
+drop_na_calories <- starbucks %>%
+  select(Beverage_category, Beverage, Beverage_prep, Calories) %>% 
+  filter(Calories != 0)
+
+drop_na_calories
+
+# The Beverage_category, Beverage, Beverage_prep, Calories columns are selected from the starbucks table. The drinks are filtered by the calories column using filter(). filter(Calories != 0) reads as return only drinks that are not 0 calories. 
+
+```
+
+# 3. Creating a new variable called calorie_diff, which stores the difference between 135 calories and the calories in each drink.
+
+```{r}
+calorie_difference = mutate(drop_na_calories, 
+                             calorie_diff = 135 - Calories)
+
+calorie_difference
+
+# mutate function allows a new column to be created - calorie_diff. calorie_diff returns the value of 135 - Calories. 
+  
+```
+
+# 4. Summarising the mean number of calories in each beverage_category - returning top and bottom 3 
+
+```{r}
+mean_cal_summary <- drop_na_calories %>%
+  group_by(Beverage_category) %>%
+  summarise(mean_cal = mean(Calories)) %>%
+  arrange(mean_cal)
+
+mean_cal_summary 
+
+tail(mean_cal_summary, 3)
+head(mean_cal_summary, 3)
+
+
+# the above function groups all the drinks into beverage categories, then creates a new column called mean_cal which gives the mean calories for each category. Then the column is arranged in ascending order and tail() and head() can be used to find out the top and bottom 3 category in terms of mean calories.
+
+
+# Signature Espresso Drinks, Frappuccino® Blended Coffee, Smoothies - the highest mean calories of the bev categories
+# Coffee, Shaken Iced Beverages, Classic Espresso Drinks - the lowest mean calories of the bev categories
+
+
+```
+
+# 5. What is the average number of calories in each Beverage_prep type?
+
+```{r}
+mean_cal_summary_prep <- drop_na_calories %>%
+  group_by(Beverage_prep) %>%
+  summarise(mean_cal_prep = mean(Calories)) %>%
+  arrange(mean_cal_prep)
+
+mean_cal_summary_prep
+
+# firstly the drinks are grouped by beverage_prep type and then a new column, mean_cal_prep, is created using summarise(). "mean_cal_prep" calculates the mean calories of each beverage_prep type. 
+
+```
+
+# 6. Which Beverage_prep type contains more than the average calories of all drinks?
+
+```{r}
+
+
+
+prep_more_than_mean <- drop_na_calories %>% 
+  select(Beverage_prep, Calories) %>% 
+  mutate(mean_calories_all_drinks = mean(Calories)) %>%
+  filter(Calories > mean_calories_all_drinks) %>%
+  group_by(Beverage_prep) %>%
+  distinct(Beverage_prep)
+  
+
+
+prep_more_than_mean
+
+  
+# Both beverage_prep and Calories are selected. Then a new column is created using mutate which returns the mean calories of all drinks. After this, using the filter () function, all the drinks where the Calories value is greater than the mean calories of all drinks are grouped by their beverage type. Distinct() is used to remove all duplicate beverage_prep types, making it easier to read.
+
+```
+
+
+# 7. Which is the best type of coffee drink to get if you’re worried about consuming too many calories?
+
+```{r}
+
+best_coffee <- drop_na_calories %>%
+  select(Beverage_category, Beverage, Calories)%>%
+  filter(Beverage %in% "Coffee") %>%
+  arrange(Calories) %>%
+  head(1)
+
+best_coffee
+
+# Columns Beverage_category, Beverage, Calories are selected. Then the drinks are filtered by the Beverage column, keeping those that contain the word "Coffee". The drinks are then arranged by their calories in ascending order and then head(1) is used to return the drink with the lowest Calories value.
+
+```
+
+
+
+
+
+
+
+
+
+
+

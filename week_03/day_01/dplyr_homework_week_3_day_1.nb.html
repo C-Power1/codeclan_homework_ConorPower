@@ -1749,171 +1749,152 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<p>#Loading Libraries.</p>
+<p>#Loading libraries</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KFJQb3N0Z3JlU1FMKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KHJlYWRyKVxuYGBgIn0= -->
+<pre class="r"><code>library(tidyverse)
+library(readr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="reading-in-csv-file" class="section level1">
+<h1>Reading in csv file</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhcmJ1Y2tzIDwtIHJlYWRfY3N2KFwiZGF0YS9zdGFyYnVja3NfZHJpbmtNZW51X2V4cGFuZGVkLmNzdlwiKVxuc3RhcmJ1Y2tzXG5gYGAifQ== -->
+<pre class="r"><code>starbucks &lt;- read_csv(&quot;data/starbucks_drinkMenu_expanded.csv&quot;)
+starbucks</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="returning-the-dimensions-variable-types-and-variable-names-etc." class="section level1">
+<h1>1. Returning the dimensions, variable types and variable names etc.</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="dropping-any-drink-details-where-calories-is-na-0" class="section level1">
+<h1>2. Dropping any drink details where calories is n/a (0)</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kcm9wX25hX2NhbG9yaWVzIDwtIHN0YXJidWNrcyAlPiVcbiAgc2VsZWN0KEJldmVyYWdlX2NhdGVnb3J5LCBCZXZlcmFnZSwgQmV2ZXJhZ2VfcHJlcCwgQ2Fsb3JpZXMpICU+JSBcbiAgZmlsdGVyKENhbG9yaWVzICE9IDApXG5cbmRyb3BfbmFfY2Fsb3JpZXNcblxuIyBUaGUgQmV2ZXJhZ2VfY2F0ZWdvcnksIEJldmVyYWdlLCBCZXZlcmFnZV9wcmVwLCBDYWxvcmllcyBjb2x1bW5zIGFyZSBzZWxlY3RlZCBmcm9tIHRoZSBzdGFyYnVja3MgdGFibGUuIFRoZSBkcmlua3MgYXJlIGZpbHRlcmVkIGJ5IHRoZSBjYWxvcmllcyBjb2x1bW4gdXNpbmcgZmlsdGVyKCkuIGZpbHRlcihDYWxvcmllcyAhPSAwKSByZWFkcyBhcyByZXR1cm4gb25seSBkcmlua3MgdGhhdCBhcmUgbm90IDAgY2Fsb3JpZXMuIFxuXG5gYGAifQ== -->
 <pre class="r"><code>
-library(RPostgreSQL)
+drop_na_calories &lt;- starbucks %&gt;%
+  select(Beverage_category, Beverage, Beverage_prep, Calories) %&gt;% 
+  filter(Calories != 0)
+
+drop_na_calories
+
+# The Beverage_category, Beverage, Beverage_prep, Calories columns are selected from the starbucks table. The drinks are filtered by the calories column using filter(). filter(Calories != 0) reads as return only drinks that are not 0 calories. 
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="sourcing-in-my-credentials-file." class="section level1">
-<h1>Sourcing in my credentials file.</h1>
+</div>
+<div id="creating-a-new-variable-called-calorie_diff-which-stores-the-difference-between-135-calories-and-the-calories-in-each-drink." class="section level1">
+<h1>3. Creating a new variable called calorie_diff, which stores the difference between 135 calories and the calories in each drink.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5ob21lX2xvY2F0aW9uIDwtIFN5cy5nZXRlbnYoXCJIT01FXCIpXG5jcmVkZW50aWFsc19sb2NhdGlvbiA8LSBwYXN0ZTAoaG9tZV9sb2NhdGlvbixcIi9jcmVkZW50aWFscy5SXCIpXG5zb3VyY2UoY3JlZGVudGlhbHNfbG9jYXRpb24pXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2Fsb3JpZV9kaWZmZXJlbmNlID0gbXV0YXRlKGRyb3BfbmFfY2Fsb3JpZXMsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYWxvcmllX2RpZmYgPSAxMzUgLSBDYWxvcmllcylcblxuY2Fsb3JpZV9kaWZmZXJlbmNlXG5cbiMgbXV0YXRlIGZ1bmN0aW9uIGFsbG93cyBhIG5ldyBjb2x1bW4gdG8gYmUgY3JlYXRlZCAtIGNhbG9yaWVfZGlmZi4gY2Fsb3JpZV9kaWZmIHJldHVybnMgdGhlIHZhbHVlIG9mIDEzNSAtIENhbG9yaWVzLiBcbiAgXG5gYGAifQ== -->
+<pre class="r"><code>calorie_difference = mutate(drop_na_calories, 
+                             calorie_diff = 135 - Calories)
+
+calorie_difference
+
+# mutate function allows a new column to be created - calorie_diff. calorie_diff returns the value of 135 - Calories. 
+  </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="summarising-the-mean-number-of-calories-in-each-beverage_category---returning-top-and-bottom-3" class="section level1">
+<h1>4. Summarising the mean number of calories in each beverage_category - returning top and bottom 3</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbl9jYWxfc3VtbWFyeSA8LSBkcm9wX25hX2NhbG9yaWVzICU+JVxuICBncm91cF9ieShCZXZlcmFnZV9jYXRlZ29yeSkgJT4lXG4gIHN1bW1hcmlzZShtZWFuX2NhbCA9IG1lYW4oQ2Fsb3JpZXMpKSAlPiVcbiAgYXJyYW5nZShtZWFuX2NhbClcblxubWVhbl9jYWxfc3VtbWFyeSBcblxudGFpbChtZWFuX2NhbF9zdW1tYXJ5LCAzKVxuaGVhZChtZWFuX2NhbF9zdW1tYXJ5LCAzKVxuXG5cbiMgdGhlIGFib3ZlIGZ1bmN0aW9uIGdyb3VwcyBhbGwgdGhlIGRyaW5rcyBpbnRvIGJldmVyYWdlIGNhdGVnb3JpZXMsIHRoZW4gY3JlYXRlcyBhIG5ldyBjb2x1bW4gY2FsbGVkIG1lYW5fY2FsIHdoaWNoIGdpdmVzIHRoZSBtZWFuIGNhbG9yaWVzIGZvciBlYWNoIGNhdGVnb3J5LiBUaGVuIHRoZSBjb2x1bW4gaXMgYXJyYW5nZWQgaW4gYXNjZW5kaW5nIG9yZGVyIGFuZCB0YWlsKCkgYW5kIGhlYWQoKSBjYW4gYmUgdXNlZCB0byBmaW5kIG91dCB0aGUgdG9wIGFuZCBib3R0b20gMyBjYXRlZ29yeSBpbiB0ZXJtcyBvZiBtZWFuIGNhbG9yaWVzLlxuXG5cbiMgU2lnbmF0dXJlIEVzcHJlc3NvIERyaW5rcywgRnJhcHB1Y2Npbm/CriBCbGVuZGVkIENvZmZlZSwgU21vb3RoaWVzIC0gdGhlIGhpZ2hlc3QgbWVhbiBjYWxvcmllcyBvZiB0aGUgYmV2IGNhdGVnb3JpZXNcbiMgQ29mZmVlLCBTaGFrZW4gSWNlZCBCZXZlcmFnZXMsIENsYXNzaWMgRXNwcmVzc28gRHJpbmtzIC0gdGhlIGxvd2VzdCBtZWFuIGNhbG9yaWVzIG9mIHRoZSBiZXYgY2F0ZWdvcmllc1xuXG5cbmBgYCJ9 -->
+<pre class="r"><code>mean_cal_summary &lt;- drop_na_calories %&gt;%
+  group_by(Beverage_category) %&gt;%
+  summarise(mean_cal = mean(Calories)) %&gt;%
+  arrange(mean_cal)
+
+mean_cal_summary 
+
+tail(mean_cal_summary, 3)
+head(mean_cal_summary, 3)
+
+
+# the above function groups all the drinks into beverage categories, then creates a new column called mean_cal which gives the mean calories for each category. Then the column is arranged in ascending order and tail() and head() can be used to find out the top and bottom 3 category in terms of mean calories.
+
+
+# Signature Espresso Drinks, Frappuccino® Blended Coffee, Smoothies - the highest mean calories of the bev categories
+# Coffee, Shaken Iced Beverages, Classic Espresso Drinks - the lowest mean calories of the bev categories
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="what-is-the-average-number-of-calories-in-each-beverage_prep-type" class="section level1">
+<h1>5. What is the average number of calories in each Beverage_prep type?</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbl9jYWxfc3VtbWFyeV9wcmVwIDwtIGRyb3BfbmFfY2Fsb3JpZXMgJT4lXG4gIGdyb3VwX2J5KEJldmVyYWdlX3ByZXApICU+JVxuICBzdW1tYXJpc2UobWVhbl9jYWxfcHJlcCA9IG1lYW4oQ2Fsb3JpZXMpKSAlPiVcbiAgYXJyYW5nZShtZWFuX2NhbF9wcmVwKVxuXG5tZWFuX2NhbF9zdW1tYXJ5X3ByZXBcblxuIyBmaXJzdGx5IHRoZSBkcmlua3MgYXJlIGdyb3VwZWQgYnkgYmV2ZXJhZ2VfcHJlcCB0eXBlIGFuZCB0aGVuIGEgbmV3IGNvbHVtbiwgbWVhbl9jYWxfcHJlcCwgaXMgY3JlYXRlZCB1c2luZyBzdW1tYXJpc2UoKS4gXCJtZWFuX2NhbF9wcmVwXCIgY2FsY3VsYXRlcyB0aGUgbWVhbiBjYWxvcmllcyBvZiBlYWNoIGJldmVyYWdlX3ByZXAgdHlwZS4gXG5cbmBgYCJ9 -->
+<pre class="r"><code>mean_cal_summary_prep &lt;- drop_na_calories %&gt;%
+  group_by(Beverage_prep) %&gt;%
+  summarise(mean_cal_prep = mean(Calories)) %&gt;%
+  arrange(mean_cal_prep)
+
+mean_cal_summary_prep
+
+# firstly the drinks are grouped by beverage_prep type and then a new column, mean_cal_prep, is created using summarise(). &quot;mean_cal_prep&quot; calculates the mean calories of each beverage_prep type. 
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="which-beverage_prep-type-contains-more-than-the-average-calories-of-all-drinks" class="section level1">
+<h1>6. Which Beverage_prep type contains more than the average calories of all drinks?</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cblxucHJlcF9tb3JlX3RoYW5fbWVhbiA8LSBkcm9wX25hX2NhbG9yaWVzICU+JSBcbiAgc2VsZWN0KEJldmVyYWdlX3ByZXAsIENhbG9yaWVzKSAlPiUgXG4gIG11dGF0ZShtZWFuX2NhbG9yaWVzX2FsbF9kcmlua3MgPSBtZWFuKENhbG9yaWVzKSkgJT4lXG4gIGZpbHRlcihDYWxvcmllcyA+IG1lYW5fY2Fsb3JpZXNfYWxsX2RyaW5rcykgJT4lXG4gIGdyb3VwX2J5KEJldmVyYWdlX3ByZXApICU+JVxuICBkaXN0aW5jdChCZXZlcmFnZV9wcmVwKVxuICBcblxuXG5wcmVwX21vcmVfdGhhbl9tZWFuXG5cbiAgXG4jIEJvdGggYmV2ZXJhZ2VfcHJlcCBhbmQgQ2Fsb3JpZXMgYXJlIHNlbGVjdGVkLiBUaGVuIGEgbmV3IGNvbHVtbiBpcyBjcmVhdGVkIHVzaW5nIG11dGF0ZSB3aGljaCByZXR1cm5zIHRoZSBtZWFuIGNhbG9yaWVzIG9mIGFsbCBkcmlua3MuIEFmdGVyIHRoaXMsIHVzaW5nIHRoZSBmaWx0ZXIgKCkgZnVuY3Rpb24sIGFsbCB0aGUgZHJpbmtzIHdoZXJlIHRoZSBDYWxvcmllcyB2YWx1ZSBpcyBncmVhdGVyIHRoYW4gdGhlIG1lYW4gY2Fsb3JpZXMgb2YgYWxsIGRyaW5rcyBhcmUgZ3JvdXBlZCBieSB0aGVpciBiZXZlcmFnZSB0eXBlLiBEaXN0aW5jdCgpIGlzIHVzZWQgdG8gcmVtb3ZlIGFsbCBkdXBsaWNhdGUgYmV2ZXJhZ2VfcHJlcCB0eXBlcywgbWFraW5nIGl0IGVhc2llciB0byByZWFkLlxuXG5gYGAifQ== -->
 <pre class="r"><code>
-home_location &lt;- Sys.getenv(&quot;HOME&quot;)
-credentials_location &lt;- paste0(home_location,&quot;/credentials.R&quot;)
-source(credentials_location)
+
+
+prep_more_than_mean &lt;- drop_na_calories %&gt;% 
+  select(Beverage_prep, Calories) %&gt;% 
+  mutate(mean_calories_all_drinks = mean(Calories)) %&gt;%
+  filter(Calories &gt; mean_calories_all_drinks) %&gt;%
+  group_by(Beverage_prep) %&gt;%
+  distinct(Beverage_prep)
+  
+
+
+prep_more_than_mean
+
+  
+# Both beverage_prep and Calories are selected. Then a new column is created using mutate which returns the mean calories of all drinks. After this, using the filter () function, all the drinks where the Calories value is greater than the mean calories of all drinks are grouped by their beverage type. Distinct() is used to remove all duplicate beverage_prep types, making it easier to read.
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="connecting-the-omni_employees-database-to-r" class="section level1">
-<h1>Connecting the omni_employees database to R</h1>
+<div id="which-is-the-best-type-of-coffee-drink-to-get-if-youre-worried-about-consuming-too-many-calories" class="section level1">
+<h1>7. Which is the best type of coffee drink to get if you’re worried about consuming too many calories?</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kYl9jb25uZWN0IDwtIGRiQ29ubmVjdChkcnYgPSBQb3N0Z3JlU1FMKCksIHVzZXIgPSBwb3N0Z3Jlc3FsX3VzZXJuYW1lLCBwYXNzd29yZCA9IHBvc3RncmVzcWxfcGFzc3dvcmQsIGRibmFtZSA9IFwiYWNtZV9lbXBsb3llZXNcIiwgaG9zdCA9IFwibG9jYWxob3N0XCIpXG5ybShwb3N0Z3Jlc3FsX3VzZXJuYW1lLCBwb3N0Z3Jlc3FsX3Bhc3N3b3JkKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5iZXN0X2NvZmZlZSA8LSBkcm9wX25hX2NhbG9yaWVzICU+JVxuICBzZWxlY3QoQmV2ZXJhZ2VfY2F0ZWdvcnksIEJldmVyYWdlLCBDYWxvcmllcyklPiVcbiAgZmlsdGVyKEJldmVyYWdlICVpbiUgXCJDb2ZmZWVcIikgJT4lXG4gIGFycmFuZ2UoQ2Fsb3JpZXMpICU+JVxuICBoZWFkKDEpXG5cbmJlc3RfY29mZmVlXG5cbiMgQ29sdW1ucyBCZXZlcmFnZV9jYXRlZ29yeSwgQmV2ZXJhZ2UsIENhbG9yaWVzIGFyZSBzZWxlY3RlZC4gVGhlbiB0aGUgZHJpbmtzIGFyZSBmaWx0ZXJlZCBieSB0aGUgQmV2ZXJhZ2UgY29sdW1uLCBrZWVwaW5nIHRob3NlIHRoYXQgY29udGFpbiB0aGUgd29yZCBcIkNvZmZlZVwiLiBUaGUgZHJpbmtzIGFyZSB0aGVuIGFycmFuZ2VkIGJ5IHRoZWlyIGNhbG9yaWVzIGluIGFzY2VuZGluZyBvcmRlciBhbmQgdGhlbiBoZWFkKDEpIGlzIHVzZWQgdG8gcmV0dXJuIHRoZSBkcmluayB3aXRoIHRoZSBsb3dlc3QgQ2Fsb3JpZXMgdmFsdWUuXG5cbmBgYCJ9 -->
 <pre class="r"><code>
-db_connect &lt;- dbConnect(drv = PostgreSQL(), user = postgresql_username, password = postgresql_password, dbname = &quot;acme_employees&quot;, host = &quot;localhost&quot;)
-rm(postgresql_username, postgresql_password)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="mvp" class="section level1">
-<h1>MVP</h1>
-</div>
-<div id="using-terminal-i-found-that-there-are-11-records-in-teams-200-records-in-employees-and-9-records-in-feedbacks." class="section level1">
-<h1>Using terminal I found that there are 11 records in teams, 200 records in employees and 9 records in feedbacks.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCAqIEZST00gZmVlZGJhY2tzXG5cbmBgYCJ9 -->
-<pre class="sql"><code>
-SELECT * FROM feedbacks
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="creating-a-list-of-all-employees-with-their-first-and-last-names-combined-together-into-one-field-called-full_name." class="section level1">
-<h1>Creating a list of all employees with their first and last names combined together into one field called full_name.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCBcbiAgaWQsXG4gIGZpcnN0X25hbWUsXG4gIGxhc3RfbmFtZSxcbiAgQ09OQ0FUKGZpcnN0X25hbWUsICcgJywgbGFzdF9uYW1lKSBBUyBmdWxsX25hbWVcbkZST00gZW1wbG95ZWVzXG5cbmBgYCJ9 -->
-<pre class="sql"><code>
-SELECT 
-  id,
-  first_name,
-  last_name,
-  CONCAT(first_name, ' ', last_name) AS full_name
-FROM employees
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="retrieving-the-details-of-all-employees-listing-their-team-name-rather-than-their-team_id." class="section level1">
-<h1>Retrieving the details of all employees, listing their team name, rather than their team_id.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCBcbiAgZmlyc3RfbmFtZSxcbiAgbGFzdF9uYW1lLFxuICBuYW1lXG5GUk9NIGVtcGxveWVlcyBBUyBlXG5JTk5FUiBKT0lOIHRlYW1zIEFTIHRcbk9OIGUudGVhbV9pZCA9IHQuaWRcblxuXG5gYGAifQ== -->
-<pre class="sql"><code>
-SELECT 
-  first_name,
-  last_name,
-  name
-FROM employees AS e
-INNER JOIN teams AS t
-ON e.team_id = t.id
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="breakdown-of-the-number-of-employees-per-team-ordered-by-descending-number-of-employees.-left-join-allows-teams-to-be-shown-even-if-they-have-no-employees-each-team-has-at-least-12-employees-though." class="section level1">
-<h1>Breakdown of the number of employees per team, ordered by descending number of employees. Left join allows teams to be shown even if they have no employees (each team has at least 12 employees though).</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCBcbiAgdC5uYW1lLFxuICBDT1VOVChlLmlkKSBBUyBudW1fZW1wbG95ZWVzXG5GUk9NIGVtcGxveWVlcyBBUyBlXG5MRUZUIEpPSU4gdGVhbXMgQVMgdFxuT04gZS50ZWFtX2lkID0gdC5pZFxuR1JPVVAgQlkgdC5uYW1lXG5PUkRFUiBCWSBudW1fZW1wbG95ZWVzIERFU0MgTlVMTFMgTEFTVFxuXG5gYGAifQ== -->
-<pre class="sql"><code>
-SELECT 
-  t.name,
-  COUNT(e.id) AS num_employees
-FROM employees AS e
-LEFT JOIN teams AS t
-ON e.team_id = t.id
-GROUP BY t.name
-ORDER BY num_employees DESC NULLS LAST
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="returning-details-of-employees-who-have-no-email-address-or-have-missing-from-their-email-address." class="section level1">
-<h1>Returning details of employees who have no email address or have ‘@’ missing from their email address.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCBcbiAgKlxuRlJPTSBlbXBsb3llZXNcbldIRVJFIChlbWFpbCBJUyBOVUxMKSBPUiAoZW1haWwgTk9UIExJS0UgJyVAJScpXG5gYGAifQ== -->
-<pre class="sql"><code>
-SELECT 
-  *
-FROM employees
-WHERE (email IS NULL) OR (email NOT LIKE '%@%')</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="extension" class="section level1">
-<h1>Extension</h1>
-<p>#2.1</p>
-</div>
-<div id="returning-the-employee-who-gave-the-most-recent-feedback---tallulah-canedo-on-26th-june-2019." class="section level1">
-<h1>Returning the employee who gave the most recent feedback - Tallulah Canedo on 26th June 2019.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVCBcbiAgKlxuRlJPTSBlbXBsb3llZXMgQVMgZVxuTEVGVCBKT0lOIGZlZWRiYWNrcyBBUyBmYlxuT04gZS5pZCA9IGZiLmlkXG5PUkRFUiBCWSBmYi5kYXRlICBERVNDIE5VTExTIExBU1RcbkxJTUlUIDFcbmBgYCJ9 -->
-<pre class="sql"><code>
-SELECT 
-  *
-FROM employees AS e
-LEFT JOIN feedbacks AS fb
-ON e.id = fb.id
-ORDER BY fb.date  DESC NULLS LAST
-LIMIT 1</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="returning-the-team_name-of-the-team-who-have-the-most-employees-where-first_name-one-single-letter." class="section level1">
-<h1>Returning the team_name of the team who have the most employees where first_name = one single letter.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgc3FsXG5cblNFTEVDVFxuICB0Lm5hbWVcbkZST00gZW1wbG95ZWVzIEFTIGVcbklOTkVSIEpPSU4gdGVhbXMgQVMgdFxuT04gZS50ZWFtX2lkID0gdC5pZFxuV0hFUkUgQ0hBUl9MRU5HVEgoZS5maXJzdF9uYW1lKSA9IDFcbkdST1VQIEJZIHQubmFtZVxuT1JERVIgQlkgQ09VTlQodC5uYW1lKSBERVNDXG5MSU1JVCAxXG5cblxuYGBgIn0= -->
-<pre class="sql"><code>
-SELECT
-  t.name
-FROM employees AS e
-INNER JOIN teams AS t
-ON e.team_id = t.id
-WHERE CHAR_LENGTH(e.first_name) = 1
-GROUP BY t.name
-ORDER BY COUNT(t.name) DESC
-LIMIT 1
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kYkRpc2Nvbm5lY3QoZGJfY29ubmVjdClcblxuYGBgIn0= -->
-<pre class="r"><code>
-dbDisconnect(db_connect)
+best_coffee &lt;- drop_na_calories %&gt;%
+  select(Beverage_category, Beverage, Calories)%&gt;%
+  filter(Beverage %in% &quot;Coffee&quot;) %&gt;%
+  arrange(Calories) %&gt;%
+  head(1)
+
+best_coffee
+
+# Columns Beverage_category, Beverage, Calories are selected. Then the drinks are filtered by the Beverage column, keeping those that contain the word &quot;Coffee&quot;. The drinks are then arranged by their calories in ascending order and then head(1) is used to return the drink with the lowest Calories value.
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1921,7 +1902,7 @@ dbDisconnect(db_connect)
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKI0xvYWRpbmcgTGlicmFyaWVzLgoKYGBge3J9CgpsaWJyYXJ5KFJQb3N0Z3JlU1FMKQoKYGBgCgojIFNvdXJjaW5nIGluIG15IGNyZWRlbnRpYWxzIGZpbGUuCgpgYGB7cn0KCmhvbWVfbG9jYXRpb24gPC0gU3lzLmdldGVudigiSE9NRSIpCmNyZWRlbnRpYWxzX2xvY2F0aW9uIDwtIHBhc3RlMChob21lX2xvY2F0aW9uLCIvY3JlZGVudGlhbHMuUiIpCnNvdXJjZShjcmVkZW50aWFsc19sb2NhdGlvbikKCmBgYAoKIyBDb25uZWN0aW5nIHRoZSBvbW5pX2VtcGxveWVlcyBkYXRhYmFzZSB0byBSCgpgYGB7cn0KCmRiX2Nvbm5lY3QgPC0gZGJDb25uZWN0KGRydiA9IFBvc3RncmVTUUwoKSwgdXNlciA9IHBvc3RncmVzcWxfdXNlcm5hbWUsIHBhc3N3b3JkID0gcG9zdGdyZXNxbF9wYXNzd29yZCwgZGJuYW1lID0gImFjbWVfZW1wbG95ZWVzIiwgaG9zdCA9ICJsb2NhbGhvc3QiKQpybShwb3N0Z3Jlc3FsX3VzZXJuYW1lLCBwb3N0Z3Jlc3FsX3Bhc3N3b3JkKQoKYGBgCgoKIyBNVlAgCgojIFVzaW5nIHRlcm1pbmFsIEkgZm91bmQgdGhhdCB0aGVyZSBhcmUgMTEgcmVjb3JkcyBpbiB0ZWFtcywgMjAwIHJlY29yZHMgaW4gZW1wbG95ZWVzIGFuZCA5IHJlY29yZHMgaW4gZmVlZGJhY2tzLgoKCgpgYGB7c3FsIGNvbm5lY3Rpb249ZGJfY29ubmVjdH0KClNFTEVDVCAqIEZST00gZmVlZGJhY2tzCgpgYGAKCiMgQ3JlYXRpbmcgYSBsaXN0IG9mIGFsbCBlbXBsb3llZXMgd2l0aCB0aGVpciBmaXJzdCBhbmQgbGFzdCBuYW1lcyBjb21iaW5lZCB0b2dldGhlciBpbnRvIG9uZSBmaWVsZCBjYWxsZWQgZnVsbF9uYW1lLiAKCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUIAogIGlkLAogIGZpcnN0X25hbWUsCiAgbGFzdF9uYW1lLAogIENPTkNBVChmaXJzdF9uYW1lLCAnICcsIGxhc3RfbmFtZSkgQVMgZnVsbF9uYW1lCkZST00gZW1wbG95ZWVzCgpgYGAKCiMgUmV0cmlldmluZyB0aGUgZGV0YWlscyBvZiBhbGwgZW1wbG95ZWVzLCBsaXN0aW5nIHRoZWlyIHRlYW0gbmFtZSwgcmF0aGVyIHRoYW4gdGhlaXIgdGVhbV9pZC4KCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUIAogIGZpcnN0X25hbWUsCiAgbGFzdF9uYW1lLAogIG5hbWUKRlJPTSBlbXBsb3llZXMgQVMgZQpJTk5FUiBKT0lOIHRlYW1zIEFTIHQKT04gZS50ZWFtX2lkID0gdC5pZAoKCmBgYAoKIyBCcmVha2Rvd24gb2YgdGhlIG51bWJlciBvZiBlbXBsb3llZXMgcGVyIHRlYW0sIG9yZGVyZWQgYnkgZGVzY2VuZGluZyBudW1iZXIgb2YgZW1wbG95ZWVzLiBMZWZ0IGpvaW4gYWxsb3dzIHRlYW1zIHRvIGJlIHNob3duIGV2ZW4gaWYgdGhleSBoYXZlIG5vIGVtcGxveWVlcyAoZWFjaCB0ZWFtIGhhcyBhdCBsZWFzdCAxMiBlbXBsb3llZXMgdGhvdWdoKS4KCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUIAogIHQubmFtZSwKICBDT1VOVChlLmlkKSBBUyBudW1fZW1wbG95ZWVzCkZST00gZW1wbG95ZWVzIEFTIGUKTEVGVCBKT0lOIHRlYW1zIEFTIHQKT04gZS50ZWFtX2lkID0gdC5pZApHUk9VUCBCWSB0Lm5hbWUKT1JERVIgQlkgbnVtX2VtcGxveWVlcyBERVNDIE5VTExTIExBU1QKCmBgYAoKIyBSZXR1cm5pbmcgZGV0YWlscyBvZiBlbXBsb3llZXMgd2hvIGhhdmUgbm8gZW1haWwgYWRkcmVzcyBvciBoYXZlICdAJyBtaXNzaW5nIGZyb20gdGhlaXIgZW1haWwgYWRkcmVzcy4KCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUIAogICoKRlJPTSBlbXBsb3llZXMKV0hFUkUgKGVtYWlsIElTIE5VTEwpIE9SIChlbWFpbCBOT1QgTElLRSAnJUAlJykKYGBgCgojIEV4dGVuc2lvbgoKIzIuMQoKIyBSZXR1cm5pbmcgdGhlIGVtcGxveWVlIHdobyBnYXZlIHRoZSBtb3N0IHJlY2VudCBmZWVkYmFjayAtIFRhbGx1bGFoIENhbmVkbyBvbiAyNnRoIEp1bmUgMjAxOS4KCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUIAogICoKRlJPTSBlbXBsb3llZXMgQVMgZQpMRUZUIEpPSU4gZmVlZGJhY2tzIEFTIGZiCk9OIGUuaWQgPSBmYi5pZApPUkRFUiBCWSBmYi5kYXRlICBERVNDIE5VTExTIExBU1QKTElNSVQgMQpgYGAKCiMgUmV0dXJuaW5nIHRoZSB0ZWFtX25hbWUgb2YgdGhlIHRlYW0gd2hvIGhhdmUgdGhlIG1vc3QgZW1wbG95ZWVzIHdoZXJlIGZpcnN0X25hbWUgPSBvbmUgc2luZ2xlIGxldHRlci4KCmBgYHtzcWwgY29ubmVjdGlvbj1kYl9jb25uZWN0fQoKU0VMRUNUCiAgdC5uYW1lCkZST00gZW1wbG95ZWVzIEFTIGUKSU5ORVIgSk9JTiB0ZWFtcyBBUyB0Ck9OIGUudGVhbV9pZCA9IHQuaWQKV0hFUkUgQ0hBUl9MRU5HVEgoZS5maXJzdF9uYW1lKSA9IDEKR1JPVVAgQlkgdC5uYW1lCk9SREVSIEJZIENPVU5UKHQubmFtZSkgREVTQwpMSU1JVCAxCgoKYGBgCgoKYGBge3J9CgpkYkRpc2Nvbm5lY3QoZGJfY29ubmVjdCkKCmBgYAoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKI0xvYWRpbmcgbGlicmFyaWVzCgpgYGB7cn0KbGlicmFyeSh0aWR5dmVyc2UpCmxpYnJhcnkocmVhZHIpCmBgYAoKIyBSZWFkaW5nIGluIGNzdiBmaWxlIApgYGB7cn0Kc3RhcmJ1Y2tzIDwtIHJlYWRfY3N2KCJkYXRhL3N0YXJidWNrc19kcmlua01lbnVfZXhwYW5kZWQuY3N2IikKc3RhcmJ1Y2tzCmBgYAoKCiMgMS4gUmV0dXJuaW5nIHRoZSBkaW1lbnNpb25zLCB2YXJpYWJsZSB0eXBlcyBhbmQgdmFyaWFibGUgbmFtZXMgZXRjLgoKYGBge3J9CgpoZWFkKHN0YXJidWNrcykKCmRpbShzdGFyYnVja3MpCgpuYW1lcyhzdGFyYnVja3MpCgpnbGltcHNlKHN0YXJidWNrcykKCnZpZXcoc3RhcmJ1Y2tzKQoKYGBgCgojIDIuIERyb3BwaW5nIGFueSBkcmluayBkZXRhaWxzIHdoZXJlIGNhbG9yaWVzIGlzIG4vYSAoMCkKCmBgYHtyfQoKZHJvcF9uYV9jYWxvcmllcyA8LSBzdGFyYnVja3MgJT4lCiAgc2VsZWN0KEJldmVyYWdlX2NhdGVnb3J5LCBCZXZlcmFnZSwgQmV2ZXJhZ2VfcHJlcCwgQ2Fsb3JpZXMpICU+JSAKICBmaWx0ZXIoQ2Fsb3JpZXMgIT0gMCkKCmRyb3BfbmFfY2Fsb3JpZXMKCiMgVGhlIEJldmVyYWdlX2NhdGVnb3J5LCBCZXZlcmFnZSwgQmV2ZXJhZ2VfcHJlcCwgQ2Fsb3JpZXMgY29sdW1ucyBhcmUgc2VsZWN0ZWQgZnJvbSB0aGUgc3RhcmJ1Y2tzIHRhYmxlLiBUaGUgZHJpbmtzIGFyZSBmaWx0ZXJlZCBieSB0aGUgY2Fsb3JpZXMgY29sdW1uIHVzaW5nIGZpbHRlcigpLiBmaWx0ZXIoQ2Fsb3JpZXMgIT0gMCkgcmVhZHMgYXMgcmV0dXJuIG9ubHkgZHJpbmtzIHRoYXQgYXJlIG5vdCAwIGNhbG9yaWVzLiAKCmBgYAoKIyAzLiBDcmVhdGluZyBhIG5ldyB2YXJpYWJsZSBjYWxsZWQgY2Fsb3JpZV9kaWZmLCB3aGljaCBzdG9yZXMgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiAxMzUgY2Fsb3JpZXMgYW5kIHRoZSBjYWxvcmllcyBpbiBlYWNoIGRyaW5rLgoKYGBge3J9CmNhbG9yaWVfZGlmZmVyZW5jZSA9IG11dGF0ZShkcm9wX25hX2NhbG9yaWVzLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYWxvcmllX2RpZmYgPSAxMzUgLSBDYWxvcmllcykKCmNhbG9yaWVfZGlmZmVyZW5jZQoKIyBtdXRhdGUgZnVuY3Rpb24gYWxsb3dzIGEgbmV3IGNvbHVtbiB0byBiZSBjcmVhdGVkIC0gY2Fsb3JpZV9kaWZmLiBjYWxvcmllX2RpZmYgcmV0dXJucyB0aGUgdmFsdWUgb2YgMTM1IC0gQ2Fsb3JpZXMuIAogIApgYGAKCiMgNC4gU3VtbWFyaXNpbmcgdGhlIG1lYW4gbnVtYmVyIG9mIGNhbG9yaWVzIGluIGVhY2ggYmV2ZXJhZ2VfY2F0ZWdvcnkgLSByZXR1cm5pbmcgdG9wIGFuZCBib3R0b20gMyAKCmBgYHtyfQptZWFuX2NhbF9zdW1tYXJ5IDwtIGRyb3BfbmFfY2Fsb3JpZXMgJT4lCiAgZ3JvdXBfYnkoQmV2ZXJhZ2VfY2F0ZWdvcnkpICU+JQogIHN1bW1hcmlzZShtZWFuX2NhbCA9IG1lYW4oQ2Fsb3JpZXMpKSAlPiUKICBhcnJhbmdlKG1lYW5fY2FsKQoKbWVhbl9jYWxfc3VtbWFyeSAKCnRhaWwobWVhbl9jYWxfc3VtbWFyeSwgMykKaGVhZChtZWFuX2NhbF9zdW1tYXJ5LCAzKQoKCiMgdGhlIGFib3ZlIGZ1bmN0aW9uIGdyb3VwcyBhbGwgdGhlIGRyaW5rcyBpbnRvIGJldmVyYWdlIGNhdGVnb3JpZXMsIHRoZW4gY3JlYXRlcyBhIG5ldyBjb2x1bW4gY2FsbGVkIG1lYW5fY2FsIHdoaWNoIGdpdmVzIHRoZSBtZWFuIGNhbG9yaWVzIGZvciBlYWNoIGNhdGVnb3J5LiBUaGVuIHRoZSBjb2x1bW4gaXMgYXJyYW5nZWQgaW4gYXNjZW5kaW5nIG9yZGVyIGFuZCB0YWlsKCkgYW5kIGhlYWQoKSBjYW4gYmUgdXNlZCB0byBmaW5kIG91dCB0aGUgdG9wIGFuZCBib3R0b20gMyBjYXRlZ29yeSBpbiB0ZXJtcyBvZiBtZWFuIGNhbG9yaWVzLgoKCiMgU2lnbmF0dXJlIEVzcHJlc3NvIERyaW5rcywgRnJhcHB1Y2Npbm/CriBCbGVuZGVkIENvZmZlZSwgU21vb3RoaWVzIC0gdGhlIGhpZ2hlc3QgbWVhbiBjYWxvcmllcyBvZiB0aGUgYmV2IGNhdGVnb3JpZXMKIyBDb2ZmZWUsIFNoYWtlbiBJY2VkIEJldmVyYWdlcywgQ2xhc3NpYyBFc3ByZXNzbyBEcmlua3MgLSB0aGUgbG93ZXN0IG1lYW4gY2Fsb3JpZXMgb2YgdGhlIGJldiBjYXRlZ29yaWVzCgoKYGBgCgojIDUuIFdoYXQgaXMgdGhlIGF2ZXJhZ2UgbnVtYmVyIG9mIGNhbG9yaWVzIGluIGVhY2ggQmV2ZXJhZ2VfcHJlcCB0eXBlPwoKYGBge3J9Cm1lYW5fY2FsX3N1bW1hcnlfcHJlcCA8LSBkcm9wX25hX2NhbG9yaWVzICU+JQogIGdyb3VwX2J5KEJldmVyYWdlX3ByZXApICU+JQogIHN1bW1hcmlzZShtZWFuX2NhbF9wcmVwID0gbWVhbihDYWxvcmllcykpICU+JQogIGFycmFuZ2UobWVhbl9jYWxfcHJlcCkKCm1lYW5fY2FsX3N1bW1hcnlfcHJlcAoKIyBmaXJzdGx5IHRoZSBkcmlua3MgYXJlIGdyb3VwZWQgYnkgYmV2ZXJhZ2VfcHJlcCB0eXBlIGFuZCB0aGVuIGEgbmV3IGNvbHVtbiwgbWVhbl9jYWxfcHJlcCwgaXMgY3JlYXRlZCB1c2luZyBzdW1tYXJpc2UoKS4gIm1lYW5fY2FsX3ByZXAiIGNhbGN1bGF0ZXMgdGhlIG1lYW4gY2Fsb3JpZXMgb2YgZWFjaCBiZXZlcmFnZV9wcmVwIHR5cGUuIAoKYGBgCgojIDYuIFdoaWNoIEJldmVyYWdlX3ByZXAgdHlwZSBjb250YWlucyBtb3JlIHRoYW4gdGhlIGF2ZXJhZ2UgY2Fsb3JpZXMgb2YgYWxsIGRyaW5rcz8KCmBgYHtyfQoKCgpwcmVwX21vcmVfdGhhbl9tZWFuIDwtIGRyb3BfbmFfY2Fsb3JpZXMgJT4lIAogIHNlbGVjdChCZXZlcmFnZV9wcmVwLCBDYWxvcmllcykgJT4lIAogIG11dGF0ZShtZWFuX2NhbG9yaWVzX2FsbF9kcmlua3MgPSBtZWFuKENhbG9yaWVzKSkgJT4lCiAgZmlsdGVyKENhbG9yaWVzID4gbWVhbl9jYWxvcmllc19hbGxfZHJpbmtzKSAlPiUKICBncm91cF9ieShCZXZlcmFnZV9wcmVwKSAlPiUKICBkaXN0aW5jdChCZXZlcmFnZV9wcmVwKQogIAoKCnByZXBfbW9yZV90aGFuX21lYW4KCiAgCiMgQm90aCBiZXZlcmFnZV9wcmVwIGFuZCBDYWxvcmllcyBhcmUgc2VsZWN0ZWQuIFRoZW4gYSBuZXcgY29sdW1uIGlzIGNyZWF0ZWQgdXNpbmcgbXV0YXRlIHdoaWNoIHJldHVybnMgdGhlIG1lYW4gY2Fsb3JpZXMgb2YgYWxsIGRyaW5rcy4gQWZ0ZXIgdGhpcywgdXNpbmcgdGhlIGZpbHRlciAoKSBmdW5jdGlvbiwgYWxsIHRoZSBkcmlua3Mgd2hlcmUgdGhlIENhbG9yaWVzIHZhbHVlIGlzIGdyZWF0ZXIgdGhhbiB0aGUgbWVhbiBjYWxvcmllcyBvZiBhbGwgZHJpbmtzIGFyZSBncm91cGVkIGJ5IHRoZWlyIGJldmVyYWdlIHR5cGUuIERpc3RpbmN0KCkgaXMgdXNlZCB0byByZW1vdmUgYWxsIGR1cGxpY2F0ZSBiZXZlcmFnZV9wcmVwIHR5cGVzLCBtYWtpbmcgaXQgZWFzaWVyIHRvIHJlYWQuCgpgYGAKCgojIDcuIFdoaWNoIGlzIHRoZSBiZXN0IHR5cGUgb2YgY29mZmVlIGRyaW5rIHRvIGdldCBpZiB5b3XigJlyZSB3b3JyaWVkIGFib3V0IGNvbnN1bWluZyB0b28gbWFueSBjYWxvcmllcz8KCmBgYHtyfQoKYmVzdF9jb2ZmZWUgPC0gZHJvcF9uYV9jYWxvcmllcyAlPiUKICBzZWxlY3QoQmV2ZXJhZ2VfY2F0ZWdvcnksIEJldmVyYWdlLCBDYWxvcmllcyklPiUKICBmaWx0ZXIoQmV2ZXJhZ2UgJWluJSAiQ29mZmVlIikgJT4lCiAgYXJyYW5nZShDYWxvcmllcykgJT4lCiAgaGVhZCgxKQoKYmVzdF9jb2ZmZWUKCiMgQ29sdW1ucyBCZXZlcmFnZV9jYXRlZ29yeSwgQmV2ZXJhZ2UsIENhbG9yaWVzIGFyZSBzZWxlY3RlZC4gVGhlbiB0aGUgZHJpbmtzIGFyZSBmaWx0ZXJlZCBieSB0aGUgQmV2ZXJhZ2UgY29sdW1uLCBrZWVwaW5nIHRob3NlIHRoYXQgY29udGFpbiB0aGUgd29yZCAiQ29mZmVlIi4gVGhlIGRyaW5rcyBhcmUgdGhlbiBhcnJhbmdlZCBieSB0aGVpciBjYWxvcmllcyBpbiBhc2NlbmRpbmcgb3JkZXIgYW5kIHRoZW4gaGVhZCgxKSBpcyB1c2VkIHRvIHJldHVybiB0aGUgZHJpbmsgd2l0aCB0aGUgbG93ZXN0IENhbG9yaWVzIHZhbHVlLgoKYGBgCgoKCgoKCgoKCgoK</div>
 
 
 
@@ -1968,7 +1949,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("sql_weekend_homework.Rmd");
+  window.initializeSourceEmbed("dplyr_homework_week_3_day_1.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
