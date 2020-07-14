@@ -1,0 +1,172 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# 1. Loading in the tidyverse library
+
+```{r}
+
+library(tidyverse)
+
+```
+
+# Reading in the face_descriptions.csv and returning the dimensions, variable names and first ten rows of the dataset.
+
+```{r}
+
+face_desc <- read_csv("data/face_descriptions.csv")
+
+dim(face_desc)
+
+names(face_desc)
+
+head(face_desc, 10)
+
+```
+
+# 2. Evaluating the variable names and describing the data format.
+
+```{r}
+
+names(face_desc)
+
+# the names() function allows all variable names of face_desc to be returned. Although the variable names follow tidyverse case rules (in that they are lower case and there is an underscore to separate the column with two words), the majority of the variable names are not descriptive of the data they hold and are unclear.   
+
+view(face_desc)
+
+#Using the view() function, it can be determined that the data is in a wide format
+
+```
+
+# 3. Formatting the data 
+
+```{r}
+
+longer_face_desc <- face_desc %>% 
+  pivot_longer(cols = starts_with("t"),
+               names_to = "test_number",
+               values_to = "description")
+
+
+view(longer_face_desc)
+
+#As the data is in a wide format, the pivot_longer funciton has been used to take all the columns that start with "t" and move them into one column called test_number (names_to argument refers to this). The values_to arguments within the pivot_longer function allow the values from the "t" columns to be organised in another new column called "descriptions".
+
+```
+
+# 4. Splitting the description column into 3 description columns.
+
+```{r}
+
+description_sep <- longer_face_desc %>% 
+  separate(description, c("1st_description", "2nd_description", "3rd_description"), sep = "/|,")
+
+view(description_sep)
+
+# To capture secondary and tertiary descriptions that are split by slashes and commmas the separate() function has been used. The code above puts descriptions split by slashes and commas (sep = "/|,") into 3 separate columns "1st_description", "2nd_description" and "3rd_description". 
+
+```
+
+
+# 5. Tidying the description columns back into one column.
+
+```{r}
+longer_description_sep <- description_sep %>%
+  rename("1" = `1st_description`,
+         "2" = `2nd_description`,
+         "3" = `3rd_description`) %>% 
+  pivot_longer(cols = 5:7,
+               names_to = "description_number",
+               values_to = "description")
+  
+
+view(longer_description_sep)
+
+# In keeping with the tidy rules, pivot_longer() was used again but this time to create a new column called description_number which details whether a description was primary, secondary or tertiary whilst keeping actual descriptions in one column. After the rename() function was added to the pipe before pivot_longer() to further tidy the data.
+
+```
+
+# 6. Filtering out the descritpions with NA values and any that have a character length of 1.
+
+```{r}
+
+  get_rid_of_nas <- longer_description_sep %>%
+  filter(is.na(description) == FALSE) %>% 
+  filter(nchar(description) != 1)
+
+view(get_rid_of_nas)
+
+
+# Using the is.na() with the filter function allows any descriptions with NA values to be filtered out (code reads keep description values where is.na() is false). The nchar() funciton counts the number of elements within a character vector and so it can help identify or filter out descriptions that are only 1 character length. 
+
+```
+
+# 7. Grouping the data by description and returning how many times a description was used.
+
+```{r}
+
+summarised_face_desc <- get_rid_of_nas %>% 
+  group_by(description) %>%
+  summarise(description_count = n()) %>% 
+
+  
+  
+view(summarised_face_desc)
+
+# to summarise the data and return how many times any descritpion was used, firstly group_by() is used which categorises each description.
+
+#Summarise() is then used to create a new column called description_count which counts how many time a description was given using the n() function. 
+
+
+```
+
+#8. Returning the top 10 descriptions 
+
+```{r}
+
+top_10_descriptions <- summarised_face_desc %>% 
+  arrange(desc(description_count)) %>%
+  head(10)
+
+top_10_descriptions 
+
+# arrange() is used to order the descriptions in descending order and head(10) is used to give the top 10 most used descriptions 
+  
+```
+
+#9. Rewriting the above code into a pipe. 
+
+```{r}
+
+faces <- read_csv("data/face_descriptions.csv") %>%
+  pivot_longer(cols = starts_with("t"),
+               names_to = "test_number",
+               values_to = "description") %>%
+  separate(description, c("1",
+                          "2",
+                          "3"), sep = "/|,") %>%
+  pivot_longer(cols = 5:7,
+               names_to = "description_number",
+               values_to = "description") %>%
+  filter(is.na(description) == FALSE) %>% 
+  filter(nchar(description) != 1) %>%
+  group_by(description) %>%
+  summarise(description_count = n()) %>% 
+  arrange(desc(description_count)) %>%
+  head(10)
+
+
+view(faces)
+  
+  
+  
+  
+  
+  
+
+
+```
+
+
+
