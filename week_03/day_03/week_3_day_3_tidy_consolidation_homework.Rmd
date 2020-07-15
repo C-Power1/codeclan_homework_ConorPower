@@ -1,0 +1,180 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in the required library 
+```{r}
+
+library(tidyverse)
+
+```
+
+# 1. Reading in the code_clan_tweets.csv file, returning the number of row and columns and listing variable names.
+
+```{r}
+
+code_clan_tweets <- read_csv("data/code_clan_tweets.csv")
+
+view(code_clan_tweets) 
+
+dim(code_clan_tweets) #Returns number of rows and columns
+
+names(code_clan_tweets) #returns variable names
+
+
+```
+
+#2. A summary of how many likes each CodeClan tweet has.
+
+```{r}
+
+summarised_code_clan_tweets<- code_clan_tweets %>% 
+  group_by(tweet_id) %>% # group the entries by tweet_id
+  summarise(favorite_count)
+
+boxplot(summarised_code_clan_tweets) 
+
+```
+
+# 3. Returning the number of CodeClan tweets that have been liked (>0 favourite count) minus tweets that were quoted.
+
+```{r}
+total_of_fave_tweets <- code_clan_tweets %>% 
+  filter(!favorite_count == 0) %>% #reads as return tweets that don't equal zero only
+  filter(!is_quote == TRUE) %>% # reads as return only tweets that weren't quoted
+  summarise(total_fav_tweet_count = n()) # n() counts the number of tweets that were favourited
+
+total_of_fave_tweets
+
+```
+
+# 4. Summary of the mean number of rewteets, split by platform type (source)
+
+```{r}
+mean_retweet_by_source <- code_clan_tweets %>% 
+  filter(!is_quote == TRUE) %>% # reads as return only tweets that weren't quoted
+  group_by(source) %>% # group the entries by source type
+  summarise(mean_retweet_count = mean(retweet_count)) #summarises and creates new column that calculates mean of retweet_count
+
+mean_retweet_by_source
+```
+
+# 5. The total number of favourite_count values, split by media_type in descending order.
+
+```{r}
+
+total_of_fave_tweets_by_media <- code_clan_tweets %>%
+  select(media_type, favorite_count) %>% #isolates the media and favourite_count columns
+  group_by(media_type) %>% #groups tweets by the media type used 
+  summarise(total_tweet_count = n()) %>% #new column called total_tweet_count uses n() to count the no of favourited tweets 
+  arrange(desc(total_tweet_count)) #total_tweet_count is arranged so the media_type with the highest total tweet count is top
+  
+
+  
+
+total_of_fave_tweets_by_media
+  
+
+```
+
+
+```{r}
+
+#Also attempted to change all NA values to "text" in media_types 
+# ifelse did not seem to work, says unused argument ("photo")
+
+total_of_fave_tweets_by_media2 <- code_clan_tweets %>% 
+ mutate(media_type_na = is.na(media_type)) %>%
+  ifelse(media_type_na, "text", "photo") %>% 
+  group_by(media_type_na) %>% 
+  summarise(total_tweet_count = n()) %>%
+  arrange(desc(total_tweet_count))
+
+total_of_fave_tweets_by_media2
+  
+```
+
+#6. Returning the mean number of characters CodeClan tweets contain
+
+```{r}
+
+
+mean_num_char <- code_clan_tweets %>%
+  select(text) %>% # selected text column
+  mutate(num_chars = nchar(text, allowNA = TRUE)) %>% # new column that counts no of chars (num_chars) of each tweet allowing NA values
+  filter(is.na(num_chars) == FALSE) %>% # filters out the NA values
+  summarise(mean_chars = mean(num_chars)) #creates new column that summarises and calculates the mean of the num_chars column 
+
+
+
+mean_num_char
+
+
+
+  
+```
+
+
+#7. Reading in the code_clan_info.csv file and joining it on to code_clan_tweets
+
+```{r}
+
+code_clan_info <- read_csv("data/code_clan_info.csv")
+
+
+code_clan_joined <- inner_join(code_clan_tweets, code_clan_info, "tweet_id") #joined by tweet_id as this is a column in both datasets
+
+view(code_clan_joined)
+
+```
+
+
+#8. Creating a new tibble called codeclan_hashtags - only the tweet_id and hashtags columns (in lowercase for analysis). NAs negated.
+
+```{r}
+
+codeclan_hashtags <- tibble(code_clan_joined$tweet_id, tolower(code_clan_joined$hashtags)) %>% 
+  filter(!is.na(code_clan_joined$hashtags))
+
+view(codeclan_hashtags)
+
+#tibble() creates a tibble - both tweet_id and hashtags columns from code_clan_joined are used to create tibble. tolower() ensures all entries in hashtag are in lower case and then any hashtag entires that are NA values are filtered out using filter() and is.na().
+```
+
+
+#Extensions
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

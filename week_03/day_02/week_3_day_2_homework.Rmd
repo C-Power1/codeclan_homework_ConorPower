@@ -55,7 +55,7 @@ view(longer_face_desc)
 
 ```
 
-# 4. Splitting the description column into 3 description columns.
+# 4. Splitting the description column into 3 description columns
 
 ```{r}
 
@@ -108,7 +108,7 @@ view(get_rid_of_nas)
 
 summarised_face_desc <- get_rid_of_nas %>% 
   group_by(description) %>%
-  summarise(description_count = n()) %>% 
+  summarise(description_count = n())
 
   
   
@@ -158,12 +158,6 @@ faces <- read_csv("data/face_descriptions.csv") %>%
 
 
 view(faces)
-  
-  
-  
-  
-  
-  
 
 
 ```

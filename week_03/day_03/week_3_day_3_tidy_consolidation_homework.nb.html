@@ -1749,280 +1749,198 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<div id="loading-in-the-tidyverse-library" class="section level1">
-<h1>1. Loading in the tidyverse library</h1>
+<div id="loading-in-the-required-library" class="section level1">
+<h1>Loading in the required library</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KHRpZHl2ZXJzZSlcblxuYGBgIn0= -->
 <pre class="r"><code>
-library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4zLjAg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjMuMiAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy40XG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMy4wLjEgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzM3bSAxLjAuMFxuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMS4wICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszN20gMS40LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAxLjMuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzdtIDAuNS4wXHUwMDFiWzM5bVxucGFja2FnZSDigJhnZ3Bsb3Qy4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy42LjJwYWNrYWdlIOKAmHRpYmJsZeKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4ycGFja2FnZSDigJh0aWR5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4ycGFja2FnZSDigJhwdXJycuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4ycGFja2FnZSDigJhkcGx5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4yXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcdTAwMWJbMzltXG4ifQ== -->
-<pre><code>Registered S3 methods overwritten by 'dbplyr':
-  method         from
-  print.tbl_lazy     
-  print.tbl_sql      
-[37m── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──[39m
-[37m[32m✓[37m [34mggplot2[37m 3.3.2     [32m✓[37m [34mpurrr  [37m 0.3.4
-[32m✓[37m [34mtibble [37m 3.0.1     [32m✓[37m [34mdplyr  [37m 1.0.0
-[32m✓[37m [34mtidyr  [37m 1.1.0     [32m✓[37m [34mstringr[37m 1.4.0
-[32m✓[37m [34mreadr  [37m 1.3.1     [32m✓[37m [34mforcats[37m 0.5.0[39m
-package ‘ggplot2’ was built under R version 3.6.2package ‘tibble’ was built under R version 3.6.2package ‘tidyr’ was built under R version 3.6.2package ‘purrr’ was built under R version 3.6.2package ‘dplyr’ was built under R version 3.6.2[37m── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-[31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
-[31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="reading-in-the-face_descriptions.csv-and-returning-the-dimensions-variable-names-and-first-ten-rows-of-the-dataset." class="section level1">
-<h1>Reading in the face_descriptions.csv and returning the dimensions, variable names and first ten rows of the dataset.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5mYWNlX2Rlc2MgPC0gcmVhZF9jc3YoXCJkYXRhL2ZhY2VfZGVzY3JpcHRpb25zLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>
-face_desc &lt;- read_csv(&quot;data/face_descriptions.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICAuZGVmYXVsdCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgdXNlcl9pZCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBhZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bVxuKVxuU2VlIHNwZWMoLi4uKSBmb3IgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbnMuXG4ifQ== -->
-<pre><code>Parsed with column specification:
-cols(
-  .default = col_character(),
-  user_id = [32mcol_double()[39m,
-  age = [32mcol_double()[39m
-)
-See spec(...) for full column specifications.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGZhY2VfZGVzYylcbmBgYCJ9 -->
-<pre class="r"><code>dim(face_desc)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIyMCAgNTNcbiJ9 -->
-<pre><code>[1] 220  53</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXMoZmFjZV9kZXNjKVxuYGBgIn0= -->
-<pre class="r"><code>names(face_desc)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcInVzZXJfaWRcIiBcInNleFwiICAgICBcImFnZVwiICAgICBcInQxXCIgICAgICBcInQyXCIgICAgICBcInQzXCIgICAgICBcInQ0XCIgICAgICBcInQ1XCIgICAgICBcInQ2XCIgICAgICBcInQ3XCIgICAgICBcInQ4XCIgICAgIFxuWzEyXSBcInQ5XCIgICAgICBcInQxMFwiICAgICBcInQxMVwiICAgICBcInQxMlwiICAgICBcInQxM1wiICAgICBcInQxNFwiICAgICBcInQxNVwiICAgICBcInQxNlwiICAgICBcInQxN1wiICAgICBcInQxOFwiICAgICBcInQxOVwiICAgIFxuWzIzXSBcInQyMFwiICAgICBcInQyMVwiICAgICBcInQyMlwiICAgICBcInQyM1wiICAgICBcInQyNFwiICAgICBcInQyNVwiICAgICBcInQyNlwiICAgICBcInQyN1wiICAgICBcInQyOFwiICAgICBcInQyOVwiICAgICBcInQzMFwiICAgIFxuWzM0XSBcInQzMVwiICAgICBcInQzMlwiICAgICBcInQzM1wiICAgICBcInQzNFwiICAgICBcInQzNVwiICAgICBcInQzNlwiICAgICBcInQzN1wiICAgICBcInQzOFwiICAgICBcInQzOVwiICAgICBcInQ0MFwiICAgICBcInQ0MVwiICAgIFxuWzQ1XSBcInQ0MlwiICAgICBcInQ0M1wiICAgICBcInQ0NFwiICAgICBcInQ0NVwiICAgICBcInQ0NlwiICAgICBcInQ0N1wiICAgICBcInQ0OFwiICAgICBcInQ0OVwiICAgICBcInQ1MFwiICAgIFxuIn0= -->
-<pre><code> [1] &quot;user_id&quot; &quot;sex&quot;     &quot;age&quot;     &quot;t1&quot;      &quot;t2&quot;      &quot;t3&quot;      &quot;t4&quot;      &quot;t5&quot;      &quot;t6&quot;      &quot;t7&quot;      &quot;t8&quot;     
-[12] &quot;t9&quot;      &quot;t10&quot;     &quot;t11&quot;     &quot;t12&quot;     &quot;t13&quot;     &quot;t14&quot;     &quot;t15&quot;     &quot;t16&quot;     &quot;t17&quot;     &quot;t18&quot;     &quot;t19&quot;    
-[23] &quot;t20&quot;     &quot;t21&quot;     &quot;t22&quot;     &quot;t23&quot;     &quot;t24&quot;     &quot;t25&quot;     &quot;t26&quot;     &quot;t27&quot;     &quot;t28&quot;     &quot;t29&quot;     &quot;t30&quot;    
-[34] &quot;t31&quot;     &quot;t32&quot;     &quot;t33&quot;     &quot;t34&quot;     &quot;t35&quot;     &quot;t36&quot;     &quot;t37&quot;     &quot;t38&quot;     &quot;t39&quot;     &quot;t40&quot;     &quot;t41&quot;    
-[45] &quot;t42&quot;     &quot;t43&quot;     &quot;t44&quot;     &quot;t45&quot;     &quot;t46&quot;     &quot;t47&quot;     &quot;t48&quot;     &quot;t49&quot;     &quot;t50&quot;    </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChmYWNlX2Rlc2MsIDEwKVxuYGBgIn0= -->
-<pre class="r"><code>head(face_desc, 10)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NTMsIm5yb3ciOjEwfSwicmRmIjoiSDRzSUFBQUFBQUFBQTUxYXpYSWJ4eEdtUmZ5UTRBOUFVcEt0Y3NXZUI0QkVHWUJzNVJTS2RxSWNraXFYNVpSOWN3YTdBMkRNeFE2OHM4c2ZYNUpESGlMSk1VK1FxcnhBSGlCNWw1eHlTbG5wK2UvWlhVZ3VvMHJDQUl1ZDZlbjUrdXV2ZS9uRloxOVBCMThQZG5aMmRuZDJlL0IvRjRZNzNkOTkrYXZIejNkMk92Zmd3enM3bloxOTlYNExsODlnOEF6K0hjTy93WXNQai8rdWZ2N2l3OUdmN2ZzL3pmdjlwK2I5Z2YzKzNkK2I5L2YrWjk3Zi81TjUvMWxtM2ovUTErRTFVdlBhQlR0cm1qRTc3aTNZVC9yMDArWXdkOWxkWGt5TmFSZXpoWDVkUFArWGV2Mzc0dkZVdnk2ZS9rTy8vK0UvNmxmOXYxMWNQdm9MdlA1Nk1UUGZYOXkzOTAvTTcydTc3TEwxcHJ4ekgrYWlZS245Y1BvWkxhN0lpaTlYUk9Ra0xhcWx0RmNHVWl4S01pL0VUZTV2UkI4Nk56eDFXem5RRjBqSnc3ejdDMW9RdXFGRjZXN0dWKzJIbXBFWldPRit2cC9RQmM5cDZXODV2dFJyektzbFlYZisyOE5sd1ZnK2pzemNuZk5sY3poWTBlOVpScERWNk9JUkhFVlJqb2xNYUREUzdEQzJzWmVzR0N1Y0p6czVUOXhzOTE4cVM3aGNHVnZJbk9iZWxWMXRwYnRKWE5PczdjS1pzWENUTVNwWlNrU1dzc0plNnROclZ0Q2xXNnU3b3B1Tk02SmZzSXplTnJ5NUs2bmJ5RUFzRnVTS1o2V2Y3NUUrOVV5SUs1Snl1SmpDY1NRbEY3bXp1TE9xd3NsaDUvWjRubkthYnovNGc2UVFVdGtQcCtTT1RnTU92TXNLTGlxM1JCOStLSzRhZHZjWElxbWtuNjQzNTJXeWNuczkvUzI3NVFuTjFlU1MwS3hnenNqQkZ6eFprY3V0YUVVbjljQVl6VEtSTHhYQUl2TVBOekJuZVVja3VKaTFlOS9NRlZ1OWx4U01sdng2eXkwSEx3c0tjMTR4MklzRE9CejlIWmxubFo4V2pidEpRYjkzbXo1U0Y0aGM4K0tLNXc2eFo5Yk9SR1NpT0kvTWpkR1JpTHhrZVZtbnZVeEk1N29UcVFNdnV5TXAreFpnNEgxeDlLVVFSTVZ4NUVsRkM4NVorc0k0aFlQMEMrNUtmMW9qQStnVWZsTldSZTduSFNnSFJpYjMzaHA0ZXlYWUlqWStXUFpsVld3S0hvQnlwbDBNUVVOa0pUYzhRVWpyeWhYUDcxcmNqTWNEN1dWd2xYVGZETzBabmljVnhtMVhjNFU3V0haTGwwdjRXZGtBOGpBWEplSGcvSUxKTWh6Y0lSeGlTb2s1UHVjb0hZNExlc1ZJUnVXS3VhVU9OSjdISktIWjJzV1NRcTJDZi9SRFRNWkRTeVBWWWdHUTh5UndrSW5yMnZUUlRyckFWMEJzOFI1R0s1NkM2VVNLTlN0WFlSTjlCcUd6OUw0L3VWUytzNGpFdk5XNTNJSnZERkhqZVd4TEV5Q2RlU1hkNzN1NUtDQjNOcGdaSUIzU21vNXBzZ0JNd0p1OFlaNG96aHlGcE1ybmlWaXZoY05VZjhPS0JRUkFNejkwbGtMNHFERCtsU1V0Z2tPYUZrZGJiSFh1SUdYZ01pbkRMSWl6UnliZHBZeW1RQkkwdjNLbnE1dzFKb284eHFTa3JXVFhsZUNlTElZRHpCenhYSXZCV0JiWUQzV1NFL2tDY1hPTjVJNDFpc0Zwa2NGOXVxYmZoeTNHckl5QVBkSWtaSk1uZ3ZNQUpqd25oYWp5TGN0Mk54bmxlYzNVcnRxZVErRXU1RC9uamN1TUpsZGt5WXRNQTZBV2FDcUp2TldqMFpXMmZHRlAyK0lTdGlqeXVpczdhZVhuNnlzVUtJcTJRdUkza0JaVjBDMkVVbENiQXV1RlZ3akpjVjZlRjBnOUhlcVFXakdhbFo2TkI5cUg1eVNndWsvelhBUXQxVFZPamcwOVFNZlNmdHV4SmE5WTdvMCtoNEEydDQwSlNyNnhKNmtNV21Kb2pwNldLbDJGVEJyZFVGdDZiOE40a1NodzFVNGZIOEFKaFdDUk1DRlowU0pGMnovOUN1NU9uVnpqaXNaRHVHZHBtNWZmK1lVZFBOVENqZGdFeDZVVmJUNWpLOHhxamtUSXh3elh5VlIrcjJPQ3NVMDd4azlmS0VjWnlwSVFYQ0ZIUDdRdVZ1d01NcGpScXVTTEtudXJ0NjBJVXRpQ2UwVUZoeHh1YTVMREhtQllsQ0lQRUFmeHVLaHRZSGNkSktleW4xQkovQmFHcjVRcFpndUsxVnJETFBvUTBaVXhWNTFndTRkcUg5dHpCRTVCb3pYUDB1eHVYdGNSSTUzTE5JTnBqdmNaQ09tZVlTYm1FaWdxSGNPRUlQbGRhcUUzSUVFV2hWZ1RScE9WS0ZjZVVTT0RsNFlVNmxVNXV3NmlwZzcrbnBWVzI4bmpRT254eFFKRWhpZVFFZUs0ZVNZVFIzS0gycUZ4clhTZ0kyVWNNWW5NQUlkZW11Z0RhOHI4WVpYckJIZXVTc2FnQkE2dDFNYy83U3d5V3RlZjNXb2pQWkVkaGoxNG5qQ1NDSFFUYUdSY0FXekh5MzRkL0NOanRXWTFvbFNYZDE4Zy9ub3VhYTFMc2ExN20weVVTTTZkbVR4dDRqTXp6TzE4YTBOenpYelU5ZVYzRlVoQ3Q1bWhONW0wTUtINWJaaHZ5SlVlWUJzWHIyMWt0Mi9FcjFLcmJ4TWJCL0p1dmFHQTBaSW5mak1LKzB0YnEyemdnczg4L1JkeEdzZkVNZ0Fmd2gzb20yTURkeVU2a09QUDlFL09GVXVsZC9EVzFCdlI1RFZ5Q2JtbERmTWFMbG9KUklZY1FMNTBMNGMyRFFnUTFVb3Z1c2xSVnNBNlJFbjN3RUdOQkJwUit1NjhxdWNoek9nOVUyTTdleU1WR21ZYythcHdITzFqRnkrS3o5dXJ1emZva1ROYmVJK0ppWGIwYzNOMGJlcTBCeWNTemp0aVB3UDJPYUE5bGNCeUx1bFpEZlU1cm16aWNHMEJPVmNZNU9nZ3ZaQTRqeHh3Qks1bkJSQnluZ2FyZW1CNDFvelhOYjhOZlNoZUZMeWtjOTkyRytvNlVldWpteFV2M2Rjbkw3V2l2dFNlZjRtNk1uRUt4ZjBhNi91UTlCeStjV25lZG1oZXhXeXZ5YnRnSUNaMGNEVlJ2bzc3Y1QrcTNXRnBFRVJLV1ZCVTNmZWlFclFmTjJkYVF4RG5uWDBkc0NUMW16cjdwV3JKaEpZU3BFSTNtVzBUUU1RRkprU0E3c3NOUzdobkdzZCtLZ3Rsd0ZndWttMzBiU2Z2TFEybHFQZFo2eTZkL05vZTRkMmN4VDNFTlhOWi9kZ3JoREdTRDE0Sm5tZ29xYzRFK2JaS2tkNzdFWjJrYmJWQjJPSjkxVURJSlNQV2JnVXFiN3pScnhwbVVmbU1nM1ZidStPQk1WdkpQd2prbTN4VGJYam1mSDFxaTF2VnZoQkVibWl5WlFOOVZ3WFhrZzNvR0lXMUlHUUdzcHF2dVpUaEc1TnJkSjlMdFRPVTg5M3lJeE9GS1N0WnNlWkJMR0g3YTNnMVBZUnJ1dlEvZUVPRHJGWkZ0T29UWEwyL2E5UWduYXNxalZRNXo2OUZkaDE2RGFiVTBlMmpvc0s5bmxwRElhS1NVOVVlMHV4YjF5MW1MNmFxamFFVU1VcmM1V3VGL3A2ZVB4QlV2OHJYSWhnK05BVzdXZzFVbksvWWUvTU1FdXpZUlVJQUhQYi9pY253Q3ZKc0RXN3g0ZnRlcUIzT1ZadUNsbkhUYVU5VktrZ2w3ZDFRa0hkTkRIVlFzKzloQnVURmNvWElHMTZ1d0E4Z0ZBdWZTWXhpcDB0Sk1Jb09QZ1c2S1F5bE81OUZzaFR0NXRpY251NFpOWE1wZG5zTk8xdW92RVl6SDZRbW5KSVZuRCtVaFhwTXM2UUM0QVZQbUVJNkVhRGQwUk9PbW1Tc2ZlemkxdFlETEYzcTZqSEE3QngzSlJ0bDZySGRrUlVMSG1CQVZTMkZkdFFYc0Z6bDBhVjZWNlprcGN1bG4ya0ZCeHZBamxwZTNSdkZaeTU4elM0c3JxTjY0Z0VtMW5OaW56ZHNJU2gzRUZzZmpvd2tvRVFETU83Sm1wNG0wQmdIWmlXTFFJSHZ2OUs5NmpFUVFTTFdvRUsxdWpBdE9SZEJhM3JGS3RFQ3RCRUNHdTZTTmJ0Y1VkV2g3WDBqeEU1VHR0YmFpTEJiU0tlZ2s4cG9JelRqU3BBckt2ZmF6MGdlWkIzdWVEWmE0eGt0dkZzYlQvZjJkUDRKN0s1bnFpVUZpODR3YjZQY05aRXNxWlIzdXZSemR5cmhVT0E3dTloVEEwMnIrUEs3MnVBcWYyejBPNVRrc0hrbzltTUFhU1hmd1ArUjR1VTVBM2Rkb3k5Qm1ra2lRTldJSXEyWFZrTWRUanFheGtubEZTWHFPcHFlZ2luMU1aUnF2ZEdvUXc3b0xsenRZSksxWVZ6VnNZNUU4Q1BnMkN5N0kyNVRqZDVOTFNST3ZtVjV6Z0czY0tJM3B1UitVMjJ1MHAxaGk1QTMycHVvdzFldXpJZ0NxZGFEUXFSaW16cW9QbjVMVjNyTG84NkQ1bE9XdUIwNk1oV0xaZ3JNclVlYVBiVzlxRmVQc2JXdjJ0bTRiTEZQUExIY3dpVkxGTUhSRTRCV1FZMFUvMzZWeHhIdG43N2hPT3QvdnUwUlJkeTJPY0c5aitqNXBvSTNCTjBLcmZUMlIvT0RoaFo3cEo0RjhGUUpJalVxQkVnQTlRRFo2NEJUMHhneG9JMEFzUnNlV3h6cklweVVZc2xRczJ6ZnorMmNicXZjUER3V2VJaGp1SUZRcXc3OXgvWXMwSGllRVF2NE0vU3dPU1hSYys4emxhckg1RFB3T09USktJajMxTE01Y0pUYlRQekFmSVE2YVFRMTlrM0hXRDNqUkFHRnN0VHVaWU5QTzR0UWpYVlFEQm15U1VGd1hFR01CL1YyWUZUMXArakpjcjA0Y0RZYndzY1A4dTZiUm1ScmJWdFhkSDBnU1NEY1JsbURCTjJSS254a1NSWVpMend1amsxRlVOTS8xbXlkQXRyTXhrOCt0ZGs4MFpLWFZZRTlmWmZORkFQYkg5T1pEN0hkOTNLWHlPODd2SkR2S3NVMklrZk51YTlVTTZIQmlZOCt0YmVNQ1VEaVdyTmo5S3k3cXh2VnpRTS8wZG15cFF1RlFuNElMSnlMbTR4WkRlNzg3NHVCNkUrcnVqbGRNNWU3bnJuZmdtM0ZOOXhQTHRtdEc0YU1jYS84eUk4bWZqVDFvNWtmUGZPamovM29Fejk2N2tjLzkxVHcwZE13L0NnTUoyRTREY05aR0Q0THc0L0Q4Sk13ZkI2R1liVkpXRzBTVnB1RTFTWmh0VWxZYlJKV200VFZKbUcxU1ZodEVsYWJodFdtWWJWcFdHMGFWcHVHMWFaaHRXbFliUnBXbTRiVnBtRzFXVmh0RmxhYmhkVm1ZYlZaV0cwV1ZwdUYxV1podFZsWWJSWldlL2EwQnE5OWdPb1RCN0VqZGNwL2hQOWV2Mzc5M3pvT0U2Z0hIUTdkbDRPVWx2VEpvb0Q3NGRNUHRWdjZZbVArT0dubm52cmJ3Rzd0NW5lSzJoZkRLbGVXcEkrVEZaUzFqeWM2bXRWbDh6cXk0d0VhUHpOTDNudHRwK282K3RibG1tZUxqSUkwZEh5bGdsTnQrTWtHeU5iLzdZSXFRWitVSWxURUEyQWQ5NDNlMjg0UC93ZGF2b1NsRWlrQUFBPT0ifQ== -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["user_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["t1"],"name":[4],"type":["chr"],"align":["left"]},{"label":["t2"],"name":[5],"type":["chr"],"align":["left"]},{"label":["t3"],"name":[6],"type":["chr"],"align":["left"]},{"label":["t4"],"name":[7],"type":["chr"],"align":["left"]},{"label":["t5"],"name":[8],"type":["chr"],"align":["left"]},{"label":["t6"],"name":[9],"type":["chr"],"align":["left"]},{"label":["t7"],"name":[10],"type":["chr"],"align":["left"]},{"label":["t8"],"name":[11],"type":["chr"],"align":["left"]},{"label":["t9"],"name":[12],"type":["chr"],"align":["left"]},{"label":["t10"],"name":[13],"type":["chr"],"align":["left"]},{"label":["t11"],"name":[14],"type":["chr"],"align":["left"]},{"label":["t12"],"name":[15],"type":["chr"],"align":["left"]},{"label":["t13"],"name":[16],"type":["chr"],"align":["left"]},{"label":["t14"],"name":[17],"type":["chr"],"align":["left"]},{"label":["t15"],"name":[18],"type":["chr"],"align":["left"]},{"label":["t16"],"name":[19],"type":["chr"],"align":["left"]},{"label":["t17"],"name":[20],"type":["chr"],"align":["left"]},{"label":["t18"],"name":[21],"type":["chr"],"align":["left"]},{"label":["t19"],"name":[22],"type":["chr"],"align":["left"]},{"label":["t20"],"name":[23],"type":["chr"],"align":["left"]},{"label":["t21"],"name":[24],"type":["chr"],"align":["left"]},{"label":["t22"],"name":[25],"type":["chr"],"align":["left"]},{"label":["t23"],"name":[26],"type":["chr"],"align":["left"]},{"label":["t24"],"name":[27],"type":["chr"],"align":["left"]},{"label":["t25"],"name":[28],"type":["chr"],"align":["left"]},{"label":["t26"],"name":[29],"type":["chr"],"align":["left"]},{"label":["t27"],"name":[30],"type":["chr"],"align":["left"]},{"label":["t28"],"name":[31],"type":["chr"],"align":["left"]},{"label":["t29"],"name":[32],"type":["chr"],"align":["left"]},{"label":["t30"],"name":[33],"type":["chr"],"align":["left"]},{"label":["t31"],"name":[34],"type":["chr"],"align":["left"]},{"label":["t32"],"name":[35],"type":["chr"],"align":["left"]},{"label":["t33"],"name":[36],"type":["chr"],"align":["left"]},{"label":["t34"],"name":[37],"type":["chr"],"align":["left"]},{"label":["t35"],"name":[38],"type":["chr"],"align":["left"]},{"label":["t36"],"name":[39],"type":["chr"],"align":["left"]},{"label":["t37"],"name":[40],"type":["chr"],"align":["left"]},{"label":["t38"],"name":[41],"type":["chr"],"align":["left"]},{"label":["t39"],"name":[42],"type":["chr"],"align":["left"]},{"label":["t40"],"name":[43],"type":["chr"],"align":["left"]},{"label":["t41"],"name":[44],"type":["chr"],"align":["left"]},{"label":["t42"],"name":[45],"type":["chr"],"align":["left"]},{"label":["t43"],"name":[46],"type":["chr"],"align":["left"]},{"label":["t44"],"name":[47],"type":["chr"],"align":["left"]},{"label":["t45"],"name":[48],"type":["chr"],"align":["left"]},{"label":["t46"],"name":[49],"type":["chr"],"align":["left"]},{"label":["t47"],"name":[50],"type":["chr"],"align":["left"]},{"label":["t48"],"name":[51],"type":["chr"],"align":["left"]},{"label":["t49"],"name":[52],"type":["chr"],"align":["left"]},{"label":["t50"],"name":[53],"type":["chr"],"align":["left"]}],"data":[{"1":"508844","2":"male","3":"19.0","4":"empty","5":"light","6":"cheery","7":"sad","8":"focused","9":"creative","10":"lost","11":"too open","12":"not interesting","13":"hiding something","14":"closed","15":"depressing","16":"confused","17":"nicer","18":"dull","19":"light brown","20":"angry","21":"deep","22":"mad","23":"blue","24":"dull","25":"upset","26":"upset","27":"depressing","28":"art","29":"deep","30":"boring","31":"mixed","32":"lost","33":"dull","34":"empty","35":"dark","36":"attractive","37":"happy","38":"very mad","39":"open","40":"focused","41":"brown","42":"sad","43":"focused","44":"light blue","45":"intersting,cute","46":"upset","47":"interesting","48":"lost","49":"determined","50":"confused","51":"full","52":"open","53":"no"},{"1":"508966","2":"female","3":"20.4","4":"bored","5":"cafinated","6":"nice","7":"off kilter","8":"bitchy","9":"average","10":"slightly dejected","11":"surprised","12":"kinda pretty","13":"engaged","14":"tired frayed sweet","15":"sad","16":"average","17":"off","18":"present","19":"annoyed","20":"agresive hard big","21":"average","22":"aver as ge","23":"mildlybsurprised","24":"indifferent","25":"indifference","26":"plotting","27":"sympathetic","28":"indifferent","29":"direct","30":"soft","31":"irritable","32":"blunt","33":"bored dry","34":"focused","35":"intense focused cold","36":"submissive","37":"blank absent uninvolved","38":"unmoved","39":"listening with concern","40":"daring challenging calculating","41":"intense","42":"searching pretty","43":"demandin expectant","44":"attentive","45":"off","46":"uninterested","47":"bright","48":"unfocused","49":"confident confrontational","50":"judging","51":"mean","52":"almost flirty","53":"confused questioning"},{"1":"508976","2":"female","3":"24.8","4":"Dark high on drugs","5":"Brown bug eyed","6":"Greenish brown bangs","7":"Dark look diff directions","8":"Mexican eyes alret","9":"Gray sketch","10":"Too far brown","11":"Gray old suspicious","12":"Dark fake lashes","13":"Blue pretty older","14":"Mexican dark common","15":"Brown dead blank","16":"Dark big blank","17":"Black girl dark","18":"Looking for approval","19":"Dark far apart","20":"Weird brown bigger","21":"Asian dark slanted","22":"Small dark dead","23":"Blue blank stare","24":"Black girl blsck","25":"Dark tiny bitchy","26":"Brown Asian looking","27":"Blue gray skeptical","28":"Dark plain small","29":"Mexican dark big","30":"Asian bloodshot","31":"Gray blue white","32":"Blood shot brown","33":"Eyes look diff ways","34":"Hazel maybe brown","35":"Weird color alert","36":"Blue crazy eyebrows","37":"Pale blue trusting","38":"Dark blue drunk","39":"Blue bags brows","40":"Dark cock eyed","41":"Dead dark saggy","42":"Blue trailer face","43":"Blue alien spaced","44":"Blue sassy tiny","45":"Blue uneven face","46":"Black girl dark","47":"Asian cross eyed","48":"Too far apart","49":"Brown green pretty","50":"Mexican eyed indian","51":"Blue drinker old","52":"Blue cock eyed","53":"White girl dark"},{"1":"509196","2":"female","3":"14.6","4":"soft brown","5":"green, brown","6":"green","7":"hurt","8":"Rich Brown","9":"grey blue","10":"soft","11":"shiny","12":"Brown, calm","13":"Blue","14":"perfect","15":"blue, grey, tan","16":"amazing","17":"Brown, Rich","18":"Sweet","19":"Pale brown, nice","20":"gold","21":"brown, thin, beautiful","22":"brown","23":"soft","24":"tired, brown","25":"brown","26":"brown, mean","27":"Amazing","28":"weeeeeeeeee","29":"grey blue, small","30":"Brown, Pretty","31":"Grey, Blue, Green","32":"Brown","33":"brown, clean","34":"meh","35":"soft","36":"Blue, determined","37":"perfect","38":"blind,","39":"Clear, Blue","40":"squinty","41":"hopeful","42":"Scared, uncomfertable, grey","43":"Grey, blue","44":"clear blue","45":"amazing","46":"Serious, pretty","47":"sweet, preppy","48":"Perfect","49":"tan","50":"Dark, Deep, amazing","51":"Blue, Crazy","52":"Blue, clear","53":"Confused, nervous, scared"},{"1":"509286","2":"female","3":"16.7","4":"brown","5":"big","6":"oval","7":"brown","8":"brown","9":"blue","10":"brown,droopy","11":"blue","12":"long eyelashes","13":"blue","14":"big","15":"brown","16":"brown","17":"brown","18":"brown","19":"small","20":"brown","21":"small","22":"brown","23":"lobsided,bluish","24":"angry,brown","25":"brown","26":"squinty","27":"small","28":"round, close","29":"big","30":"brown","31":"small","32":"brown","33":"big","34":"surprised,blue","35":"blue","36":"blue","37":"small","38":"old","39":"tired","40":"squinty","41":"sad","42":"makeuo","43":"big","44":"round","45":"blue","46":"small","47":"round","48":"big","49":"close together","50":"eyeliner","51":"blue","52":"blue","53":"norma"},{"1":"509400","2":"male","3":"NA","4":"wide","5":"big","6":"green","7":"indian","8":"nice","9":"crazy","10":"shy","11":"blue","12":"wide","13":"happy","14":"good","15":"small","16":"calm","17":"small","18":"bright","19":"asian","20":"?","21":"asian","22":"tired","23":"away from eachother","24":"sleepy","25":"beautiful","26":"beautiful asian","27":"very small","28":"big","29":"angry","30":"asian","31":"green","32":"nice","33":"special","34":"?","35":"blue","36":"serious","37":"not very beautiful","38":"blue","39":"blue","40":"sweet","41":"weird","42":"blue","43":"blue","44":"small blue","45":"sharp","46":"angry","47":"big asian","48":"sleepy","49":"confident","50":"indian","51":"blur","52":"wide","53":"sad"},{"1":"509503","2":"female","3":"36.2","4":"brown tired","5":"hazel wide","6":"hazel pleased older","7":"brown tired","8":"brown elongated tired","9":"blue smirking","10":"hazel downturned","11":"blue tense","12":"hazel puffy sad","13":"blue alert","14":"hazel staring","15":"hazel sad tired","16":"light brown wide","17":"brown","18":"blue healthy","19":"brown attentive","20":"green hazel displeased","21":"brown oval thoughtful","22":"brown hard","23":"green downturned","24":"dark brown tired","25":"brown round kind","26":"brown squinting","27":"green sad kind","28":"light brown rested","29":"hazel sad","30":"brown impatient","31":"hazel mad","32":"brown distracted","33":"brown sleepless","34":"blue open judging","35":"blue oval blownpupils","36":"blue vague","37":"blue plain","38":"green judgemental","39":"blue tired sad","40":"light brown squinting","41":"brown crooked tired","42":"blue tired blank","43":"blue large","44":"blue un-rested friendly","45":"blue green commanding","46":"brown mean","47":"brown alert","48":"brown round tired","49":"hazel snide","50":"brown tired oval","51":"blue older","52":"blue icy madeup","53":"lightbrown rested"},{"1":"509665","2":"female","3":"20.7","4":"far apart","5":"big","6":"average","7":"crossed eye","8":"pretty shape","9":"pretty color/ shape","10":"nice shape","11":"average/curious","12":"love lashes","13":"nice shape","14":"nice shape","15":"nice shape","16":"big/ round","17":"pretty shape","18":"round/ big","19":"small","20":"big/ engaging","21":"nice shape","22":"average","23":"uneven","24":"unhappy/drugged","25":"dark","26":"in deep thought","27":"small/ beady/ bored","28":"round/ big","29":"pretty shape","30":"far apart/ small","31":"small/ pretty color","32":"pretty","33":"round/ dark","34":"pretty shape","35":"staring into space","36":"pretty color/ shape","37":"pretty color","38":"nice shape/ great lashes","39":"pretty color","40":"beautiful/ interesting/ engaging","41":"pretty shape/ crossed","42":"big/ round","43":"far apart","44":"pretty/ big/ engaging","45":"really pretty/ nice shape","46":"nice shape","47":"far apart/ round","48":"not enthused","49":"pretty/ big/interested","50":"big/ too dark","51":"droopy/ pretty color","52":"beautiful color/shape","53":"big"},{"1":"509787","2":"female","3":"5.0","4":"tired","5":"alert, scared","6":"happy","7":"bored, serious","8":"average","9":"happy","10":"scared","11":"alert","12":"alert","13":"busy","14":"happy","15":"bored","16":"average","17":"angry","18":"annoyed","19":"annoyed","20":"alert","21":"monotone","22":"average","23":"attentive","24":"bored, tired","25":"average","26":"angry","27":"bored","28":"alert","29":"serious, angry, sad","30":"understanding","31":"angry","32":"serious","33":"average","34":"average","35":"average","36":"annoyed","37":"happy","38":"thinking","39":"annoyed","40":"annoyed, angry","41":"average","42":"upset","43":"alertive","44":"not believing","45":"average","46":"bored","47":"happy","48":"tired","49":"serioud","50":"sad","51":"thinking","52":"happy","53":"acknowledgement"},{"1":"509848","2":"male","3":"18.2","4":"tired","5":"wide","6":"relaxed","7":"crooked","8":"nice","9":"content","10":"wide","11":"exaggerated","12":"angry","13":"normal","14":"angry","15":"bored","16":"plain","17":"almond","18":"round","19":"peircing","20":"lazy","21":"aloof","22":"normal","23":"droopy","24":"flat","25":"tired","26":"suspicous","27":"small","28":"bug","29":"very angry","30":"angled","31":"annoyed","32":"small","33":"crooked","34":"almond","35":"staring","36":"flat","37":"crooked","38":"watching","39":"annoyed","40":"calming","41":"focused","42":"sad","43":"big","44":"loss of words","45":"jennifer lawrence","46":"relaxed","47":"small","48":"tired","49":"focused","50":"Big","51":"worried","52":"happy","53":"crooked"}],"options":{"columns":{"min":{},"max":[10],"total":[53]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbmBgYCJ9 -->
-<pre class="r"><code>NA</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="evaluating-the-variable-names-and-describing-the-data-format." class="section level1">
-<h1>2. Evaluating the variable names and describing the data format.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5uYW1lcyhmYWNlX2Rlc2MpXG5gYGAifQ== -->
-<pre class="r"><code>
-names(face_desc)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcInVzZXJfaWRcIiBcInNleFwiICAgICBcImFnZVwiICAgICBcInQxXCIgICAgICBcInQyXCIgICAgICBcInQzXCIgICAgICBcInQ0XCIgICAgICBcInQ1XCIgICAgICBcInQ2XCIgICAgICBcInQ3XCIgICAgICBcInQ4XCIgICAgIFxuWzEyXSBcInQ5XCIgICAgICBcInQxMFwiICAgICBcInQxMVwiICAgICBcInQxMlwiICAgICBcInQxM1wiICAgICBcInQxNFwiICAgICBcInQxNVwiICAgICBcInQxNlwiICAgICBcInQxN1wiICAgICBcInQxOFwiICAgICBcInQxOVwiICAgIFxuWzIzXSBcInQyMFwiICAgICBcInQyMVwiICAgICBcInQyMlwiICAgICBcInQyM1wiICAgICBcInQyNFwiICAgICBcInQyNVwiICAgICBcInQyNlwiICAgICBcInQyN1wiICAgICBcInQyOFwiICAgICBcInQyOVwiICAgICBcInQzMFwiICAgIFxuWzM0XSBcInQzMVwiICAgICBcInQzMlwiICAgICBcInQzM1wiICAgICBcInQzNFwiICAgICBcInQzNVwiICAgICBcInQzNlwiICAgICBcInQzN1wiICAgICBcInQzOFwiICAgICBcInQzOVwiICAgICBcInQ0MFwiICAgICBcInQ0MVwiICAgIFxuWzQ1XSBcInQ0MlwiICAgICBcInQ0M1wiICAgICBcInQ0NFwiICAgICBcInQ0NVwiICAgICBcInQ0NlwiICAgICBcInQ0N1wiICAgICBcInQ0OFwiICAgICBcInQ0OVwiICAgICBcInQ1MFwiICAgIFxuIn0= -->
-<pre><code> [1] &quot;user_id&quot; &quot;sex&quot;     &quot;age&quot;     &quot;t1&quot;      &quot;t2&quot;      &quot;t3&quot;      &quot;t4&quot;      &quot;t5&quot;      &quot;t6&quot;      &quot;t7&quot;      &quot;t8&quot;     
-[12] &quot;t9&quot;      &quot;t10&quot;     &quot;t11&quot;     &quot;t12&quot;     &quot;t13&quot;     &quot;t14&quot;     &quot;t15&quot;     &quot;t16&quot;     &quot;t17&quot;     &quot;t18&quot;     &quot;t19&quot;    
-[23] &quot;t20&quot;     &quot;t21&quot;     &quot;t22&quot;     &quot;t23&quot;     &quot;t24&quot;     &quot;t25&quot;     &quot;t26&quot;     &quot;t27&quot;     &quot;t28&quot;     &quot;t29&quot;     &quot;t30&quot;    
-[34] &quot;t31&quot;     &quot;t32&quot;     &quot;t33&quot;     &quot;t34&quot;     &quot;t35&quot;     &quot;t36&quot;     &quot;t37&quot;     &quot;t38&quot;     &quot;t39&quot;     &quot;t40&quot;     &quot;t41&quot;    
-[45] &quot;t42&quot;     &quot;t43&quot;     &quot;t44&quot;     &quot;t45&quot;     &quot;t46&quot;     &quot;t47&quot;     &quot;t48&quot;     &quot;t49&quot;     &quot;t50&quot;    </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0aGUgbmFtZXMoKSBmdW5jdGlvbiBhbGxvd3MgYWxsIHZhcmlhYmxlIG5hbWVzIG9mIGZhY2VfZGVzYyB0byBiZSByZXR1cm5lZC4gQWx0aG91Z2ggdGhlIHZhcmlhYmxlIG5hbWVzIGZvbGxvdyB0aWR5dmVyc2UgY2FzZSBydWxlcyAoaW4gdGhhdCB0aGV5IGFyZSBsb3dlciBjYXNlIGFuZCB0aGVyZSBpcyBhbiB1bmRlcnNjb3JlIHRvIHNlcGFyYXRlIHRoZSBjb2x1bW4gd2l0aCB0d28gd29yZHMpLCB0aGUgbWFqb3JpdHkgb2YgdGhlIHZhcmlhYmxlIG5hbWVzIGFyZSBub3QgZGVzY3JpcHRpdmUgb2YgdGhlIGRhdGEgdGhleSBob2xkIGFuZCBhcmUgdW5jbGVhci4gICBcblxudmlldyhmYWNlX2Rlc2MpXG5cbiNVc2luZyB0aGUgdmlldygpIGZ1bmN0aW9uLCBpdCBjYW4gYmUgZGV0ZXJtaW5lZCB0aGF0IHRoZSBkYXRhIGlzIGluIGEgd2lkZSBmb3JtYXRcblxuYGBgIn0= -->
-<pre class="r"><code># the names() function allows all variable names of face_desc to be returned. Although the variable names follow tidyverse case rules (in that they are lower case and there is an underscore to separate the column with two words), the majority of the variable names are not descriptive of the data they hold and are unclear.   
-
-view(face_desc)
-
-#Using the view() function, it can be determined that the data is in a wide format
+library(tidyverse)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="formatting-the-data" class="section level1">
-<h1>3. Formatting the data</h1>
+<div id="reading-in-the-code_clan_tweets.csv-file-returning-the-number-of-row-and-columns-and-listing-variable-names." class="section level1">
+<h1>1. Reading in the code_clan_tweets.csv file, returning the number of row and columns and listing variable names.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5sb25nZXJfZmFjZV9kZXNjIDwtIGZhY2VfZGVzYyAlPiUgXG4gIHBpdm90X2xvbmdlcihjb2xzID0gc3RhcnRzX3dpdGgoXCJ0XCIpLFxuICAgICAgICAgICAgICAgbmFtZXNfdG8gPSBcInRlc3RfbnVtYmVyXCIsXG4gICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSBcImRlc2NyaXB0aW9uXCIpXG5cblxudmlldyhsb25nZXJfZmFjZV9kZXNjKVxuXG4jQXMgdGhlIGRhdGEgaXMgaW4gYSB3aWRlIGZvcm1hdCwgdGhlIHBpdm90X2xvbmdlciBmdW5jaXRvbiBoYXMgYmVlbiB1c2VkIHRvIHRha2UgYWxsIHRoZSBjb2x1bW5zIHRoYXQgc3RhcnQgd2l0aCBcInRcIiBhbmQgbW92ZSB0aGVtIGludG8gb25lIGNvbHVtbiBjYWxsZWQgdGVzdF9udW1iZXIgKG5hbWVzX3RvIGFyZ3VtZW50IHJlZmVycyB0byB0aGlzKS4gVGhlIHZhbHVlc190byBhcmd1bWVudHMgd2l0aGluIHRoZSBwaXZvdF9sb25nZXIgZnVuY3Rpb24gYWxsb3cgdGhlIHZhbHVlcyBmcm9tIHRoZSBcInRcIiBjb2x1bW5zIHRvIGJlIG9yZ2FuaXNlZCBpbiBhbm90aGVyIG5ldyBjb2x1bW4gY2FsbGVkIFwiZGVzY3JpcHRpb25zXCIuXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5jb2RlX2NsYW5fdHdlZXRzIDwtIHJlYWRfY3N2KFwiZGF0YS9jb2RlX2NsYW5fdHdlZXRzLmNzdlwiKVxuXG52aWV3KGNvZGVfY2xhbl90d2VldHMpIFxuXG5kaW0oY29kZV9jbGFuX3R3ZWV0cykgI1JldHVybnMgbnVtYmVyIG9mIHJvd3MgYW5kIGNvbHVtbnNcblxubmFtZXMoY29kZV9jbGFuX3R3ZWV0cykgI3JldHVybnMgdmFyaWFibGUgbmFtZXNcblxuXG5gYGAifQ== -->
 <pre class="r"><code>
-longer_face_desc &lt;- face_desc %&gt;% 
-  pivot_longer(cols = starts_with(&quot;t&quot;),
-               names_to = &quot;test_number&quot;,
-               values_to = &quot;description&quot;)
+code_clan_tweets &lt;- read_csv(&quot;data/code_clan_tweets.csv&quot;)
 
+view(code_clan_tweets) 
 
-view(longer_face_desc)
+dim(code_clan_tweets) #Returns number of rows and columns
 
-#As the data is in a wide format, the pivot_longer funciton has been used to take all the columns that start with &quot;t&quot; and move them into one column called test_number (names_to argument refers to this). The values_to arguments within the pivot_longer function allow the values from the &quot;t&quot; columns to be organised in another new column called &quot;descriptions&quot;.
+names(code_clan_tweets) #returns variable names
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#2. A summary of how many likes each CodeClan tweet has.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zdW1tYXJpc2VkX2NvZGVfY2xhbl90d2VldHM8LSBjb2RlX2NsYW5fdHdlZXRzICU+JSBcbiAgZ3JvdXBfYnkodHdlZXRfaWQpICU+JSAjIGdyb3VwIHRoZSBlbnRyaWVzIGJ5IHR3ZWV0X2lkXG4gIHN1bW1hcmlzZShmYXZvcml0ZV9jb3VudClcblxuYm94cGxvdChzdW1tYXJpc2VkX2NvZGVfY2xhbl90d2VldHMpIFxuXG5gYGAifQ== -->
+<pre class="r"><code>
+summarised_code_clan_tweets&lt;- code_clan_tweets %&gt;% 
+  group_by(tweet_id) %&gt;% # group the entries by tweet_id
+  summarise(favorite_count)
+
+boxplot(summarised_code_clan_tweets) 
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="splitting-the-description-column-into-3-description-columns" class="section level1">
-<h1>4. Splitting the description column into 3 description columns</h1>
+<div id="returning-the-number-of-codeclan-tweets-that-have-been-liked-0-favourite-count-minus-tweets-that-were-quoted." class="section level1">
+<h1>3. Returning the number of CodeClan tweets that have been liked (&gt;0 favourite count) minus tweets that were quoted.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kZXNjcmlwdGlvbl9zZXAgPC0gbG9uZ2VyX2ZhY2VfZGVzYyAlPiUgXG4gIHNlcGFyYXRlKGRlc2NyaXB0aW9uLCBjKFwiMXN0X2Rlc2NyaXB0aW9uXCIsIFwiMm5kX2Rlc2NyaXB0aW9uXCIsIFwiM3JkX2Rlc2NyaXB0aW9uXCIpLCBzZXAgPSBcIi98LFwiKVxuYGBgIn0= -->
-<pre class="r"><code>
-description_sep &lt;- longer_face_desc %&gt;% 
-  separate(description, c(&quot;1st_description&quot;, &quot;2nd_description&quot;, &quot;3rd_description&quot;), sep = &quot;/|,&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXhwZWN0ZWQgMyBwaWVjZXMuIEFkZGl0aW9uYWwgcGllY2VzIGRpc2NhcmRlZCBpbiA0MyByb3dzIFsxMDAxLCAxMDAzLCAxMDA0LCAxMDA2LCAxMDA4LCAxMDA5LCAxMDEwLCAxMDExLCAxMDEzLCAxMDE0LCAxMDE1LCAxMDE2LCAxMDE4LCAxMDE5LCAxMDIwLCAxMDIxLCAxMDIyLCAxMDIzLCAxMDI1LCAxMDI2LCAuLi5dLkV4cGVjdGVkIDMgcGllY2VzLiBNaXNzaW5nIHBpZWNlcyBmaWxsZWQgd2l0aCBgTkFgIGluIDEwNjQ2IHJvd3MgWzEsIDIsIDMsIDQsIDUsIDYsIDcsIDgsIDksIDEwLCAxMSwgMTIsIDEzLCAxNCwgMTUsIDE2LCAxNywgMTgsIDE5LCAyMCwgLi4uXS5cbiJ9 -->
-<pre><code>Expected 3 pieces. Additional pieces discarded in 43 rows [1001, 1003, 1004, 1006, 1008, 1009, 1010, 1011, 1013, 1014, 1015, 1016, 1018, 1019, 1020, 1021, 1022, 1023, 1025, 1026, ...].Expected 3 pieces. Missing pieces filled with `NA` in 10646 rows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmlldyhkZXNjcmlwdGlvbl9zZXApXG5cbiMgVG8gY2FwdHVyZSBzZWNvbmRhcnkgYW5kIHRlcnRpYXJ5IGRlc2NyaXB0aW9ucyB0aGF0IGFyZSBzcGxpdCBieSBzbGFzaGVzIGFuZCBjb21tbWFzIHRoZSBzZXBhcmF0ZSgpIGZ1bmN0aW9uIGhhcyBiZWVuIHVzZWQuIFRoZSBjb2RlIGFib3ZlIHB1dHMgZGVzY3JpcHRpb25zIHNwbGl0IGJ5IHNsYXNoZXMgYW5kIGNvbW1hcyAoc2VwID0gXCIvfCxcIikgaW50byAzIHNlcGFyYXRlIGNvbHVtbnMgXCIxc3RfZGVzY3JpcHRpb25cIiwgXCIybmRfZGVzY3JpcHRpb25cIiBhbmQgXCIzcmRfZGVzY3JpcHRpb25cIi4gXG5cbmBgYCJ9 -->
-<pre class="r"><code>view(description_sep)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudG90YWxfb2ZfZmF2ZV90d2VldHMgPC0gY29kZV9jbGFuX3R3ZWV0cyAlPiUgXG4gIGZpbHRlcighZmF2b3JpdGVfY291bnQgPT0gMCkgJT4lICNyZWFkcyBhcyByZXR1cm4gdHdlZXRzIHRoYXQgZG9uJ3QgZXF1YWwgemVybyBvbmx5XG4gIGZpbHRlcighaXNfcXVvdGUgPT0gVFJVRSkgJT4lICMgcmVhZHMgYXMgcmV0dXJuIG9ubHkgdHdlZXRzIHRoYXQgd2VyZW4ndCBxdW90ZWRcbiAgc3VtbWFyaXNlKHRvdGFsX2Zhdl90d2VldF9jb3VudCA9IG4oKSkgIyBuKCkgY291bnRzIHRoZSBudW1iZXIgb2YgdHdlZXRzIHRoYXQgd2VyZSBmYXZvdXJpdGVkXG5cbnRvdGFsX29mX2ZhdmVfdHdlZXRzXG5cbmBgYCJ9 -->
+<pre class="r"><code>total_of_fave_tweets &lt;- code_clan_tweets %&gt;% 
+  filter(!favorite_count == 0) %&gt;% #reads as return tweets that don't equal zero only
+  filter(!is_quote == TRUE) %&gt;% # reads as return only tweets that weren't quoted
+  summarise(total_fav_tweet_count = n()) # n() counts the number of tweets that were favourited
 
-# To capture secondary and tertiary descriptions that are split by slashes and commmas the separate() function has been used. The code above puts descriptions split by slashes and commas (sep = &quot;/|,&quot;) into 3 separate columns &quot;1st_description&quot;, &quot;2nd_description&quot; and &quot;3rd_description&quot;. 
+total_of_fave_tweets
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="tidying-the-description-columns-back-into-one-column." class="section level1">
-<h1>5. Tidying the description columns back into one column.</h1>
+<div id="summary-of-the-mean-number-of-rewteets-split-by-platform-type-source" class="section level1">
+<h1>4. Summary of the mean number of rewteets, split by platform type (source)</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9uZ2VyX2Rlc2NyaXB0aW9uX3NlcCA8LSBkZXNjcmlwdGlvbl9zZXAgJT4lXG4gIHJlbmFtZShcIjFcIiA9IGAxc3RfZGVzY3JpcHRpb25gLFxuICAgICAgICAgXCIyXCIgPSBgMm5kX2Rlc2NyaXB0aW9uYCxcbiAgICAgICAgIFwiM1wiID0gYDNyZF9kZXNjcmlwdGlvbmApICU+JSBcbiAgcGl2b3RfbG9uZ2VyKGNvbHMgPSA1OjcsXG4gICAgICAgICAgICAgICBuYW1lc190byA9IFwiZGVzY3JpcHRpb25fbnVtYmVyXCIsXG4gICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSBcImRlc2NyaXB0aW9uXCIpXG4gIFxuXG52aWV3KGxvbmdlcl9kZXNjcmlwdGlvbl9zZXApXG5cbiMgSW4ga2VlcGluZyB3aXRoIHRoZSB0aWR5IHJ1bGVzLCBwaXZvdF9sb25nZXIoKSB3YXMgdXNlZCBhZ2FpbiBidXQgdGhpcyB0aW1lIHRvIGNyZWF0ZSBhIG5ldyBjb2x1bW4gY2FsbGVkIGRlc2NyaXB0aW9uX251bWJlciB3aGljaCBkZXRhaWxzIHdoZXRoZXIgYSBkZXNjcmlwdGlvbiB3YXMgcHJpbWFyeSwgc2Vjb25kYXJ5IG9yIHRlcnRpYXJ5IHdoaWxzdCBrZWVwaW5nIGFjdHVhbCBkZXNjcmlwdGlvbnMgaW4gb25lIGNvbHVtbi4gQWZ0ZXIgdGhlIHJlbmFtZSgpIGZ1bmN0aW9uIHdhcyBhZGRlZCB0byB0aGUgcGlwZSBiZWZvcmUgcGl2b3RfbG9uZ2VyKCkgdG8gZnVydGhlciB0aWR5IHRoZSBkYXRhLlxuXG5gYGAifQ== -->
-<pre class="r"><code>longer_description_sep &lt;- description_sep %&gt;%
-  rename(&quot;1&quot; = `1st_description`,
-         &quot;2&quot; = `2nd_description`,
-         &quot;3&quot; = `3rd_description`) %&gt;% 
-  pivot_longer(cols = 5:7,
-               names_to = &quot;description_number&quot;,
-               values_to = &quot;description&quot;)
-  
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbl9yZXR3ZWV0X2J5X3NvdXJjZSA8LSBjb2RlX2NsYW5fdHdlZXRzICU+JSBcbiAgZmlsdGVyKCFpc19xdW90ZSA9PSBUUlVFKSAlPiUgIyByZWFkcyBhcyByZXR1cm4gb25seSB0d2VldHMgdGhhdCB3ZXJlbid0IHF1b3RlZFxuICBncm91cF9ieShzb3VyY2UpICU+JSAjIGdyb3VwIHRoZSBlbnRyaWVzIGJ5IHNvdXJjZSB0eXBlXG4gIHN1bW1hcmlzZShtZWFuX3JldHdlZXRfY291bnQgPSBtZWFuKHJldHdlZXRfY291bnQpKSAjc3VtbWFyaXNlcyBhbmQgY3JlYXRlcyBuZXcgY29sdW1uIHRoYXQgY2FsY3VsYXRlcyBtZWFuIG9mIHJldHdlZXRfY291bnRcblxubWVhbl9yZXR3ZWV0X2J5X3NvdXJjZVxuYGBgIn0= -->
+<pre class="r"><code>mean_retweet_by_source &lt;- code_clan_tweets %&gt;% 
+  filter(!is_quote == TRUE) %&gt;% # reads as return only tweets that weren't quoted
+  group_by(source) %&gt;% # group the entries by source type
+  summarise(mean_retweet_count = mean(retweet_count)) #summarises and creates new column that calculates mean of retweet_count
 
-view(longer_description_sep)
-
-# In keeping with the tidy rules, pivot_longer() was used again but this time to create a new column called description_number which details whether a description was primary, secondary or tertiary whilst keeping actual descriptions in one column. After the rename() function was added to the pipe before pivot_longer() to further tidy the data.
-</code></pre>
+mean_retweet_by_source</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="filtering-out-the-descritpions-with-na-values-and-any-that-have-a-character-length-of-1." class="section level1">
-<h1>6. Filtering out the descritpions with NA values and any that have a character length of 1.</h1>
+<div id="the-total-number-of-favourite_count-values-split-by-media_type-in-descending-order." class="section level1">
+<h1>5. The total number of favourite_count values, split by media_type in descending order.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4gIGdldF9yaWRfb2ZfbmFzIDwtIGxvbmdlcl9kZXNjcmlwdGlvbl9zZXAgJT4lXG4gIGZpbHRlcihpcy5uYShkZXNjcmlwdGlvbikgPT0gRkFMU0UpICU+JSBcbiAgZmlsdGVyKG5jaGFyKGRlc2NyaXB0aW9uKSAhPSAxKVxuXG52aWV3KGdldF9yaWRfb2ZfbmFzKVxuXG5cbiMgVXNpbmcgdGhlIGlzLm5hKCkgd2l0aCB0aGUgZmlsdGVyIGZ1bmN0aW9uIGFsbG93cyBhbnkgZGVzY3JpcHRpb25zIHdpdGggTkEgdmFsdWVzIHRvIGJlIGZpbHRlcmVkIG91dCAoY29kZSByZWFkcyBrZWVwIGRlc2NyaXB0aW9uIHZhbHVlcyB3aGVyZSBpcy5uYSgpIGlzIGZhbHNlKS4gVGhlIG5jaGFyKCkgZnVuY2l0b24gY291bnRzIHRoZSBudW1iZXIgb2YgZWxlbWVudHMgd2l0aGluIGEgY2hhcmFjdGVyIHZlY3RvciBhbmQgc28gaXQgY2FuIGhlbHAgaWRlbnRpZnkgb3IgZmlsdGVyIG91dCBkZXNjcmlwdGlvbnMgdGhhdCBhcmUgb25seSAxIGNoYXJhY3RlciBsZW5ndGguIFxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG50b3RhbF9vZl9mYXZlX3R3ZWV0c19ieV9tZWRpYSA8LSBjb2RlX2NsYW5fdHdlZXRzICU+JVxuICBzZWxlY3QobWVkaWFfdHlwZSwgZmF2b3JpdGVfY291bnQpICU+JSAjaXNvbGF0ZXMgdGhlIG1lZGlhIGFuZCBmYXZvdXJpdGVfY291bnQgY29sdW1uc1xuICBncm91cF9ieShtZWRpYV90eXBlKSAlPiUgI2dyb3VwcyB0d2VldHMgYnkgdGhlIG1lZGlhIHR5cGUgdXNlZCBcbiAgc3VtbWFyaXNlKHRvdGFsX3R3ZWV0X2NvdW50ID0gbigpKSAlPiUgI2NyZWF0ZXMgYSBuZXcgY29sdW1uIGNhbGxlZCB0b3RhbF90d2VldF9jb3VudCB0aGF0IGNvdW50c1xuICBhcnJhbmdlKGRlc2ModG90YWxfdHdlZXRfY291bnQpKSAjdG90YWxfdHdlZXRfY291bnQgaXMgYXJyYW5nZWQgc28gdGhlIHRcbmBgYCJ9 -->
 <pre class="r"><code>
-  get_rid_of_nas &lt;- longer_description_sep %&gt;%
-  filter(is.na(description) == FALSE) %&gt;% 
-  filter(nchar(description) != 1)
-
-view(get_rid_of_nas)
-
-
-# Using the is.na() with the filter function allows any descriptions with NA values to be filtered out (code reads keep description values where is.na() is false). The nchar() funciton counts the number of elements within a character vector and so it can help identify or filter out descriptions that are only 1 character length. 
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="grouping-the-data-by-description-and-returning-how-many-times-a-description-was-used." class="section level1">
-<h1>7. Grouping the data by description and returning how many times a description was used.</h1>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zdW1tYXJpc2VkX2ZhY2VfZGVzYyA8LSBnZXRfcmlkX29mX25hcyAlPiUgXG4gIGdyb3VwX2J5KGRlc2NyaXB0aW9uKSAlPiVcbiAgc3VtbWFyaXNlKGRlc2NyaXB0aW9uX2NvdW50ID0gbigpKVxuYGBgIn0= -->
-<pre class="r"><code>
-summarised_face_desc &lt;- get_rid_of_nas %&gt;% 
-  group_by(description) %&gt;%
-  summarise(description_count = n())</code></pre>
+total_of_fave_tweets_by_media &lt;- code_clan_tweets %&gt;%
+  select(media_type, favorite_count) %&gt;% #isolates the media and favourite_count columns
+  group_by(media_type) %&gt;% #groups tweets by the media type used 
+  summarise(total_tweet_count = n()) %&gt;% #creates a new column called total_tweet_count that counts
+  arrange(desc(total_tweet_count)) #total_tweet_count is arranged so the t</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCB1bmdyb3VwaW5nIG91dHB1dCAob3ZlcnJpZGUgd2l0aCBgLmdyb3Vwc2AgYXJndW1lbnQpXG4ifQ== -->
 <pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuICBcbiAgXG52aWV3KHN1bW1hcmlzZWRfZmFjZV9kZXNjKVxuXG4jIHRvIHN1bW1hcmlzZSB0aGUgZGF0YSBhbmQgcmV0dXJuIGhvdyBtYW55IHRpbWVzIGFueSBkZXNjcml0cGlvbiB3YXMgdXNlZCwgZmlyc3RseSBncm91cF9ieSgpIGlzIHVzZWQgd2hpY2ggY2F0ZWdvcmlzZXMgZWFjaCBkZXNjcmlwdGlvbi5cblxuI1N1bW1hcmlzZSgpIGlzIHRoZW4gdXNlZCB0byBjcmVhdGUgYSBuZXcgY29sdW1uIGNhbGxlZCBkZXNjcmlwdGlvbl9jb3VudCB3aGljaCBjb3VudHMgaG93IG1hbnkgdGltZSBhIGRlc2NyaXB0aW9uIHdhcyBnaXZlbiB1c2luZyB0aGUgbigpIGZ1bmN0aW9uLiBcblxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuICBcblxuICBcblxudG90YWxfb2ZfZmF2ZV90d2VldHNfYnlfbWVkaWFcbmBgYCJ9 -->
 <pre class="r"><code>  
+
   
-view(summarised_face_desc)
 
-# to summarise the data and return how many times any descritpion was used, firstly group_by() is used which categorises each description.
-
-#Summarise() is then used to create a new column called description_count which counts how many time a description was given using the n() function. 
-</code></pre>
+total_of_fave_tweets_by_media</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>#8. Returning the top 10 descriptions</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG50b3BfMTBfZGVzY3JpcHRpb25zIDwtIHN1bW1hcmlzZWRfZmFjZV9kZXNjICU+JSBcbiAgYXJyYW5nZShkZXNjKGRlc2NyaXB0aW9uX2NvdW50KSkgJT4lXG4gIGhlYWQoMTApXG5cbnRvcF8xMF9kZXNjcmlwdGlvbnMgXG5gYGAifQ== -->
-<pre class="r"><code>
-top_10_descriptions &lt;- summarised_face_desc %&gt;% 
-  arrange(desc(description_count)) %&gt;%
-  head(10)
-
-top_10_descriptions </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMTFSUzA3RE1CQ2RPSEdyQmhXb09FZXlZUU43eEFFUVNOMGhKekVoSXJVajIrR3o0d3lJUTdEaENoeUVnM1RaTUU0OXFFcWs1OHk4OFh6ZStPWnFmWjZ1VXdDSUlaN2h5ZEVFZm5kN25WMEFKQXlkQ0JKWStQOHJocy9ROE9RcElnMEJYaGo5b29LVEZHMHZLV0Ezb20yRE0rdU1kTzZOUWtiM3FncE9iQVdaM0RWR2tqTVh6OUtJbXNyRlJWTlRNYVVOMWtack9RNENzRVg4SW40UTM0aXZnRS9FUjRDZEtPSktiS1FOYWxnZ2p5cHBTOU4wcnRHa2FYVkEzWmM0dUpzVVd1QUNjaXJtSjJMdmVBekRzSjEyTEZ0aHFTT1JhU1djeUI4TTVxTzNtNlRNOWRnWGs1aGZQcDhrUjJaQ25QVEtUMUpsNVdPdm5yTExzSjhJOXQ4eTJPbUJ6Zll0MlJCS2NkcXlWSFdqL2wrekZZV2sxenoyVCs0RjU1MXBjQjlCQ2JJMmQ5b0p1cGVXdWlWbTFBYTdQMXVyRkM5ekFnQUEifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFVVzdDTUF3MWhUQzFFaHRvNTJnbHhBOEhRRHZBdEVuc3F3cHRCaFVocVZwWGJIKzd3aTRNYzRLRHRFUks4dndjUCtmNWRiTmRaZHNNQU1Zd250SXBDSUo0ZjN2SjF3Q1RoSUlSVENCMTl4ZWxud2s0Y3M1M2VxWEZEMFI3c0dnSnpEajVTL3NqVWhGR25sUi9WN2lSMlVuVmpTenh1MVhNTE5DaTFDV2VsY0t5c29QQlNDZnQ3TGtJV3I3aER4MzBtVXZjc05LeUR3MERtZFVTWmZIWlVUMUZjY21EYmJHeGhvb1M1MWRFeGFNdUlwNEc0MzVTNTlWaE1NZDg2UnI0OUczTkdDZi9zV3VaWEZsS3NOUlVtWDFqd2hTRWxqdWxPWGdreDk1dzBYWU56WU9kRU5zWGZscUJxYXdPalBjR2x6L1dsNi8vNWdFQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["description_count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"brown","2":"246"},{"1":"blue","2":"218"},{"1":"small","2":"190"},{"1":"pretty","2":"173"},{"1":"round","2":"168"},{"1":"sad","2":"168"},{"1":"tired","2":"148"},{"1":"average","2":"146"},{"1":"big","2":"146"},{"1":"normal","2":"115"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+{"columns":[{"label":["media_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["total_tweet_count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"NA","2":"145"},{"1":"photo","2":"89"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGFycmFuZ2UoKSBpcyB1c2VkIHRvIG9yZGVyIHRoZSBkZXNjcmlwdGlvbnMgaW4gZGVzY2VuZGluZyBvcmRlciBhbmQgaGVhZCgxMCkgaXMgdXNlZCB0byBnaXZlIHRoZSB0b3AgMTAgbW9zdCB1c2VkIGRlc2NyaXB0aW9ucyBcbiAgXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbk5BXG5gYGAifQ== -->
+<pre class="r"><code>NA
+NA</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jQWxzbyBhdHRlbXB0ZWQgdG8gY2hhbmdlIGFsbCBOQSB2YWx1ZXMgdG8gXCJ0ZXh0XCIgaW4gbWVkaWFfdHlwZXMgXG4jIGlmZWxzZSBkaWQgbm90IHNlZW0gdG8gd29yaywgc2F5cyB1bnVzZWQgYXJndW1lbnQgKFwicGhvdG9cIilcblxudG90YWxfb2ZfZmF2ZV90d2VldHNfYnlfbWVkaWEyIDwtIGNvZGVfY2xhbl90d2VldHMgJT4lIFxuIG11dGF0ZShtZWRpYV90eXBlX25hID0gaXMubmEobWVkaWFfdHlwZSkpICU+JVxuICBpZmVsc2UobWVkaWFfdHlwZV9uYSwgXCJ0ZXh0XCIsIFwicGhvdG9cIikgJT4lIFxuICBncm91cF9ieShtZWRpYV90eXBlX25hKSAlPiUgXG4gIHN1bW1hcmlzZSh0b3RhbF90d2VldF9jb3VudCA9IG4oKSkgJT4lXG4gIGFycmFuZ2UoZGVzYyh0b3RhbF90d2VldF9jb3VudCkpXG5cbnRvdGFsX29mX2ZhdmVfdHdlZXRzX2J5X21lZGlhMlxuICBcbmBgYCJ9 -->
 <pre class="r"><code>
-# arrange() is used to order the descriptions in descending order and head(10) is used to give the top 10 most used descriptions 
+#Also attempted to change all NA values to &quot;text&quot; in media_types 
+# ifelse did not seem to work, says unused argument (&quot;photo&quot;)
+
+total_of_fave_tweets_by_media2 &lt;- code_clan_tweets %&gt;% 
+ mutate(media_type_na = is.na(media_type)) %&gt;%
+  ifelse(media_type_na, &quot;text&quot;, &quot;photo&quot;) %&gt;% 
+  group_by(media_type_na) %&gt;% 
+  summarise(total_tweet_count = n()) %&gt;%
+  arrange(desc(total_tweet_count))
+
+total_of_fave_tweets_by_media2
   </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>#9. Rewriting the above code into a pipe.</p>
+<p>#6. Returning the mean number of characters CodeClan tweets contain</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5mYWNlcyA8LSByZWFkX2NzdihcImRhdGEvZmFjZV9kZXNjcmlwdGlvbnMuY3N2XCIpICU+JVxuICBwaXZvdF9sb25nZXIoY29scyA9IHN0YXJ0c193aXRoKFwidFwiKSxcbiAgICAgICAgICAgICAgIG5hbWVzX3RvID0gXCJ0ZXN0X251bWJlclwiLFxuICAgICAgICAgICAgICAgdmFsdWVzX3RvID0gXCJkZXNjcmlwdGlvblwiKSAlPiVcbiAgc2VwYXJhdGUoZGVzY3JpcHRpb24sIGMoXCIxXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgIFwiMlwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICBcIjNcIiksIHNlcCA9IFwiL3wsXCIpICU+JVxuICBwaXZvdF9sb25nZXIoY29scyA9IDU6NyxcbiAgICAgICAgICAgICAgIG5hbWVzX3RvID0gXCJkZXNjcmlwdGlvbl9udW1iZXJcIixcbiAgICAgICAgICAgICAgIHZhbHVlc190byA9IFwiZGVzY3JpcHRpb25cIikgJT4lXG4gIGZpbHRlcihpcy5uYShkZXNjcmlwdGlvbikgPT0gRkFMU0UpICU+JSBcbiAgZmlsdGVyKG5jaGFyKGRlc2NyaXB0aW9uKSAhPSAxKSAlPiVcbiAgZ3JvdXBfYnkoZGVzY3JpcHRpb24pICU+JVxuICBzdW1tYXJpc2UoZGVzY3JpcHRpb25fY291bnQgPSBuKCkpICU+JSBcbiAgYXJyYW5nZShkZXNjKGRlc2NyaXB0aW9uX2NvdW50KSkgJT4lXG4gIGhlYWQoMTApXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cbm1lYW5fbnVtX2NoYXIgPC0gY29kZV9jbGFuX3R3ZWV0cyAlPiVcbiAgc2VsZWN0KHRleHQpICU+JSAjIHNlbGVjdGVkIHRleHQgY29sdW1uXG4gIG11dGF0ZShudW1fY2hhcnMgPSBuY2hhcih0ZXh0LCBhbGxvd05BID0gVFJVRSkpICU+JSAjIG5ldyBjb2x1bW4gdGhhdCBjb3VudHMgbm8gb2YgY2hhcnMgKG51bV9jaGFycykgb2YgZWFjaCB0d2VldCBhbGxvd2luZyBOQSB2YWx1ZXNcbiAgZmlsdGVyKGlzLm5hKG51bV9jaGFycykgPT0gRkFMU0UpICU+JSAjIGZpbHRlcnMgb3V0IHRoZSBOQSB2YWx1ZXNcbiAgc3VtbWFyaXNlKG1lYW5fY2hhcnMgPSBtZWFuKG51bV9jaGFycykpICNjcmVhdGVzIG5ldyBjb2x1bW4gdGhhdCBzdW1tYXJpc2VzIGFuZCBjYWxjdWxhdGVzIHRoZSBtZWFuIG9mIHRoZSBudW1fY2hhcnMgY29sdW1uIFxuXG5cblxubWVhbl9udW1fY2hhclxuXG5cblxuICBcbmBgYCJ9 -->
 <pre class="r"><code>
-faces &lt;- read_csv(&quot;data/face_descriptions.csv&quot;) %&gt;%
-  pivot_longer(cols = starts_with(&quot;t&quot;),
-               names_to = &quot;test_number&quot;,
-               values_to = &quot;description&quot;) %&gt;%
-  separate(description, c(&quot;1&quot;,
-                          &quot;2&quot;,
-                          &quot;3&quot;), sep = &quot;/|,&quot;) %&gt;%
-  pivot_longer(cols = 5:7,
-               names_to = &quot;description_number&quot;,
-               values_to = &quot;description&quot;) %&gt;%
-  filter(is.na(description) == FALSE) %&gt;% 
-  filter(nchar(description) != 1) %&gt;%
-  group_by(description) %&gt;%
-  summarise(description_count = n()) %&gt;% 
-  arrange(desc(description_count)) %&gt;%
-  head(10)</code></pre>
+
+mean_num_char &lt;- code_clan_tweets %&gt;%
+  select(text) %&gt;% # selected text column
+  mutate(num_chars = nchar(text, allowNA = TRUE)) %&gt;% # new column that counts no of chars (num_chars) of each tweet allowing NA values
+  filter(is.na(num_chars) == FALSE) %&gt;% # filters out the NA values
+  summarise(mean_chars = mean(num_chars)) #creates new column that summarises and calculates the mean of the num_chars column 
+
+
+
+mean_num_char
+
+
+
+  </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICAuZGVmYXVsdCA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgdXNlcl9pZCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBhZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bVxuKVxuU2VlIHNwZWMoLi4uKSBmb3IgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbnMuXG5FeHBlY3RlZCAzIHBpZWNlcy4gQWRkaXRpb25hbCBwaWVjZXMgZGlzY2FyZGVkIGluIDQzIHJvd3MgWzEwMDEsIDEwMDMsIDEwMDQsIDEwMDYsIDEwMDgsIDEwMDksIDEwMTAsIDEwMTEsIDEwMTMsIDEwMTQsIDEwMTUsIDEwMTYsIDEwMTgsIDEwMTksIDEwMjAsIDEwMjEsIDEwMjIsIDEwMjMsIDEwMjUsIDEwMjYsIC4uLl0uRXhwZWN0ZWQgMyBwaWVjZXMuIE1pc3NpbmcgcGllY2VzIGZpbGxlZCB3aXRoIGBOQWAgaW4gMTA2NDYgcm93cyBbMSwgMiwgMywgNCwgNSwgNiwgNywgOCwgOSwgMTAsIDExLCAxMiwgMTMsIDE0LCAxNSwgMTYsIDE3LCAxOCwgMTksIDIwLCAuLi5dLmBzdW1tYXJpc2UoKWAgdW5ncm91cGluZyBvdXRwdXQgKG92ZXJyaWRlIHdpdGggYC5ncm91cHNgIGFyZ3VtZW50KVxuIn0= -->
-<pre><code>Parsed with column specification:
-cols(
-  .default = col_character(),
-  user_id = [32mcol_double()[39m,
-  age = [32mcol_double()[39m
-)
-See spec(...) for full column specifications.
-Expected 3 pieces. Additional pieces discarded in 43 rows [1001, 1003, 1004, 1006, 1008, 1009, 1010, 1011, 1013, 1014, 1015, 1016, 1018, 1019, 1020, 1021, 1022, 1023, 1025, 1026, ...].Expected 3 pieces. Missing pieces filled with `NA` in 10646 rows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmlldyhmYWNlcylcblxuXG5gYGAifQ== -->
-<pre class="r"><code>view(faces)
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#7. Reading in the code_clan_info.csv file and joining it on to code_clan_tweets</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5jb2RlX2NsYW5faW5mbyA8LSByZWFkX2NzdihcImRhdGEvY29kZV9jbGFuX2luZm8uY3N2XCIpXG5cblxuY29kZV9jbGFuX2pvaW5lZCA8LSBpbm5lcl9qb2luKGNvZGVfY2xhbl90d2VldHMsIGNvZGVfY2xhbl9pbmZvLCBcInR3ZWV0X2lkXCIpICNqb2luZWQgYnkgdHdlZXRfaWQgYXMgdGhpcyBpcyBhIGNvbHVtbiBpbiBib3RoIGRhdGFzZXRzXG5cbnZpZXcoY29kZV9jbGFuX2pvaW5lZClcblxuYGBgIn0= -->
+<pre class="r"><code>
+code_clan_info &lt;- read_csv(&quot;data/code_clan_info.csv&quot;)
+
+
+code_clan_joined &lt;- inner_join(code_clan_tweets, code_clan_info, &quot;tweet_id&quot;) #joined by tweet_id as this is a column in both datasets
+
+view(code_clan_joined)
 </code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#8. Creating a new tibble called codeclan_hashtags - only the tweet_id and hashtags columns (in lowercase for analysis). NAs negated.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5jb2RlY2xhbl9oYXNodGFncyA8LSB0aWJibGUoY29kZV9jbGFuX2pvaW5lZCR0d2VldF9pZCwgdG9sb3dlcihjb2RlX2NsYW5fam9pbmVkJGhhc2h0YWdzKSkgJT4lXG4gIGZpbHRlcighaXMubmEoY29kZV9jbGFuX2pvaW5lZCRoYXNodGFncykpXG5cbnZpZXcoY29kZWNsYW5faGFzaHRhZ3MpXG4gIFxuXG4gIFxuICBcblxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+codeclan_hashtags &lt;- tibble(code_clan_joined$tweet_id, tolower(code_clan_joined$hashtags)) %&gt;%
+  filter(!is.na(code_clan_joined$hashtags))
+
+view(codeclan_hashtags)
+  
+
+  
+  
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#Extensions</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyAxLiBMb2FkaW5nIGluIHRoZSB0aWR5dmVyc2UgbGlicmFyeQoKYGBge3J9CgpsaWJyYXJ5KHRpZHl2ZXJzZSkKCmBgYAoKIyBSZWFkaW5nIGluIHRoZSBmYWNlX2Rlc2NyaXB0aW9ucy5jc3YgYW5kIHJldHVybmluZyB0aGUgZGltZW5zaW9ucywgdmFyaWFibGUgbmFtZXMgYW5kIGZpcnN0IHRlbiByb3dzIG9mIHRoZSBkYXRhc2V0LgoKYGBge3J9CgpmYWNlX2Rlc2MgPC0gcmVhZF9jc3YoImRhdGEvZmFjZV9kZXNjcmlwdGlvbnMuY3N2IikKCmRpbShmYWNlX2Rlc2MpCgpuYW1lcyhmYWNlX2Rlc2MpCgpoZWFkKGZhY2VfZGVzYywgMTApCgpgYGAKCiMgMi4gRXZhbHVhdGluZyB0aGUgdmFyaWFibGUgbmFtZXMgYW5kIGRlc2NyaWJpbmcgdGhlIGRhdGEgZm9ybWF0LgoKYGBge3J9CgpuYW1lcyhmYWNlX2Rlc2MpCgojIHRoZSBuYW1lcygpIGZ1bmN0aW9uIGFsbG93cyBhbGwgdmFyaWFibGUgbmFtZXMgb2YgZmFjZV9kZXNjIHRvIGJlIHJldHVybmVkLiBBbHRob3VnaCB0aGUgdmFyaWFibGUgbmFtZXMgZm9sbG93IHRpZHl2ZXJzZSBjYXNlIHJ1bGVzIChpbiB0aGF0IHRoZXkgYXJlIGxvd2VyIGNhc2UgYW5kIHRoZXJlIGlzIGFuIHVuZGVyc2NvcmUgdG8gc2VwYXJhdGUgdGhlIGNvbHVtbiB3aXRoIHR3byB3b3JkcyksIHRoZSBtYWpvcml0eSBvZiB0aGUgdmFyaWFibGUgbmFtZXMgYXJlIG5vdCBkZXNjcmlwdGl2ZSBvZiB0aGUgZGF0YSB0aGV5IGhvbGQgYW5kIGFyZSB1bmNsZWFyLiAgIAoKdmlldyhmYWNlX2Rlc2MpCgojVXNpbmcgdGhlIHZpZXcoKSBmdW5jdGlvbiwgaXQgY2FuIGJlIGRldGVybWluZWQgdGhhdCB0aGUgZGF0YSBpcyBpbiBhIHdpZGUgZm9ybWF0CgpgYGAKCiMgMy4gRm9ybWF0dGluZyB0aGUgZGF0YSAKCmBgYHtyfQoKbG9uZ2VyX2ZhY2VfZGVzYyA8LSBmYWNlX2Rlc2MgJT4lIAogIHBpdm90X2xvbmdlcihjb2xzID0gc3RhcnRzX3dpdGgoInQiKSwKICAgICAgICAgICAgICAgbmFtZXNfdG8gPSAidGVzdF9udW1iZXIiLAogICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSAiZGVzY3JpcHRpb24iKQoKCnZpZXcobG9uZ2VyX2ZhY2VfZGVzYykKCiNBcyB0aGUgZGF0YSBpcyBpbiBhIHdpZGUgZm9ybWF0LCB0aGUgcGl2b3RfbG9uZ2VyIGZ1bmNpdG9uIGhhcyBiZWVuIHVzZWQgdG8gdGFrZSBhbGwgdGhlIGNvbHVtbnMgdGhhdCBzdGFydCB3aXRoICJ0IiBhbmQgbW92ZSB0aGVtIGludG8gb25lIGNvbHVtbiBjYWxsZWQgdGVzdF9udW1iZXIgKG5hbWVzX3RvIGFyZ3VtZW50IHJlZmVycyB0byB0aGlzKS4gVGhlIHZhbHVlc190byBhcmd1bWVudHMgd2l0aGluIHRoZSBwaXZvdF9sb25nZXIgZnVuY3Rpb24gYWxsb3cgdGhlIHZhbHVlcyBmcm9tIHRoZSAidCIgY29sdW1ucyB0byBiZSBvcmdhbmlzZWQgaW4gYW5vdGhlciBuZXcgY29sdW1uIGNhbGxlZCAiZGVzY3JpcHRpb25zIi4KCmBgYAoKIyA0LiBTcGxpdHRpbmcgdGhlIGRlc2NyaXB0aW9uIGNvbHVtbiBpbnRvIDMgZGVzY3JpcHRpb24gY29sdW1ucwoKYGBge3J9CgpkZXNjcmlwdGlvbl9zZXAgPC0gbG9uZ2VyX2ZhY2VfZGVzYyAlPiUgCiAgc2VwYXJhdGUoZGVzY3JpcHRpb24sIGMoIjFzdF9kZXNjcmlwdGlvbiIsICIybmRfZGVzY3JpcHRpb24iLCAiM3JkX2Rlc2NyaXB0aW9uIiksIHNlcCA9ICIvfCwiKQoKdmlldyhkZXNjcmlwdGlvbl9zZXApCgojIFRvIGNhcHR1cmUgc2Vjb25kYXJ5IGFuZCB0ZXJ0aWFyeSBkZXNjcmlwdGlvbnMgdGhhdCBhcmUgc3BsaXQgYnkgc2xhc2hlcyBhbmQgY29tbW1hcyB0aGUgc2VwYXJhdGUoKSBmdW5jdGlvbiBoYXMgYmVlbiB1c2VkLiBUaGUgY29kZSBhYm92ZSBwdXRzIGRlc2NyaXB0aW9ucyBzcGxpdCBieSBzbGFzaGVzIGFuZCBjb21tYXMgKHNlcCA9ICIvfCwiKSBpbnRvIDMgc2VwYXJhdGUgY29sdW1ucyAiMXN0X2Rlc2NyaXB0aW9uIiwgIjJuZF9kZXNjcmlwdGlvbiIgYW5kICIzcmRfZGVzY3JpcHRpb24iLiAKCmBgYAoKCiMgNS4gVGlkeWluZyB0aGUgZGVzY3JpcHRpb24gY29sdW1ucyBiYWNrIGludG8gb25lIGNvbHVtbi4KCmBgYHtyfQpsb25nZXJfZGVzY3JpcHRpb25fc2VwIDwtIGRlc2NyaXB0aW9uX3NlcCAlPiUKICByZW5hbWUoIjEiID0gYDFzdF9kZXNjcmlwdGlvbmAsCiAgICAgICAgICIyIiA9IGAybmRfZGVzY3JpcHRpb25gLAogICAgICAgICAiMyIgPSBgM3JkX2Rlc2NyaXB0aW9uYCkgJT4lIAogIHBpdm90X2xvbmdlcihjb2xzID0gNTo3LAogICAgICAgICAgICAgICBuYW1lc190byA9ICJkZXNjcmlwdGlvbl9udW1iZXIiLAogICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSAiZGVzY3JpcHRpb24iKQogIAoKdmlldyhsb25nZXJfZGVzY3JpcHRpb25fc2VwKQoKIyBJbiBrZWVwaW5nIHdpdGggdGhlIHRpZHkgcnVsZXMsIHBpdm90X2xvbmdlcigpIHdhcyB1c2VkIGFnYWluIGJ1dCB0aGlzIHRpbWUgdG8gY3JlYXRlIGEgbmV3IGNvbHVtbiBjYWxsZWQgZGVzY3JpcHRpb25fbnVtYmVyIHdoaWNoIGRldGFpbHMgd2hldGhlciBhIGRlc2NyaXB0aW9uIHdhcyBwcmltYXJ5LCBzZWNvbmRhcnkgb3IgdGVydGlhcnkgd2hpbHN0IGtlZXBpbmcgYWN0dWFsIGRlc2NyaXB0aW9ucyBpbiBvbmUgY29sdW1uLiBBZnRlciB0aGUgcmVuYW1lKCkgZnVuY3Rpb24gd2FzIGFkZGVkIHRvIHRoZSBwaXBlIGJlZm9yZSBwaXZvdF9sb25nZXIoKSB0byBmdXJ0aGVyIHRpZHkgdGhlIGRhdGEuCgpgYGAKCiMgNi4gRmlsdGVyaW5nIG91dCB0aGUgZGVzY3JpdHBpb25zIHdpdGggTkEgdmFsdWVzIGFuZCBhbnkgdGhhdCBoYXZlIGEgY2hhcmFjdGVyIGxlbmd0aCBvZiAxLgoKYGBge3J9CgogIGdldF9yaWRfb2ZfbmFzIDwtIGxvbmdlcl9kZXNjcmlwdGlvbl9zZXAgJT4lCiAgZmlsdGVyKGlzLm5hKGRlc2NyaXB0aW9uKSA9PSBGQUxTRSkgJT4lIAogIGZpbHRlcihuY2hhcihkZXNjcmlwdGlvbikgIT0gMSkKCnZpZXcoZ2V0X3JpZF9vZl9uYXMpCgoKIyBVc2luZyB0aGUgaXMubmEoKSB3aXRoIHRoZSBmaWx0ZXIgZnVuY3Rpb24gYWxsb3dzIGFueSBkZXNjcmlwdGlvbnMgd2l0aCBOQSB2YWx1ZXMgdG8gYmUgZmlsdGVyZWQgb3V0IChjb2RlIHJlYWRzIGtlZXAgZGVzY3JpcHRpb24gdmFsdWVzIHdoZXJlIGlzLm5hKCkgaXMgZmFsc2UpLiBUaGUgbmNoYXIoKSBmdW5jaXRvbiBjb3VudHMgdGhlIG51bWJlciBvZiBlbGVtZW50cyB3aXRoaW4gYSBjaGFyYWN0ZXIgdmVjdG9yIGFuZCBzbyBpdCBjYW4gaGVscCBpZGVudGlmeSBvciBmaWx0ZXIgb3V0IGRlc2NyaXB0aW9ucyB0aGF0IGFyZSBvbmx5IDEgY2hhcmFjdGVyIGxlbmd0aC4gCgpgYGAKCiMgNy4gR3JvdXBpbmcgdGhlIGRhdGEgYnkgZGVzY3JpcHRpb24gYW5kIHJldHVybmluZyBob3cgbWFueSB0aW1lcyBhIGRlc2NyaXB0aW9uIHdhcyB1c2VkLgoKYGBge3J9CgpzdW1tYXJpc2VkX2ZhY2VfZGVzYyA8LSBnZXRfcmlkX29mX25hcyAlPiUgCiAgZ3JvdXBfYnkoZGVzY3JpcHRpb24pICU+JQogIHN1bW1hcmlzZShkZXNjcmlwdGlvbl9jb3VudCA9IG4oKSkKCiAgCiAgCnZpZXcoc3VtbWFyaXNlZF9mYWNlX2Rlc2MpCgojIHRvIHN1bW1hcmlzZSB0aGUgZGF0YSBhbmQgcmV0dXJuIGhvdyBtYW55IHRpbWVzIGFueSBkZXNjcml0cGlvbiB3YXMgdXNlZCwgZmlyc3RseSBncm91cF9ieSgpIGlzIHVzZWQgd2hpY2ggY2F0ZWdvcmlzZXMgZWFjaCBkZXNjcmlwdGlvbi4KCiNTdW1tYXJpc2UoKSBpcyB0aGVuIHVzZWQgdG8gY3JlYXRlIGEgbmV3IGNvbHVtbiBjYWxsZWQgZGVzY3JpcHRpb25fY291bnQgd2hpY2ggY291bnRzIGhvdyBtYW55IHRpbWUgYSBkZXNjcmlwdGlvbiB3YXMgZ2l2ZW4gdXNpbmcgdGhlIG4oKSBmdW5jdGlvbi4gCgoKYGBgCgojOC4gUmV0dXJuaW5nIHRoZSB0b3AgMTAgZGVzY3JpcHRpb25zIAoKYGBge3J9Cgp0b3BfMTBfZGVzY3JpcHRpb25zIDwtIHN1bW1hcmlzZWRfZmFjZV9kZXNjICU+JSAKICBhcnJhbmdlKGRlc2MoZGVzY3JpcHRpb25fY291bnQpKSAlPiUKICBoZWFkKDEwKQoKdG9wXzEwX2Rlc2NyaXB0aW9ucyAKCiMgYXJyYW5nZSgpIGlzIHVzZWQgdG8gb3JkZXIgdGhlIGRlc2NyaXB0aW9ucyBpbiBkZXNjZW5kaW5nIG9yZGVyIGFuZCBoZWFkKDEwKSBpcyB1c2VkIHRvIGdpdmUgdGhlIHRvcCAxMCBtb3N0IHVzZWQgZGVzY3JpcHRpb25zIAogIApgYGAKCiM5LiBSZXdyaXRpbmcgdGhlIGFib3ZlIGNvZGUgaW50byBhIHBpcGUuIAoKYGBge3J9CgpmYWNlcyA8LSByZWFkX2NzdigiZGF0YS9mYWNlX2Rlc2NyaXB0aW9ucy5jc3YiKSAlPiUKICBwaXZvdF9sb25nZXIoY29scyA9IHN0YXJ0c193aXRoKCJ0IiksCiAgICAgICAgICAgICAgIG5hbWVzX3RvID0gInRlc3RfbnVtYmVyIiwKICAgICAgICAgICAgICAgdmFsdWVzX3RvID0gImRlc2NyaXB0aW9uIikgJT4lCiAgc2VwYXJhdGUoZGVzY3JpcHRpb24sIGMoIjEiLAogICAgICAgICAgICAgICAgICAgICAgICAgICIyIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAiMyIpLCBzZXAgPSAiL3wsIikgJT4lCiAgcGl2b3RfbG9uZ2VyKGNvbHMgPSA1OjcsCiAgICAgICAgICAgICAgIG5hbWVzX3RvID0gImRlc2NyaXB0aW9uX251bWJlciIsCiAgICAgICAgICAgICAgIHZhbHVlc190byA9ICJkZXNjcmlwdGlvbiIpICU+JQogIGZpbHRlcihpcy5uYShkZXNjcmlwdGlvbikgPT0gRkFMU0UpICU+JSAKICBmaWx0ZXIobmNoYXIoZGVzY3JpcHRpb24pICE9IDEpICU+JQogIGdyb3VwX2J5KGRlc2NyaXB0aW9uKSAlPiUKICBzdW1tYXJpc2UoZGVzY3JpcHRpb25fY291bnQgPSBuKCkpICU+JSAKICBhcnJhbmdlKGRlc2MoZGVzY3JpcHRpb25fY291bnQpKSAlPiUKICBoZWFkKDEwKQoKCnZpZXcoZmFjZXMpCgoKYGBgCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBMb2FkaW5nIGluIHRoZSByZXF1aXJlZCBsaWJyYXJ5IApgYGB7cn0KCmxpYnJhcnkodGlkeXZlcnNlKQoKYGBgCgojIDEuIFJlYWRpbmcgaW4gdGhlIGNvZGVfY2xhbl90d2VldHMuY3N2IGZpbGUsIHJldHVybmluZyB0aGUgbnVtYmVyIG9mIHJvdyBhbmQgY29sdW1ucyBhbmQgbGlzdGluZyB2YXJpYWJsZSBuYW1lcy4KCmBgYHtyfQoKY29kZV9jbGFuX3R3ZWV0cyA8LSByZWFkX2NzdigiZGF0YS9jb2RlX2NsYW5fdHdlZXRzLmNzdiIpCgp2aWV3KGNvZGVfY2xhbl90d2VldHMpIAoKZGltKGNvZGVfY2xhbl90d2VldHMpICNSZXR1cm5zIG51bWJlciBvZiByb3dzIGFuZCBjb2x1bW5zCgpuYW1lcyhjb2RlX2NsYW5fdHdlZXRzKSAjcmV0dXJucyB2YXJpYWJsZSBuYW1lcwoKCmBgYAoKIzIuIEEgc3VtbWFyeSBvZiBob3cgbWFueSBsaWtlcyBlYWNoIENvZGVDbGFuIHR3ZWV0IGhhcy4KCmBgYHtyfQoKc3VtbWFyaXNlZF9jb2RlX2NsYW5fdHdlZXRzPC0gY29kZV9jbGFuX3R3ZWV0cyAlPiUgCiAgZ3JvdXBfYnkodHdlZXRfaWQpICU+JSAjIGdyb3VwIHRoZSBlbnRyaWVzIGJ5IHR3ZWV0X2lkCiAgc3VtbWFyaXNlKGZhdm9yaXRlX2NvdW50KQoKYm94cGxvdChzdW1tYXJpc2VkX2NvZGVfY2xhbl90d2VldHMpIAoKYGBgCgojIDMuIFJldHVybmluZyB0aGUgbnVtYmVyIG9mIENvZGVDbGFuIHR3ZWV0cyB0aGF0IGhhdmUgYmVlbiBsaWtlZCAoPjAgZmF2b3VyaXRlIGNvdW50KSBtaW51cyB0d2VldHMgdGhhdCB3ZXJlIHF1b3RlZC4KCmBgYHtyfQp0b3RhbF9vZl9mYXZlX3R3ZWV0cyA8LSBjb2RlX2NsYW5fdHdlZXRzICU+JSAKICBmaWx0ZXIoIWZhdm9yaXRlX2NvdW50ID09IDApICU+JSAjcmVhZHMgYXMgcmV0dXJuIHR3ZWV0cyB0aGF0IGRvbid0IGVxdWFsIHplcm8gb25seQogIGZpbHRlcighaXNfcXVvdGUgPT0gVFJVRSkgJT4lICMgcmVhZHMgYXMgcmV0dXJuIG9ubHkgdHdlZXRzIHRoYXQgd2VyZW4ndCBxdW90ZWQKICBzdW1tYXJpc2UodG90YWxfZmF2X3R3ZWV0X2NvdW50ID0gbigpKSAjIG4oKSBjb3VudHMgdGhlIG51bWJlciBvZiB0d2VldHMgdGhhdCB3ZXJlIGZhdm91cml0ZWQKCnRvdGFsX29mX2ZhdmVfdHdlZXRzCgpgYGAKCiMgNC4gU3VtbWFyeSBvZiB0aGUgbWVhbiBudW1iZXIgb2YgcmV3dGVldHMsIHNwbGl0IGJ5IHBsYXRmb3JtIHR5cGUgKHNvdXJjZSkKCmBgYHtyfQptZWFuX3JldHdlZXRfYnlfc291cmNlIDwtIGNvZGVfY2xhbl90d2VldHMgJT4lIAogIGZpbHRlcighaXNfcXVvdGUgPT0gVFJVRSkgJT4lICMgcmVhZHMgYXMgcmV0dXJuIG9ubHkgdHdlZXRzIHRoYXQgd2VyZW4ndCBxdW90ZWQKICBncm91cF9ieShzb3VyY2UpICU+JSAjIGdyb3VwIHRoZSBlbnRyaWVzIGJ5IHNvdXJjZSB0eXBlCiAgc3VtbWFyaXNlKG1lYW5fcmV0d2VldF9jb3VudCA9IG1lYW4ocmV0d2VldF9jb3VudCkpICNzdW1tYXJpc2VzIGFuZCBjcmVhdGVzIG5ldyBjb2x1bW4gdGhhdCBjYWxjdWxhdGVzIG1lYW4gb2YgcmV0d2VldF9jb3VudAoKbWVhbl9yZXR3ZWV0X2J5X3NvdXJjZQpgYGAKCiMgNS4gVGhlIHRvdGFsIG51bWJlciBvZiBmYXZvdXJpdGVfY291bnQgdmFsdWVzLCBzcGxpdCBieSBtZWRpYV90eXBlIGluIGRlc2NlbmRpbmcgb3JkZXIuCgpgYGB7cn0KCnRvdGFsX29mX2ZhdmVfdHdlZXRzX2J5X21lZGlhIDwtIGNvZGVfY2xhbl90d2VldHMgJT4lCiAgc2VsZWN0KG1lZGlhX3R5cGUsIGZhdm9yaXRlX2NvdW50KSAlPiUgI2lzb2xhdGVzIHRoZSBtZWRpYSBhbmQgZmF2b3VyaXRlX2NvdW50IGNvbHVtbnMKICBncm91cF9ieShtZWRpYV90eXBlKSAlPiUgI2dyb3VwcyB0d2VldHMgYnkgdGhlIG1lZGlhIHR5cGUgdXNlZCAKICBzdW1tYXJpc2UodG90YWxfdHdlZXRfY291bnQgPSBuKCkpICU+JSAjbmV3IGNvbHVtbiBjYWxsZWQgdG90YWxfdHdlZXRfY291bnQgdXNlcyBuKCkgdG8gY291bnQgdGhlIG5vIG9mIGZhdm91cml0ZWQgdHdlZXRzIAogIGFycmFuZ2UoZGVzYyh0b3RhbF90d2VldF9jb3VudCkpICN0b3RhbF90d2VldF9jb3VudCBpcyBhcnJhbmdlZCBzbyB0aGUgbWVkaWFfdHlwZSB3aXRoIHRoZSBoaWdoZXN0IHRvdGFsIHR3ZWV0IGNvdW50IGlzIHRvcAogIAoKICAKCnRvdGFsX29mX2ZhdmVfdHdlZXRzX2J5X21lZGlhCiAgCgpgYGAKCgpgYGB7cn0KCiNBbHNvIGF0dGVtcHRlZCB0byBjaGFuZ2UgYWxsIE5BIHZhbHVlcyB0byAidGV4dCIgaW4gbWVkaWFfdHlwZXMgCiMgaWZlbHNlIGRpZCBub3Qgc2VlbSB0byB3b3JrLCBzYXlzIHVudXNlZCBhcmd1bWVudCAoInBob3RvIikKCnRvdGFsX29mX2ZhdmVfdHdlZXRzX2J5X21lZGlhMiA8LSBjb2RlX2NsYW5fdHdlZXRzICU+JSAKIG11dGF0ZShtZWRpYV90eXBlX25hID0gaXMubmEobWVkaWFfdHlwZSkpICU+JQogIGlmZWxzZShtZWRpYV90eXBlX25hLCAidGV4dCIsICJwaG90byIpICU+JSAKICBncm91cF9ieShtZWRpYV90eXBlX25hKSAlPiUgCiAgc3VtbWFyaXNlKHRvdGFsX3R3ZWV0X2NvdW50ID0gbigpKSAlPiUKICBhcnJhbmdlKGRlc2ModG90YWxfdHdlZXRfY291bnQpKQoKdG90YWxfb2ZfZmF2ZV90d2VldHNfYnlfbWVkaWEyCiAgCmBgYAoKIzYuIFJldHVybmluZyB0aGUgbWVhbiBudW1iZXIgb2YgY2hhcmFjdGVycyBDb2RlQ2xhbiB0d2VldHMgY29udGFpbgoKYGBge3J9CgoKbWVhbl9udW1fY2hhciA8LSBjb2RlX2NsYW5fdHdlZXRzICU+JQogIHNlbGVjdCh0ZXh0KSAlPiUgIyBzZWxlY3RlZCB0ZXh0IGNvbHVtbgogIG11dGF0ZShudW1fY2hhcnMgPSBuY2hhcih0ZXh0LCBhbGxvd05BID0gVFJVRSkpICU+JSAjIG5ldyBjb2x1bW4gdGhhdCBjb3VudHMgbm8gb2YgY2hhcnMgKG51bV9jaGFycykgb2YgZWFjaCB0d2VldCBhbGxvd2luZyBOQSB2YWx1ZXMKICBmaWx0ZXIoaXMubmEobnVtX2NoYXJzKSA9PSBGQUxTRSkgJT4lICMgZmlsdGVycyBvdXQgdGhlIE5BIHZhbHVlcwogIHN1bW1hcmlzZShtZWFuX2NoYXJzID0gbWVhbihudW1fY2hhcnMpKSAjY3JlYXRlcyBuZXcgY29sdW1uIHRoYXQgc3VtbWFyaXNlcyBhbmQgY2FsY3VsYXRlcyB0aGUgbWVhbiBvZiB0aGUgbnVtX2NoYXJzIGNvbHVtbiAKCgoKbWVhbl9udW1fY2hhcgoKCgogIApgYGAKCgojNy4gUmVhZGluZyBpbiB0aGUgY29kZV9jbGFuX2luZm8uY3N2IGZpbGUgYW5kIGpvaW5pbmcgaXQgb24gdG8gY29kZV9jbGFuX3R3ZWV0cwoKYGBge3J9Cgpjb2RlX2NsYW5faW5mbyA8LSByZWFkX2NzdigiZGF0YS9jb2RlX2NsYW5faW5mby5jc3YiKQoKCmNvZGVfY2xhbl9qb2luZWQgPC0gaW5uZXJfam9pbihjb2RlX2NsYW5fdHdlZXRzLCBjb2RlX2NsYW5faW5mbywgInR3ZWV0X2lkIikgI2pvaW5lZCBieSB0d2VldF9pZCBhcyB0aGlzIGlzIGEgY29sdW1uIGluIGJvdGggZGF0YXNldHMKCnZpZXcoY29kZV9jbGFuX2pvaW5lZCkKCmBgYAoKCiM4LiBDcmVhdGluZyBhIG5ldyB0aWJibGUgY2FsbGVkIGNvZGVjbGFuX2hhc2h0YWdzIC0gb25seSB0aGUgdHdlZXRfaWQgYW5kIGhhc2h0YWdzIGNvbHVtbnMgKGluIGxvd2VyY2FzZSBmb3IgYW5hbHlzaXMpLiBOQXMgbmVnYXRlZC4KCmBgYHtyfQoKY29kZWNsYW5faGFzaHRhZ3MgPC0gdGliYmxlKGNvZGVfY2xhbl9qb2luZWQkdHdlZXRfaWQsIHRvbG93ZXIoY29kZV9jbGFuX2pvaW5lZCRoYXNodGFncykpICU+JSAKICBmaWx0ZXIoIWlzLm5hKGNvZGVfY2xhbl9qb2luZWQkaGFzaHRhZ3MpKQoKdmlldyhjb2RlY2xhbl9oYXNodGFncykKCiN0aWJibGUoKSBjcmVhdGVzIGEgdGliYmxlIC0gYm90aCB0d2VldF9pZCBhbmQgaGFzaHRhZ3MgY29sdW1ucyBmcm9tIGNvZGVfY2xhbl9qb2luZWQgYXJlIHVzZWQgdG8gY3JlYXRlIHRpYmJsZS4gdG9sb3dlcigpIGVuc3VyZXMgYWxsIGVudHJpZXMgaW4gaGFzaHRhZyBhcmUgaW4gbG93ZXIgY2FzZSBhbmQgdGhlbiBhbnkgaGFzaHRhZyBlbnRpcmVzIHRoYXQgYXJlIE5BIHZhbHVlcyBhcmUgZmlsdGVyZWQgb3V0IHVzaW5nIGZpbHRlcigpIGFuZCBpcy5uYSgpLgpgYGAKCgojRXh0ZW5zaW9ucwoKYGBge3J9CgpgYGAKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoK</div>
 
 
 
@@ -2069,7 +1987,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("week_3_day_2_homework.Rmd");
+  window.initializeSourceEmbed("week_3_day_3_tidy_consolidation_homework.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
