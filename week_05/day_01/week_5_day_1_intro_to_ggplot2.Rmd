@@ -1,0 +1,161 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in libraries 
+
+```{r}
+library(tidyverse)
+library(scales)
+library(CodeClanData)
+```
+
+
+# MVP 
+
+# 1. Looking at variable names and dimensions of backpack data set
+
+```{r}
+
+dim(backpack)
+names(backpack)
+view(backpack)
+```
+
+Backpack variable names :
+
+[1] "backpack_weight" "body_weight"     "ratio"           "back_problems"   "major"           "year"           
+[7] "sex"             "status"          "units" 
+
+
+
+# 2. Graph showing distribution of backpack weights that students are carrying
+
+
+```{r}
+ggplot(backpack) + 
+  geom_histogram(aes(x = backpack_weight), col = "white", fill = "dark green") +
+  labs(x = "\n Backpack Weight",
+       y = "\n  Number of Students",
+       title = "Backpack Weights Amongst Students")
+
+```
+
+The distribution of backpack weights amongst students can be said to be skewed to the right (positively skewed). More students carry backpacks with smaller weight values than those with larger weight values.
+
+# 3. Graph depicting distribution of backpack weights that students are carrying by sex
+
+
+```{r}
+ggplot(backpack) +
+  geom_bar(aes(x = backpack_weight, fill = sex)) +
+  labs(
+    x = "Backpack Weight",
+    y = "Number of Students",
+    title = "Backpack Weights Amongst Students",
+    fill = "Sex"
+  ) + scale_fill_hue(c=45, l=80)
+  
+```
+
+This bar graph shows the different backpack weights that students carry but also how these are distributed amongst female and male students.
+
+# 4. Graph showing relationship between
+
+```{r}
+ggplot(backpack, aes(body_weight, backpack_weight)) +
+  geom_point(shape=18, color="red") +
+  labs(x = "\n Student Body Weight",
+       y = "\n Backpack Weight",
+       title = "\n Student Body Weight v Backpack Weight") +
+  geom_smooth(method=lm,
+             color="darkblue",
+             se = FALSE)
+  
+```
+
+The graph is a scatter plot that depicts body weight v backpack weight. The dots on the plot show that students with lower body weight values tend to have smaller backpack weight values. The linear regression line helps illustrate this point further - its increasing. 
+
+5. 
+
+```{r}
+
+ggplot(backpack) +
+  aes(body_weight, backpack_weight, colour = sex, fill = sex) +
+  geom_point(shape=18) +
+  labs(x = "\n Student Body Weight",
+       y = "\n Backpack Weight",
+       title = "\n Student Body Weight v Backpack Weight by Sex") +
+  geom_smooth(method="lm",
+              se = FALSE)
+  
+```
+
+This scatter plot depicts body weight v backpack weight but the data is split by sex - x-axis is student body weight and y-axis is backpack weight. The dots pink dots on the plot show female students and the blue, male students. There are 2 linear regression lines for each sex which are both increasing (following the trend from the previous graph that students with lower body weight values tend to have smaller backpack weight values). However it can be said that the female linear line has steeper slope meaning this relationship is more pertinent with female students than male.
+
+
+6. The proportion of students who report back pain
+
+```{r}
+ggplot(backpack) + 
+  geom_bar(aes(x = as.logical(back_problems)), fill = "dark green") +
+  labs(x = "Reported Back Problems",
+       y = "Number of Students",
+       title = "Back Pain Amongst Students") +
+  scale_x_discrete(labels = c('No','Yes')) +
+  scale_color_brewer(palette="Dark2") 
+```
+
+
+This bar chart shows the proportion of students who reported back pain. It splits the x-axis into those who did reported back pain (yes) and those who didn't (no).
+
+7.
+```{r}
+
+```
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
