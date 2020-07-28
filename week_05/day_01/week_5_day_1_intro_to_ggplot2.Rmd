@@ -99,32 +99,60 @@ This scatter plot depicts body weight v backpack weight but the data is split by
 
 ```{r}
 ggplot(backpack) + 
-  geom_bar(aes(x = as.logical(back_problems)), fill = "dark green") +
+  geom_bar(aes(x = as.logical(back_problems))) +
   labs(x = "Reported Back Problems",
        y = "Number of Students",
        title = "Back Pain Amongst Students") +
   scale_x_discrete(labels = c('No','Yes')) +
-  scale_color_brewer(palette="Dark2") 
+  scale_fill_manual(values = c("red", "green"))
 ```
-
 
 This bar chart shows the proportion of students who reported back pain. It splits the x-axis into those who did reported back pain (yes) and those who didn't (no).
 
+*Tried to colour by factor here but couldn't get it to work*
+
 7.
+
 ```{r}
 
+ggplot(backpack, aes(x = as.logical(back_problems))) +
+  geom_bar(aes(fill = sex), position = "dodge") +
+  labs(x = "Reported Back Problems",
+       y = "Number of Students",
+       title = "Back Pain Amongst Students",
+       fill = "sex") + 
+  scale_x_discrete(labels = c('No','Yes')) +
+  scale_fill_hue(c=45, l=80)
+  
 ```
- 
+
+
+This bar chart shows the proportion of students who reported back pain. It splits the x-axis into those who did reported back pain (yes) and those who didn't (no) but this time also splits this further into female and male.
+
+8. Graph showing the relationship between backpack weight, body weight, gender and reported backpain.
+
+
+```{r}
 
 
 
+ggplot(backpack, aes(x = body_weight, y = backpack_weight)) +
+  geom_point(stat = "identity", shape=18) +
+  geom_smooth(method="lm",
+              se = FALSE) +
+  facet_grid(as.logical(back_problems) ~ sex, labeller = "label_both") +
+  labs(x = "\n Student Body Weight",
+       y = "\n Backpack Weight")
+  
+  
+  
+  
+  
+
+```
 
 
-
-
-
-
-
+This faceted scatter plot shows the relationship between backpack weight, body weight, gender and reported backpain. 
 
 
 
