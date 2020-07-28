@@ -1,0 +1,203 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in libraries
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(CodeClanData)
+library(viridis)
+library(wesanderson)
+```
+
+# 3.1 Comparison
+
+## "late_deliveries" Plot
+
+```{r}
+
+view(late_deliveries)
+dim(late_deliveries)
+colnames(late_deliveries)
+```
+
+Depicts the number of late deliveries between 2015 and 2019. Line plot the best as there is only 2 variables and shows a how late deliveries change over time.
+
+```{r}
+ggplot(late_deliveries) +
+  aes(x = date, y = late_deliveries) +
+  geom_line(aes(colour = "red")) +
+  labs(x = "\n Year",
+       y = "\n Number of Late Deliveries",
+       title = "Number of late deliveries between 2015 and 2019") +
+  theme(panel.background = element_rect(fill = "lightblue",
+                                colour = "lightblue",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "white"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "white")) +
+  scale_colour_hue(guide = FALSE)
+
+  
+```
+
+
+## "recovery_times" Plot
+
+```{r}
+view(recovery_times)
+dim(recovery_times)
+colnames(recovery_times)
+
+```
+
+```{r}
+
+prognosis_labelled <- recovery_times %>% 
+  rename(Prognosis = prognosis) %>% 
+  mutate(treatment_group = recode(treatment_group, 
+                       "treatment_a" = "Treatment A", 
+                       "treatment_b" = "Treatment B",
+                       "control" = "Control"))
+
+prognosis_labelled
+
+ggplot(prognosis_labelled, aes(x=treatment_group, y=recovery)) +
+    geom_bar(stat="identity", aes(fill=Prognosis)) +
+  facet_wrap(~Prognosis) +
+  coord_flip() +
+  labs(x = "\n Treatment Group",
+       y = "\n Recovery Period",
+       title = "The recovery time for each treatment group split by prognosis")
+
+```
+
+## "fitness_levels" Plot
+
+```{r}
+view(fitness_levels)
+dim(fitness_levels)
+colnames(fitness_levels)
+```
+
+```{r}
+ggplot(fitness_levels, aes(x=fitness_score, y=child, fill= age)) +
+    geom_bar(colour="black", stat="identity") +
+  facet_wrap(~group) 
+
+
+```
+
+```{r}
+ggplot(fitness_levels) + 
+  aes(x = fitness_score, y = age, group = child, colour = group) +
+  geom_line() +
+  facet_wrap(~ group)
+```
+
+```{r}
+ggplot(fitness_levels, aes(x=child, y = fitness_score)) +
+    geom_bar(stat="identity", aes(fill=group)) + coord_flip()
+
+```
+
+
+# 3.2 Connection
+## blood_pressure
+
+```{r}
+colnames(blood_pressure)
+view(blood_pressure)
+```
+
+
+```{r}
+ggplot(blood_pressure, aes(systolic_blood_pressure_mm_hg, daily_saturated_fat_intake_mg)) +
+  geom_point(shape=18, color="red") +
+  labs(x = "\n Systolic Blood Pressure (mm,hg)",
+       y = "\n Daily Saturated Fat Intake (mg)",
+       title = "\n Systolic Blood Pressure (mm,hg) v Daily Saturated Fat Intake (mg)") +
+  geom_smooth(method=lm,
+             color="darkblue",
+             se = FALSE)
+```
+
+## car_use
+
+```{r}
+colnames(car_use)
+view(car_use)
+
+```
+
+```{r}
+percent_car_use <- car_use %>%
+  mutate(car_use_percent = round((car_use_percent * 100), digits = 1)) %>% 
+  mutate(air_so2_concentration_p = round((air_so2_concentration_ppm * 1000000), digits = 1))
+
+percent_car_use
+  
+```
+
+```{r}
+ggplot(percent_car_use, aes(x = air_so2_concentration_ppm , y = car_use_percent)) +
+  geom_point(aes(colour = city, size = population)) +
+  scale_x_continuous(trans = "log10")
+```
+
+#3.3 Distribution
+
+## "d20_outcomes"
+
+```{r}
+colnames(d20_outcomes)
+view(d20_outcomes)
+```
+
+```{r}
+ggplot(d20_outcomes) +
+  aes(x = outcome) +
+  geom_histogram(bins = 10, col = "white", fill = "dark green") + 
+  theme_light() + 
+  labs(y = "count", x = "outcome")
+```
+
+## "d20x5_outcomes"
+
+```{r}
+colnames(d20x5_outcomes)
+view(d20x5_outcomes)
+```
+
+```{r}
+ggplot(d20x5_outcomes) +
+  aes(x = outcome) +
+  geom_histogram(bins = 6, col = "white", fill = "dark green") + 
+  theme_light() + 
+  labs(y = "count", x = "outcome")
+```
+
+# 3.4 Composition
+
+## "pension_surplus" plot
+
+```{r}
+colnames(pension_surplus)
+view(pension_surplus)
+```
+
+## pension_liabilities plot
+
+```{r}
+colnames(pension_liabilities)
+view(pension_liabilities)
+```
+
+```{r}
+pension_surplus_reworked2
+```
+
