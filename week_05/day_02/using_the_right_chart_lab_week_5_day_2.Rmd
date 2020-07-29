@@ -72,7 +72,10 @@ ggplot(prognosis_labelled, aes(x=treatment_group, y=recovery)) +
   coord_flip() +
   labs(x = "\n Treatment Group",
        y = "\n Recovery Period",
-       title = "The recovery time for each treatment group split by prognosis")
+       title = "The recovery time for each treatment group split by prognosis") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) +
+  scale_fill_manual(values = wesanderson::wes_palette("Rushmore1", n = 4))
+  
 
 ```
 
@@ -84,24 +87,17 @@ dim(fitness_levels)
 colnames(fitness_levels)
 ```
 
-```{r}
-ggplot(fitness_levels, aes(x=fitness_score, y=child, fill= age)) +
-    geom_bar(colour="black", stat="identity") +
-  facet_wrap(~group) 
-
-
-```
-
-```{r}
-ggplot(fitness_levels) + 
-  aes(x = fitness_score, y = age, group = child, colour = group) +
-  geom_line() +
-  facet_wrap(~ group)
-```
 
 ```{r}
 ggplot(fitness_levels, aes(x=child, y = fitness_score)) +
-    geom_bar(stat="identity", aes(fill=group)) + coord_flip()
+    geom_bar(stat="identity", aes(fill=group)) +
+    coord_flip()+
+    labs(x = "\n Child",
+       y = "\n Fitness Score",
+       title = "Fitness score for each child and coloured by group") +
+  theme(legend.background = element_rect(color = "steelblue", linetype = "solid")) +
+  scale_colour_discrete(name="Group")
+  
 
 ```
 
@@ -123,7 +119,8 @@ ggplot(blood_pressure, aes(systolic_blood_pressure_mm_hg, daily_saturated_fat_in
        title = "\n Systolic Blood Pressure (mm,hg) v Daily Saturated Fat Intake (mg)") +
   geom_smooth(method=lm,
              color="darkblue",
-             se = FALSE)
+             se = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
 ## car_use
@@ -146,7 +143,14 @@ percent_car_use
 ```{r}
 ggplot(percent_car_use, aes(x = air_so2_concentration_ppm , y = car_use_percent)) +
   geom_point(aes(colour = city, size = population)) +
-  scale_x_continuous(trans = "log10")
+  scale_x_continuous(trans = "log10") +
+  theme(panel.grid.minor = element_blank()) +
+  labs(x = "\n air CO2 concentration (ppm)",
+       y = "\n Car Use Percentage (%)",
+       title = "\n Air CO2 Concentration v Car Use Percentage for each City")
+  
+
+  
 ```
 
 #3.3 Distribution
