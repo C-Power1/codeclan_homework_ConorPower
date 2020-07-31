@@ -35,7 +35,9 @@ percent_olympics_summer_gmedals <- olympics_overall_medals %>%
   mutate(percent_of_medals = (count/sum(count)))
 
 
-percent_olympics_summer_gmedals_plot <- function(m, s){ggplot(percent_olympics_summer_gmedals, aes(x = 2, y = percent_of_medals, fill = team)) +
+percent_olympics_summer_gmedals_plot <- function(m, s){
+  
+  ggplot(percent_olympics_summer_gmedals, aes(x = 2, y = percent_of_medals, fill = team)) +
   geom_col(colour = "black") +
   coord_polar("y", start = 1) +
   geom_text(aes(label = paste0(round(percent_of_medals*100), "%")),

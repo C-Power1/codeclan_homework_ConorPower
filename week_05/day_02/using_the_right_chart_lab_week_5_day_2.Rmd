@@ -204,4 +204,3 @@ view(pension_liabilities)
 ```{r}
 pension_surplus_reworked2
 ```
-
