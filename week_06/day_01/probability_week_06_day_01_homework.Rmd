@@ -1,0 +1,221 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(prob)
+library(tidyverse)
+library(gtools)
+```
+
+# Titanic Survivors Task
+
+```{r}
+titanic_tibble <- tibble(
+  passenger = c(488, 812),
+  crew = c(215, 703), 
+)
+
+titanic_tibble <- titanic_tibble %>%
+    mutate(total_deaths = rowSums(.), 
+           status = c("survived", "died")) %>%
+  select(status, passenger, crew, total_deaths )
+
+titanic_tibble 
+```
+
+
+Total people on board
+
+```{r}
+survived_titanic <- 488 + 215
+died_titanic <- 812 + 703
+
+total_people <- survived_titanic + died_titanic
+
+total_people
+```
+
+
+Crew Probability
+```{r}
+crew_prob <- titanic_tibble %>% 
+  summarise(crew_total = sum(crew)) %>% 
+  mutate(probaility = crew_total / total_people) %>% 
+  select(probaility)
+
+crew_prob
+```
+
+Passenger Probability
+
+```{r}
+passenger_prob <- titanic_tibble %>% 
+  summarise(pass_total = sum(passenger)) %>% 
+  mutate(probaility = pass_total  / total_people)%>% 
+  select(probaility)
+
+
+passenger_prob
+```
+
+Crew and survived Probability
+
+```{r}
+crew_and_survived <- titanic_tibble %>%
+  select(status, crew) %>%
+  filter(status == "survived") %>%
+  mutate(probaility = crew / total_people) %>%
+  select(probaility)
+
+crew_and_survived
+```
+
+Passenger and survived Probability
+
+```{r}
+pass_and_survived <- titanic_tibble %>%
+  select(status, passenger) %>%
+  filter(status == "survived") %>%
+  mutate(probaility = passenger / total_people) %>%
+  select(probaility)
+
+pass_and_survived
+
+```
+
+Conditional - prob(A∣B)=prob(A∩B)/prob(B)
+
+```{r}
+
+probability_crew_survived <- crew_and_survived / crew_prob
+probability_crew_survived
+```
+
+```{r}
+probability_passenger_survived <- pass_and_survived / passenger_prob
+probability_passenger_survived
+```
+
+Passengers were more likely to survive
+
+
+
+# Probability Quiz
+
+#1. If I roll a six-sided dice once, what is the probability of getting a number less than 5?
+
+Probability is 0.67 or 2/3 - as there only numbers 1, 2, 3, 4 are less than 5 on a six-sided dice (4/6). Simplified 4/6 = 2/3 (0.67 rounded in decimal form).
+
+#2. How many outcomes are there in the sample space of an experiment in which we toss three dice?
+
+```{r}
+
+three_dice_sample_space <- rolldie(3) %>% 
+  summarise(sample_space = nrow(rolldie(3)))
+
+three_dice_sample_space
+
+```
+
+Sample space of 3 dice is 18
+
+#3.  In an experiment where we roll four dice:
+
+
+```{r}
+s_4_dice <- rolldie(4) 
+s_4_dice
+  
+```
+
+# i - How many outcomes are in the event total_equals_5_6_7 (i.e. the total of the four dice equals 5, 6 or 7)?
+```{r}
+
+total_equals_5_6_7 <- s_4_dice %>%
+  summarise(num_outcomes = rowSums(. == 5|6|7)) %>% 
+  head(1)
+
+total_equals_5_6_7
+```
+
+4 outcomes were the roll of 4 dice equals 5, 6, or 7
+
+# ii - What is the probability of this event?
+
+prob(event) = num(event outcomes) / num (all outcomes)
+
+```{r}
+s_4_dice_total_outcomes <-  nrow(rolldie(4))
+s_4_dice_total_outcomes
+
+prob_total_equals_5_6_7 <- 4 / 1296
+
+prob_total_equals_5_6_7 
+
+```
+
+# iii - What assumptions do we apply in answering part ii?
+
+The assumption is that all outcomes are equally likely 
+
+# 4. Five chairs are placed in a row in a room, along with five people of differing height. The people sit down randomly on the chairs. What is the probability that they sit in order of decreasing height, left to right?
+
+```{r}
+
+group_heights <- c(100, 101, 102, 103, 104)
+
+seats <- as_tibble(
+  
+  permutations(n = 5,
+               r =5,
+               v = group_heights,
+               repeats.allowed = FALSE)
+  
+)
+
+seats
+
+ordered_seats <- seats %>% 
+  filter(V1 == 104, V2== 103, V3 == 102, V4 == 101, V5 == 100 )
+
+```
+
+```{r}
+prob_ordered_seats <- nrow(ordered_seats) / nrow(seats)
+prob_ordered_seats
+```
+
+Probability is 0.008
+
+# 5. I roll six dice:
+
+# i What is the probability I see the numbers 6, 5, 4, 3, 2 and 1 in order on the dice, left to right?
+
+```{r}
+six_dice_in_order <- rolldie(6) %>% 
+  filter(isin(., c(6, 5, 4, 3, 2, 1), ordered = TRUE))
+
+
+prob_six_dice_in_order <- nrow(six_dice_in_order) / nrow(rolldie(6))
+
+prob_six_dice_in_order
+
+```
+
+Probabilty is 2.143347e-05
+
+# ii 
+
+```{r}
+six_dice_unordered <- rolldie(6) %>% 
+  filter(isin(., c(6, 5, 4, 3, 2, 1), ordered = FALSE))
+
+
+prob_six_dice_unordered <- nrow(six_dice_unordered) / nrow(rolldie(6))
+
+prob_six_dice_unordered 
+```
+
+Probabilty is 0.015
