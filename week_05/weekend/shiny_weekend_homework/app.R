@@ -3,8 +3,9 @@ library(dplyr)
 library(ggplot2)
 library(shiny)
 library(data.table)
+library(shinythemes)
+library(gganimate)
 
-source("global.R")
 
 
 ui <- fluidPage(
@@ -17,7 +18,7 @@ ui <- fluidPage(
     tabsetPanel(
         
         tabPanel(
-            "Top Ten Selling Games",
+            "Find Games",
             column(4,
                    selectInput("genre",
                                "Choose genre",
@@ -51,16 +52,31 @@ ui <- fluidPage(
                    
                    plotOutput("scatter")),
             
-            column(4,
+            
+              sidebarPanel(
                    
                    sliderInput("transparency",
                                "Transparency",
-                               min = 0, max = 1, value = 0.8)        
-            )
+                               min = 0, max = 1, value = 0.8)
+                   )
+                      
             
+            
+        ),
+        
+        tabPanel(
+          
+          "Nintendo sales since 2000",
+          
+          
+          tags$br(actionButton("update1", "Click")),
+          
+          tags$br(plotOutput("line"))       
+          
+          )
+          
         )
     )    
-)
 
 
 server <- function(input, output) {
@@ -79,7 +95,7 @@ server <- function(input, output) {
     })
     
     output$table_output <- DT::renderDataTable({
-        game_data()
+        game_data() 
         
     })
     
@@ -93,10 +109,62 @@ server <- function(input, output) {
       ggplot(game_data2()) +
         aes(x = critic_score,
             y = user_score) +
-        geom_point(alpha = input$transparency)
-        
+        labs(x = "Critic Score", y = "User Score") +
+        geom_point(alpha = input$transparency) +
+        theme(panel.background = element_rect(fill = "lightblue",
+                                              colour = "lightblue",
+                                              size = 0.5, linetype = "solid"),
+              panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                              colour = "white"), 
+              panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                              colour = "white"))
+        # I thought it would be interesting for the user to see how user score compared with crititc score and whether the two correlated
+      #the user will see that often they do and so could reasonably base judgement on a game using either score.
     })
-}
+    
+    nintendo_data <- eventReactive(input$update1, {
+      
+      game_sales %>%
+        filter(publisher == "Nintendo")
+      
+    })
+    
+    output$line <- renderImage({
+      
+      outfile <- tempfile(fileext='.gif')
+      
+      nintendo_plot <- ggplot(nintendo_data(), aes(year_of_release,
+                                      sales,
+                                      fill = publisher)) +
+        geom_line() +
+        expand_limits(x= 2000)+
+        labs(x = "Year", y = "Sales (m)", title = "Nintendo Sales Since the Begninning of the Millennium") +
+        theme(panel.background = element_rect(fill = "lightblue",
+                                              colour = "lightblue",
+                                              size = 0.5, linetype = "solid"),
+              panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                              colour = "white"), 
+              panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                              colour = "white")) +
+        geom_point(aes(group = seq_along(year_of_release))) +
+        transition_reveal(year_of_release, )
+      
+
+# I chose to concentrate on the top publisher by sales Nintendo to demonstarate how their sales had flucuated since 2000 despite being top
+# I chose to animate the line graph to emphasise this fluctuation.              
+      #Unfortunately it takes a while to render after activated by action button.
+      
+      anim_save("outfile.gif", animate(nintendo_plot)) # I had to include this code (149 to 156) in the funciton in order for the gif graph to work
+                                                        
+      list(src = "outfile.gif",
+           contentType = 'image/gif'
+   
+      )},
+      
+      deleteFile = TRUE)
+    
+    
+    }
 
 # Run the app
 shinyApp(ui = ui, server = server)
