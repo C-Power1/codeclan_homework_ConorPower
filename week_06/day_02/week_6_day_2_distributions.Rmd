@@ -1,0 +1,116 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Loading libraries
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(MASS)
+library(ggpubr)
+```
+
+# Reading data and cleaning variable names
+
+```{r}
+mobile_details <- read_csv("data/20190928-items.csv")
+clean_mobile_details <- clean_names(mobile_details)
+```
+
+# Viewing data
+
+```{r}
+view(clean_mobile_details)
+```
+
+# Brand with the highest number of phones in dataset
+
+```{r}
+
+most_phones_brand <- sort(table(clean_mobile_details$brand), decreasing = TRUE)[1]
+most_phones_brand
+```
+
+# Plotting a distribution of phone ratings as a probability density and overlaying a fitted normal distribution for Samsung
+
+Calculating mean and SD of Samsung phone ratings
+
+```{r}
+samsung_rating_stats <-clean_mobile_details %>% 
+  filter(brand == "Samsung") %>% 
+summarise(mean_rating = mean(rating),
+          sd_rating = sd(rating),
+          num = n())
+
+samsung_rating_stats
+```
+
+Creating histogram and normal distribution plot
+
+```{r}
+samsung_dist_plot <- clean_mobile_details %>%
+  filter(brand == "Samsung") %>% 
+  ggplot(aes(x = rating)) +
+  geom_histogram(aes(y = ..density..), col = "white") +
+  stat_function(
+    fun = dnorm, 
+    args = list(
+      mean = samsung_rating_stats$mean_rating, 
+      sd = samsung_rating_stats$sd_rating
+    ),
+    col = "green"
+  )
+
+samsung_dist_plot
+```
+
+The plot shows that the distribution is skewed to the left so is not a good model of these ratings.
+
+Using shapiro test to test normallity also confirms this as the p-value is below 0.05:
+
+```{r}
+samsung_sp <- clean_mobile_details %>% 
+  filter(brand == "Samsung")
+```
+
+```{r}
+shapiro.test(samsung_sp$rating)
+```
+
+
+#Calculating within one, two and three standard deviations of the mean 
+
+Within one 
+
+```{r}
+samsung_sp %>%
+  filter(rating >= samsung_rating_stats$mean_rating - samsung_rating_stats$sd_rating) %>%
+  filter(rating <= samsung_rating_stats$mean_rating + samsung_rating_stats$sd_rating) %>%
+  summarise(prop_within_1sd = n() / nrow(samsung_sp))
+```
+
+Within two 
+
+```{r}
+samsung_sp %>%
+  filter(rating >= samsung_rating_stats$mean_rating - (2 * samsung_rating_stats$sd_rating)) %>%
+  filter(rating <= samsung_rating_stats$mean_rating + (2 * samsung_rating_stats$sd_rating)) %>%
+  summarise(prop_within_2sd = n() / nrow(samsung_sp))
+```
+
+Within three
+
+```{r}
+samsung_sp %>%
+  filter(rating >= samsung_rating_stats$mean_rating - (3 * samsung_rating_stats$sd_rating)) %>%
+  filter(rating <= samsung_rating_stats$mean_rating + (3 * samsung_rating_stats$sd_rating)) %>%
+  summarise(prop_within_3sd = n() / nrow(samsung_sp))
+```
+
+Normal distributions follow the 68-95-99.7 rule - the proportions of values lying within one-, two- and three standard deviations of the mean for samsung ratings are 0.7934509, 0.9193955, 0.9798489 (79%, 91% and 97.98%). This again demonstrates that normal distribution doesn't provide a good model.
+
+
+
+

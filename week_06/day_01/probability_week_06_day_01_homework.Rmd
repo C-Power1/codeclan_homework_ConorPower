@@ -119,7 +119,6 @@ three_dice_sample_space
 
 ```
 
-Sample space of 3 dice is 18
 
 #3.  In an experiment where we roll four dice:
 
