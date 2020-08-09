@@ -1,0 +1,219 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(infer)
+library(janitor)
+```
+
+```{r}
+glimpse(msleep)
+```
+
+```{r}
+mammals_sleep <- msleep %>% 
+  clean_names()
+```
+
+```{r}
+mammals_sleep %>% 
+  ggplot(aes(x = sleep_total)) +
+  geom_histogram(col = "white")
+```
+
+
+```{r}
+jabber_observed_stat <- mammals_sleep %>% 
+  summarise(mean_rating = mean(sleep_total))
+
+jabber_observed_stat
+```
+
+```{r}
+jabber_null_disribution <- mammals_sleep %>% 
+  specify(response = sleep_total) %>% 
+  hypothesise(null = "point", mu = 7) %>% 
+  generate(reps = 10000, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+
+jabber_null_disribution
+```
+
+```{r}
+jabber_null_disribution %>% 
+  visualise()+
+  shade_p_value(obs_stat = jabber_observed_stat$mean_rating, direction = "both")
+```
+
+```{r}
+jabber_p_value <- jabber_null_disribution %>% 
+  get_p_value(obs_stat = jabber_observed_stat$mean_rating, direction = "both")
+
+jabber_p_value
+```
+
+Low p-value so we reject null hypothesis
+
+
+2.
+
+```{r}
+omni_and_herb <- mammals_sleep %>%
+  filter(vore == "omni" | vore == "herbi") %>% 
+  select(sleep_total, vore)
+
+```
+
+```{r}
+omni_and_herb %>%
+  group_by(vore) %>%
+  summarise(n = n())
+```
+
+```{r}
+omni_and_herb %>%
+  ggplot(aes(y = sleep_total, x = vore)) +
+  geom_boxplot()
+```
+
+```{r}
+omni_herb_null_distribution <- omni_and_herb %>% 
+  specify(sleep_total ~ vore) %>%  
+  hypothesise(null = "independence") %>% 
+  generate(reps = 10000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("omni", "herbi"))
+
+omni_herb_null_distribution
+```
+
+```{r}
+omni_and_herb_observed_stat <- omni_and_herb %>% 
+  specify(sleep_total ~ vore) %>% 
+  calculate(stat = "diff in means", order = c("omni", "herbi"))
+  
+omni_and_herb_observed_stat
+
+```
+
+```{r}
+omni_herb_null_distribution %>%
+  visualise() +
+  shade_p_value(obs_stat = omni_and_herb_observed_stat, direction = "right")
+```
+
+```{r}
+omni_herb_p_value <- omni_herb_null_distribution %>% 
+  get_p_value(obs_stat = omni_and_herb_observed_stat, direction = "right")
+
+omni_herb_p_value
+```
+
+p-value is greater than α (0.05) meaning insufficient evidence to reject H0 and so we fail to reject H0. There is not  enough evidence to suggest that statistically, omnivores sleep for significantly longer than herbivores, on average.
+
+3.
+
+```{r}
+mammals_sleep %>%
+  group_by(conservation) %>%
+  summarise(prop = n()/nrow(mammals_sleep)) %>%
+  filter(conservation == "domesticated")
+```
+
+
+```{r}
+mammals_sleep_prop <- mammals_sleep %>%
+  mutate(is_domesticated = ifelse(conservation == "domesticated", "dom", "not_dom")) 
+mammals_sleep_prop
+
+```
+
+```{r}
+dom_null_distribution_prop <- mammals_sleep_prop %>% 
+  specify(response = is_domesticated, success = "dom") %>% 
+  hypothesize(null = "point", p = 0.05) %>% 
+  generate(reps = 10000, type = "simulate") %>% 
+  calculate(stat = "prop")
+
+dom_null_distribution_prop
+```
+
+```{r}
+dom_null_distribution_prop %>% 
+  visualise()
+```
+
+```{r}
+dom_observed_stat <- mammals_sleep_prop %>% 
+  specify(response = is_domesticated, success = "dom") %>% 
+  calculate(stat = "prop")
+
+dom_observed_stat
+```
+
+```{r}
+dom_null_distribution_prop %>% 
+  visualise() +
+  shade_p_value(obs_stat = dom_observed_stat, direction = "greater")
+```
+
+```{r}
+options(scipen = 999)
+
+dom_p_value <- dom_null_distribution_prop %>%
+  get_p_value(obs_stat = dom_observed_stat, direction = "greater")
+
+dom_p_value
+```
+
+p-value is less than α (0.05) we reject H0 in favour of Ha. We found enough evidence in the sample to suggest that the sample mean/proportion is statistically significantly different from, less than or greater than the null value.
+
+# 1.2 Hypothesis testing - interpretation
+
+## 1.2.1 Defining the Hypothesis
+
+1.
+
+- Null hypothesis: 40% of the town's population are aware of the coffee shop
+- Alternative hypothesis: Significantly more than 40% of the town's population are aware of the coffee shop
+
+H0 : π shop_awareness = 0.40
+Ha: π shop_awareness ≠  0.40
+
+Simulate is the method that would be used to generate the null distribution 
+
+2.
+
+- Null hypothesis: The proportion of people who click on the banner will not significantly differ between group 1 and group 2
+- Alternative hypothesis: The proportion of people who click on the banner will significantly differ between group 1 and group 2
+
+H0: π group_1_CTR − π group_2_CTR = 0
+Ha: π group_1_CTR − π group_2_CTR ≠ 0
+
+Permutation is the method that would be used to generate the null distribution
+
+3.
+
+- Null hypothesis: the mean part size is 145mmm
+- Alternative hypothesis: the mean size differs significantly from 145mm
+
+H0: μ part_size = 145
+Ha: μ part_size ≠ 145
+
+Bootstrap is the method that would be used to generate the null distribution
+
+## 1.2.2 Interpreting the results
+
+1. Coffee shop problem - p-value is greater than α so there is a lack of sufficient evidence to reject H0 and we fail to reject H0. Based on the sample, there's not enough evidence that the town's awareness the shop is statistically significantly greater than 40%
+
+2. Website company problem - p-value is less than α so we reject H0 in favour of Ha. The difference between the proportion of people who clicked on the banner is significantly different between the two groups.
+
+3. Manufacturing company problem - p-value is greater than α so we lack sufficient evidence to reject H0 and so fail to reject  H0. There is a lack of evidence to suggest that the mean part size signicantly differs from 145mm based on the sample given.
+
+
+
+
+
+
