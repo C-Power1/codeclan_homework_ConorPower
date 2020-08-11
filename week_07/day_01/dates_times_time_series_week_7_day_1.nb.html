@@ -1751,80 +1751,14 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
-<pre class="r"><code>library(dplyr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJhkcGx5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4yXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
-<pre><code>package ‘dplyr’ was built under R version 3.6.2
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShsdWJyaWRhdGUpXG5gYGAifQ== -->
-<pre class="r"><code>library(lubridate)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJhsdWJyaWRhdGXigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiAzLjYuMlxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmGx1YnJpZGF0ZeKAmVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6YmFzZeKAmTpcblxuICAgIGRhdGUsIGludGVyc2VjdCwgc2V0ZGlmZiwgdW5pb25cbiJ9 -->
-<pre><code>package ‘lubridate’ was built under R version 3.6.2
-Attaching package: ‘lubridate’
-
-The following objects are masked from ‘package:base’:
-
-    date, intersect, setdiff, union</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4zLjAg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjMuMiAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy40XG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMy4wLjMgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1zdHJpbmdyXHUwMDFiWzM3bSAxLjQuMFxuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMS4wICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtZm9yY2F0c1x1MDAxYlszN20gMC41LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAxLjMuMSAgICAgXHUwMDFiWzM5bVxucGFja2FnZSDigJhnZ3Bsb3Qy4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy42LjJwYWNrYWdlIOKAmHRpYmJsZeKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4ycGFja2FnZSDigJh0aWR5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4ycGFja2FnZSDigJhwdXJycuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4yXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWx1YnJpZGF0ZVx1MDAxYlszN206Olx1MDAxYlszMm1hcy5kaWZmdGltZSgpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtYmFzZVx1MDAxYlszN206OmFzLmRpZmZ0aW1lKClcblx1MDAxYlszMW14XHUwMDFiWzM3bSBcdTAwMWJbMzRtbHVicmlkYXRlXHUwMDFiWzM3bTo6XHUwMDFiWzMybWRhdGUoKVx1MDAxYlszN20gICAgICAgIG1hc2tzIFx1MDAxYlszNG1iYXNlXHUwMDFiWzM3bTo6ZGF0ZSgpXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSAgICAgICAgICBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1sdWJyaWRhdGVcdTAwMWJbMzdtOjpcdTAwMWJbMzJtaW50ZXJzZWN0KClcdTAwMWJbMzdtICAgbWFza3MgXHUwMDFiWzM0bWJhc2VcdTAwMWJbMzdtOjppbnRlcnNlY3QoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgICAgICAgICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcblx1MDAxYlszMW14XHUwMDFiWzM3bSBcdTAwMWJbMzRtbHVicmlkYXRlXHUwMDFiWzM3bTo6XHUwMDFiWzMybXNldGRpZmYoKVx1MDAxYlszN20gICAgIG1hc2tzIFx1MDAxYlszNG1iYXNlXHUwMDFiWzM3bTo6c2V0ZGlmZigpXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWx1YnJpZGF0ZVx1MDAxYlszN206Olx1MDAxYlszMm11bmlvbigpXHUwMDFiWzM3bSAgICAgICBtYXNrcyBcdTAwMWJbMzRtYmFzZVx1MDAxYlszN206OnVuaW9uKClcdTAwMWJbMzltXG4ifQ== -->
-<pre><code>Registered S3 methods overwritten by 'dbplyr':
-  method         from
-  print.tbl_lazy     
-  print.tbl_sql      
-[37m── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──[39m
-[37m[32m✓[37m [34mggplot2[37m 3.3.2     [32m✓[37m [34mpurrr  [37m 0.3.4
-[32m✓[37m [34mtibble [37m 3.0.3     [32m✓[37m [34mstringr[37m 1.4.0
-[32m✓[37m [34mtidyr  [37m 1.1.0     [32m✓[37m [34mforcats[37m 0.5.0
-[32m✓[37m [34mreadr  [37m 1.3.1     [39m
-package ‘ggplot2’ was built under R version 3.6.2package ‘tibble’ was built under R version 3.6.2package ‘tidyr’ was built under R version 3.6.2package ‘purrr’ was built under R version 3.6.2[37m── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-[31mx[37m [34mlubridate[37m::[32mas.difftime()[37m masks [34mbase[37m::as.difftime()
-[31mx[37m [34mlubridate[37m::[32mdate()[37m        masks [34mbase[37m::date()
-[31mx[37m [34mdplyr[37m::[32mfilter()[37m          masks [34mstats[37m::filter()
-[31mx[37m [34mlubridate[37m::[32mintersect()[37m   masks [34mbase[37m::intersect()
-[31mx[37m [34mdplyr[37m::[32mlag()[37m             masks [34mstats[37m::lag()
-[31mx[37m [34mlubridate[37m::[32msetdiff()[37m     masks [34mbase[37m::setdiff()
-[31mx[37m [34mlubridate[37m::[32munion()[37m       masks [34mbase[37m::union()[39m</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0c2liYmxlKVxuYGBgIn0= -->
-<pre class="r"><code>library(tsibble)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJh0c2liYmxl4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy42LjJcbkF0dGFjaGluZyBwYWNrYWdlOiDigJh0c2liYmxl4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6bHVicmlkYXRl4oCZOlxuXG4gICAgaW50ZXJ2YWxcbiJ9 -->
-<pre><code>package ‘tsibble’ was built under R version 3.6.2
-Attaching package: ‘tsibble’
-
-The following object is masked from ‘package:lubridate’:
-
-    interval</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0c2liYmxlZGF0YSlcbmBgYCJ9 -->
-<pre class="r"><code>library(tsibbledata)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJh0c2liYmxlZGF0YeKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuNi4yXG4ifQ== -->
-<pre><code>package ‘tsibbledata’ was built under R version 3.6.2</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShmZWFzdHMpXG5gYGAifQ== -->
-<pre class="r"><code>library(feasts)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJhmZWFzdHPigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiAzLjYuMkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZmFibGV0b29sc1xucGFja2FnZSDigJhmYWJsZXRvb2xz4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy42LjJcbiJ9 -->
-<pre><code>package ‘feasts’ was built under R version 3.6.2Loading required package: fabletools
-package ‘fabletools’ was built under R version 3.6.2</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShueWNmbGlnaHRzMTMpXG5cbmBgYCJ9 -->
-<pre class="r"><code>library(nycflights13)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmxpYnJhcnkobHVicmlkYXRlKVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KHRzaWJibGUpXG5saWJyYXJ5KHRzaWJibGVkYXRhKVxubGlicmFyeShmZWFzdHMpXG5saWJyYXJ5KG55Y2ZsaWdodHMxMylcblxuYGBgIn0= -->
+<pre class="r"><code>library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(tsibble)
+library(tsibbledata)
+library(feasts)
+library(nycflights13)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1844,37 +1778,13 @@ date2 &lt;- ymd_hms(&quot;2001-11-07 10:09:56&quot;)</code></pre>
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueWVhcihkYXRlMSlcbmBgYCJ9 -->
-<pre class="r"><code>year(date1)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueWVhcihkYXRlMSlcbm1vbnRoKGRhdGUxLCBsYWJlbCA9IFRSVUUsIGFiYnIgPSBGQUxTRSlcbm1kYXkoZGF0ZTEpXG55ZGF5KGRhdGUxKVxud2RheShkYXRlMSlcbmBgYCJ9 -->
+<pre class="r"><code>year(date1)
+month(date1, label = TRUE, abbr = FALSE)
+mday(date1)
+yday(date1)
+wday(date1)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIwMTdcbiJ9 -->
-<pre><code>[1] 2017</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9udGgoZGF0ZTEsIGxhYmVsID0gVFJVRSwgYWJiciA9IEZBTFNFKVxuYGBgIn0= -->
-<pre class="r"><code>month(date1, label = TRUE, abbr = FALSE)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIEFwcmlsXG4xMiBMZXZlbHM6IEphbnVhcnkgPCBGZWJydWFyeSA8IE1hcmNoIDwgQXByaWwgPCBNYXkgPCBKdW5lIDwgSnVseSA8IEF1Z3VzdCA8IFNlcHRlbWJlciA8IE9jdG9iZXIgPCAuLi4gPCBEZWNlbWJlclxuIn0= -->
-<pre><code>[1] April
-12 Levels: January &lt; February &lt; March &lt; April &lt; May &lt; June &lt; July &lt; August &lt; September &lt; October &lt; ... &lt; December</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWRheShkYXRlMSlcbmBgYCJ9 -->
-<pre class="r"><code>mday(date1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIyXG4ifQ== -->
-<pre><code>[1] 22</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueWRheShkYXRlMSlcbmBgYCJ9 -->
-<pre class="r"><code>yday(date1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDExMlxuIn0= -->
-<pre><code>[1] 112</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2RheShkYXRlMSlcbmBgYCJ9 -->
-<pre class="r"><code>wday(date1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDdcbiJ9 -->
-<pre><code>[1] 7</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="2" style="list-style-type: decimal">

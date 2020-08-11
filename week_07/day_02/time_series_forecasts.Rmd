@@ -1,0 +1,227 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+library(tsibbledata)
+library(fable)
+library(leaflet)
+library(sf)
+```
+
+```{r}
+view(nyc_bikes)
+?nyc_bikes
+```
+
+1. Creating 3 new columns (year_used, month_used and date_used) using the start_time column. 
+
+```{r}
+new_nyc_bikes <- nyc_bikes %>% 
+  mutate(year_used = year(start_time),
+         month_used = month((start_time), label = TRUE),
+         date_used = date(start_time))
+```
+
+2. Summarising the no of bikes by month and making plot. 
+
+```{r}
+bikes_by_month <- new_nyc_bikes %>% 
+  index_by(month_used) %>% 
+  summarise(num_of_bikes = n())
+
+ggplot(bikes_by_month) +
+  aes(x = month_used, y = num_of_bikes)+
+  geom_col()
+
+```
+
+3. Summarising the no of bikes by date and making plot. 
+
+```{r}
+bikes_by_date <- new_nyc_bikes %>% 
+  index_by(date_used) %>% 
+  summarise(num_of_bikes = n())
+
+ggplot(bikes_by_date) +
+  aes(x = date_used, y = num_of_bikes)+
+  geom_col()
+
+```
+
+4. 
+
+```{r}
+
+bikes_by_date %>% 
+  autoplot()
+```
+
+```{r}
+new_bikes_by_date <- bikes_by_date %>% 
+  fill_gaps(num_of_bikes = as.integer(median(num_of_bikes)))
+  
+
+new_bikes_by_date
+```
+
+```{r}
+model_fit <- new_bikes_by_date %>% 
+  model(
+    snaive_model = SNAIVE(num_of_bikes),
+    mean_model = MEAN(num_of_bikes),
+    naive_model = NAIVE(num_of_bikes)
+  )
+```
+
+5.
+
+```{r}
+bike_forecast <- model_fit %>% 
+  fabletools::forecast(h = 120)
+```
+
+```{r}
+bike_forecast %>% 
+autoplot(new_bikes_by_date, level = NULL)
+```
+
+6. 
+
+```{r}
+
+unique(new_bikes_by_date$date_used)
+
+# 80/ 20 split 
+# data time index stretches across 361 days 
+# 361 x 0.8 = 288.8 = 289 (once rounded)
+
+# 289 years training v 72 days left over
+```
+
+
+```{r}
+bikes_training <- new_bikes_by_date %>% 
+  filter_index("2018-01-01" ~ "2018-10-16")
+
+#fit model on my training data
+
+fit_training <- bikes_training %>% 
+  model(
+    snaive_model = SNAIVE(num_of_bikes),
+    mean_model = MEAN(num_of_bikes),
+    naive_model = NAIVE(num_of_bikes)
+  )
+
+#new forecast based on the training data
+forecast_training <- fit_training %>% 
+fabletools::forecast(h = 120)
+```
+ 
+ 
+```{r}
+forecast_training %>%
+  autoplot(bikes_training, level = NULL) + 
+  autolayer(filter_index(new_bikes_by_date, "2018-01-01" ~ .), color = "black")
+```
+ 
+```{r}
+accuracy_model <- fabletools::accuracy(forecast_training, new_bikes_by_date)
+
+accuracy_model %>% 
+  arrange(RMSE)
+```
+
+7.
+
+None of the models could be described as good fits for forecasting the data.
+
+The snaive_model, based on the forecast_training plot looks to be the best fit out of the three but according to the results from the accuracy test, the naive model is the most accurate.
+
+Neither the mean model or the naive model look like good fits on the forecast_training plot as they do not resemble the data's peaks and throughs. 
+
+A testing a different model would probably be the best the solution in this case as there should already be enough data to be able to forecast.
+
+
+8.
+
+```{r}
+ggplot(new_nyc_bikes) +
+  aes(x = start_long, y = start_lat, colour = month_used) +
+  geom_point() +
+  facet_wrap(~ bike_id) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+```{r}
+ggplot(new_nyc_bikes) +
+  aes(x = end_long, y = end_lat, colour = month_used) +
+  geom_point() +
+  facet_wrap(~ bike_id) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+These plots tell you that the bikes were not used every month and the data is effected by seasons. 
+
+9. 
+
+```{r}
+nyc_bikes_map <- leaflet(nyc_bikes) %>% 
+ addTiles() %>% 
+  addMarkers(lng = ~start_long, lat = ~start_lat, clusterOptions = markerClusterOptions(), popup = nyc_bikes$bike_id)
+
+nyc_bikes_map 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
