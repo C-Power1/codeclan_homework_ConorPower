@@ -1,0 +1,117 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(tsibble)
+library(tsibbledata)
+library(feasts)
+library(nycflights13)
+
+```
+
+# 1. Dates and Times
+
+
+```{r}
+date1 <- ymd_hms("2017-04-22 22:01:18")
+date2 <- ymd_hms("2001-11-07 10:09:56")
+```
+
+1. Extracting the different components (year, month, mday, yday, wday) from the variable date1.
+
+```{r}
+year(date1)
+month(date1, label = TRUE, abbr = FALSE)
+mday(date1)
+yday(date1)
+wday(date1)
+```
+
+2. - Adding 14 days to date1 and storing it in a variable called next_fortnight. 
+
+- Taking away 10 years from date2 variable, and storing it in previous_decade.
+
+```{r}
+next_fornight <- date1 + days(14)
+next_fornight
+
+previous_decade <- date2 - years(10)
+previous_decade
+```
+
+3. Creating a variable called this_year containing today’s date. Then creating an interval object which uses this_year and the previous_decade variable made above. Storing it in interval_years.
+
+```{r}
+this_year <- today()
+
+interval_years <- previous_decade %--% this_year
+
+interval_years
+```
+
+4. Changing the time zone of both your date variables to “America/New_York”, and call them nyc_date1 and nyc_date2.
+
+```{r}
+nyc_date1 <- with_tz(date1, tzone = "America/New_York")
+nyc_date2 <- with_tz(date2, tzone = "America/New_York")
+
+nyc_date1
+nyc_date2
+```
+
+5. Using the flights data from the nycflights13 dataset and making a date-time column called departure_date from the year, month, day, hour, and minute variables in the flights tibble.
+
+```{r}
+flights %>% 
+  mutate(departure_date = make_datetime(year, month, day, hour, minute))
+```
+
+
+# 2. Time series familiarity
+
+6. 
+```{r}
+view(weather)
+
+unique(weather$origin)
+```
+
+```{r}
+weather_tibble <- weather %>% 
+  select(temp, humid, precip, time_hour, origin)
+
+```
+
+The time index is preserved in the time_hour variable and a new observation is made every hour. Origin is the key as this together with time_hour, uniquely identifies the observation
+
+7. Making the weather tibble into a weather tsibble
+
+```{r}
+weather_tsibble <- weather_tibble %>% as_tsibble(key = origin, index = time_hour)
+```
+
+8. 
+
+```{r}
+weather_month_year_cols <- weather_tsibble %>% 
+  mutate(year = year(time_hour), month = month(time_hour, label = TRUE)) 
+
+```
+
+```{r}
+
+weather <- weather_month_year_cols %>%
+  index_by(date = ~ as_date(.)) 
+
+
+ggplot(data = weather, aes(x = date, y = temp)) +
+  geom_line(aes(colour = origin))
+```
+
+
+
