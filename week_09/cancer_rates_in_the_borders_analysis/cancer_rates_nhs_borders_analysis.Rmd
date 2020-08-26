@@ -1,0 +1,305 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in libraries 
+
+```{r}
+library(tidyverse)
+library(forcats)
+library(janitor)
+library(scales)
+library(fable)
+library(fabletools)
+library(tsibble)
+```
+
+# Reading in the data and then cleaning variable names
+
+```{r}
+geo_codes_and_labels <- read_csv("geography_codes_and_labels_hb2014_01042019.csv") %>% 
+  clean_names()
+
+cancer_incidence <- read_csv("opendata_inc9418_hb.csv") %>% 
+  clean_names()
+
+```
+
+# Exploring the data
+
+```{r}
+
+head(geo_codes_and_labels)
+view(geo_codes_and_labels)
+
+head(cancer_incidence)
+summary(cancer_incidence)
+```
+
+## The data appears to be in a wider form than preferred for analysis but I've feel I can perform the analysis I need without formatting it too much.
+
+```{r}
+unique(cancer_incidence$hb)
+
+view(borders_cancer_incidence)
+```
+
+# Recoding the NHS Board names to allow for easier analysis
+
+```{r}
+recoding_cancer_data <- cancer_incidence %>% 
+  mutate(hb =case_when(
+    hb == "S08000015" ~ "NHS Ayrshire and Arran",
+    hb == "S08000016" ~ "NHS Borders",
+    hb == "S08000017" ~ "NHS Dumfries and Galloway",
+    hb == "S08000029" ~ "NHS Fife",
+    hb == "S08000019" ~ "NHS Forth Valley",
+    hb == "S08000020" ~ "NHS Grampian",
+    hb == "S08000031" ~ "NHS Greater Glasgow and Clyde",
+    hb == "S08000022" ~ "NHS Highland",
+    hb == "S08000032" ~ "NHS Lanarkshire",
+    hb == "S08000024" ~ "NHS Lothian",
+    hb == "S08000025" ~ "NHS Orkney",
+    hb == "S08000026" ~ "NHS Shetland",
+    hb == "S08000030" ~ "NHS Tayside",
+    hb == "S08000028" ~ "NHS Western Isles",
+    TRUE ~ hb))
+
+recoding_cancer_data
+
+```
+
+According to the NHS website, as their is a strong link between age and risk of cancer, a high crude rate is a good indication of a high proportion of elderly people within a population. It is therefore acceptable to say crude rate values will be valuable for NHS Borders to look at when planning for provision of cancer treatment services.
+
+# Average Crude Rates for all cancer types over 24 years period, comparison by NHS Board 
+
+```{r}
+crude_rate_comparison <- recoding_cancer_data %>%
+  filter(sex == "All",
+         cancer_site == "All cancer types") %>% 
+    group_by(hb) %>%
+    summarise(aver_crude_rate = mean(crude_rate)) %>%
+  mutate(hb = fct_reorder(hb, aver_crude_rate)) %>% 
+  ggplot() +
+  coord_flip() +
+  aes(x = hb , y = aver_crude_rate) +
+  geom_bar(stat = "identity") +
+  labs( y = "Average Crude Rate",
+       title = "The Average Crude Rate for all Cancer Types by NHS Board",
+       subtitle = "1994 - 2018")
+  
+  
+
+crude_rate_comparison 
+  
+```
+
+The Borders reports the 2nd highest average crude rate over the 24 year period.
+
+
+# How crude rate has varied over time for all cancer types within NHS Borders catchment area
+
+```{r}
+cr_borders_over_time <- recoding_cancer_data %>%
+  filter(sex == "All",
+         cancer_site == "All cancer types", hb == 'NHS Borders') %>% 
+ggplot() +
+  aes(x = year, y = crude_rate) +
+  geom_line() +
+  geom_point()+
+  scale_x_continuous(breaks = breaks_extended(14))+
+  labs(x = "Year",
+       y = "Crude Rate",
+       title = "Crude Rate for All Cancer types in NHS Borders",
+       subtitle = "1994 - 2018")
+
+cr_borders_over_time
+```
+
+Their appears to be an upwards trend of crude rate over the 24 year period.
+
+
+# All recorded incidences of cancer reported in Borders by year
+
+```{r}
+borders_cancer_incidence <- cancer_incidence %>%
+  filter(hb == "S08000016")
+  
+```
+
+# The Number of Incidences of Cancer (all types) in NHS Borders
+
+```{r}
+all_cancer_types <- borders_cancer_incidence %>% 
+  filter(cancer_site == "All cancer types",
+         sex == "All") %>% 
+  group_by(year) %>% 
+  summarise(incidences_all_ages) %>% 
+  ggplot() +
+  aes(x = year, y = incidences_all_ages) +
+  geom_line() +
+  geom_point()+
+  scale_x_continuous(breaks = breaks_extended(14))+
+  labs(x = "Year",
+       y = "Incidences",
+       title = "The Number of Incidences of Cancer (all types) in NHS Borders",
+       subtitle = "1994 - 2018")
+
+all_cancer_types
+```
+  
+# Splitting the above by sex 
+  
+```{r}
+all_cancer_types_by_sex <- borders_cancer_incidence %>% 
+  filter(cancer_site == "All cancer types",
+         sex != "All") %>% 
+  group_by(year, sex) %>% 
+  summarise(incidences_all_ages) %>% 
+  ggplot() +
+  aes(x = year, y = incidences_all_ages, colour = sex) +
+  geom_line() +
+  geom_point()+
+  scale_x_continuous(breaks = breaks_extended(10))+
+  scale_y_continuous(breaks = breaks_extended(8)) +
+  labs(x = "Year",
+       y = "Incidences",
+       title = "The Number of Incidences of Cancer (all types) split by Sex in NHS Borders",
+       subtitle = "1994 - 2018")
+
+all_cancer_types_by_sex
+```
+
+# The top 10 cancer types in NHS Borders 
+
+```{r}
+top_cancer_types <- borders_cancer_incidence %>% 
+  filter(cancer_site != "All cancer types", sex == "All") %>% 
+  group_by(cancer_site) %>%
+  summarise(num_incidences = sum(incidences_all_ages)) %>%
+  arrange(desc(num_incidences)) %>%
+  mutate(cancer_site = fct_reorder(cancer_site, num_incidences)) %>% 
+  head(10) %>% 
+  ggplot() +
+  aes(x = cancer_site , y = num_incidences) +
+  geom_bar(stat = "identity") +
+  coord_flip()+
+  scale_y_continuous(breaks = breaks_extended(8)) +
+  labs(x = "Cancer Type",
+       y = "Incidences",
+       title = "The Top Ten Cancer Types recorded in NHS Borders by Number of Incidences",
+       subtitle = "1994 - 2018")
+  
+
+ 
+top_cancer_types
+```
+
+# The top 5 cancer types in NHS Borders (females)
+
+
+```{r}
+top_cancer_types_sex <- borders_cancer_incidence %>% 
+  filter(cancer_site != "All cancer types", sex == "Female") %>% 
+  group_by(cancer_site, sex) %>%
+  summarise(num_incidences = sum(incidences_all_ages)) %>%
+  arrange(desc(num_incidences)) %>%
+  mutate(cancer_site = fct_reorder(cancer_site, num_incidences)) %>% 
+  head(5) %>% 
+  ggplot() +
+  coord_flip() +
+  aes(x = cancer_site , y = num_incidences) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_y_continuous(breaks = breaks_extended(8)) +
+  labs(x = "Cancer Type",
+       y = "Incidences",
+       title = "The Top Ten Cancer Types recorded in NHS Borders by Number of Incidences",
+       subtitle = "1994 - 2018")
+
+top_cancer_types_sex 
+```
+
+# The top 5 cancer types in NHS Borders (males)
+
+```{r}
+top_cancer_types_sex <- borders_cancer_incidence %>% 
+  filter(cancer_site != "All cancer types", sex == "Male") %>% 
+  group_by(cancer_site, sex) %>%
+  summarise(num_incidences = sum(incidences_all_ages)) %>%
+  arrange(desc(num_incidences)) %>%
+  mutate(cancer_site = fct_reorder(cancer_site, num_incidences)) %>% 
+  head(5) %>% 
+  ggplot() +
+  coord_flip() +
+  aes(x = cancer_site , y = num_incidences) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_y_continuous(breaks = breaks_extended(8)) +
+  labs(x = "Cancer Type",
+       y = "Incidences",
+       title = "The Top Ten Cancer Types recorded in NHS Borders by Number of Incidences",
+       subtitle = "1994 - 2018")
+
+top_cancer_types_sex 
+```
+
+```{r}
+view(borders_cancer_incidence)
+
+unique(borders_cancer_incidence$cancer_site)
+```
+
+
+
+#Forecasting Crude Rate for Top 3 Cancer types in the Borders
+
+```{r}
+ 
+
+top3_cancer_types_cr <- borders_cancer_incidence %>% 
+  filter(cancer_site == "Non-melanoma skin cancer" |
+         cancer_site == "Breast" |
+         cancer_site == "Basal cell carcinoma of the skin",
+         sex == "All") %>% 
+  group_by(year) %>%
+  summarise(crude_rate = crude_rate, cancer_site) %>%
+  arrange(desc(crude_rate)) %>% 
+  mutate(year = as.numeric(year))
+
+top3_cancer_types_cr
+
+top3_cancer_types_cr_tsibble <- as_tsibble(top3_cancer_types_cr, index = year, key = cancer_site)
+  
+cancer_site_1 <- top3_cancer_types_cr_tsibble %>% 
+  select(cancer_site, crude_rate, year)
+
+cancer_site_1 %>% autoplot()
+
+```
+
+```{r}
+fit <- cancer_site_1 %>%
+  fabletools::model(
+    arima = ARIMA(crude_rate),
+    drift = RW(crude_rate ~ drift())
+  )
+fit
+```
+
+
+```{r}
+forecast_5years <- fit %>%
+  fabletools::forecast(h = "5 years")
+forecast_5years 
+```
+
+```{r}
+forecast_5years %>%
+  autoplot(cancer_site_1, level = NULL) +
+  ggtitle("Forecasts for Top 3 Cancer Types in NHS Borders Catchment") +
+  xlab("Year") +
+  guides(colour = guide_legend(title = "Forecast"))
+```
+
+
+The forecast models show a similar trend to the "Crude Rate for All Cancer types in NHS Borders" plot (fluctuating but ultimately upward trending) in regards to the top 3 cancer types.
