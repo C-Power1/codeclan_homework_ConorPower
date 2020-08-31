@@ -39,12 +39,6 @@ summary(cancer_incidence)
 
 ## The data appears to be in a wider form than preferred for analysis but I've feel I can perform the analysis I need without formatting it too much.
 
-```{r}
-unique(cancer_incidence$hb)
-
-view(borders_cancer_incidence)
-```
-
 # Recoding the NHS Board names to allow for easier analysis
 
 ```{r}
@@ -243,13 +237,6 @@ top_cancer_types_sex <- borders_cancer_incidence %>%
 top_cancer_types_sex 
 ```
 
-```{r}
-view(borders_cancer_incidence)
-
-unique(borders_cancer_incidence$cancer_site)
-```
-
-
 
 #Forecasting Crude Rate for Top 3 Cancer types in the Borders
 
@@ -280,8 +267,7 @@ cancer_site_1 %>% autoplot()
 ```{r}
 fit <- cancer_site_1 %>%
   fabletools::model(
-    arima = ARIMA(crude_rate),
-    drift = RW(crude_rate ~ drift())
+    arima = ARIMA(crude_rate)
   )
 fit
 ```
@@ -298,6 +284,7 @@ forecast_5years %>%
   autoplot(cancer_site_1, level = NULL) +
   ggtitle("Forecasts for Top 3 Cancer Types in NHS Borders Catchment") +
   xlab("Year") +
+  ylab("Crude Rate")
   guides(colour = guide_legend(title = "Forecast"))
 ```
 

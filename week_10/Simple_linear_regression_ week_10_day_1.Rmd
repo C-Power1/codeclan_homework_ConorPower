@@ -1,0 +1,152 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in libraires 
+```{r}
+library(tidyverse)
+library(janitor)
+library(modelr)
+library(broom)
+library(ggfortify)
+```
+
+# Reading in data and plotting data 
+
+```{r}
+project <- read_csv("data/project_management.csv")  
+  
+```
+
+```{r}
+project_plot <- project %>% 
+  ggplot(aes(x = estimated_length, y = actual_length)) +
+  geom_point()+
+  geom_text(aes(label = 1:nrow(project)))
+
+project_plot
+```
+
+Looking at the plot it appears point labelled "5" is an outlier and has high leverage - potentially influencial
+"28" and "18" look like outliers but less influential 
+
+# Regressing actual_length on estimated_length and plotting cooks distance to  
+
+```{r}
+plot(lm(actual_length ~ estimated_length,data = project))
+```
+
+# Obtaining the intercept and regression coefficient of variable estimated_length for a simple linear model fitted to data omitting one non-influential outlier points
+ 
+ Values when fitting the full data set
+ 
+```{r}
+model_1 <- lm(formula = actual_length ~ estimated_length, data = project)
+
+model_1
+```
+
+
+Coefficients:
+     (Intercept)  estimated_length  
+           1.416             1.223 
+           
+
+When "18" point is ommitted.
+
+```{r}
+project_2 <- project %>%
+  filter(X1 != 18) 
+```
+
+```{r}
+model_2 <- lm(formula = actual_length ~ estimated_length, data = project_2)
+
+model_2
+```
+
+
+Coefficients:
+     (Intercept)  estimated_length  
+           1.591             1.221  
+
+
+The intercept and estimated_length values have changed after omitting "18" the non influnetial data point. intercept has increased and estimated_length has gone down.
+
+
+#Plotting all the data points, the regression line omitting "18" and the regression line for the full data set
+
+```{r}
+project %>%
+  ggplot(aes(x = estimated_length)) +
+  geom_point(aes(y = actual_length)) +
+  geom_abline(
+    intercept = model_1$coefficients[1],
+    slope = model_1$coefficients[2],
+    col = "red"
+  ) +
+   geom_abline(
+    intercept = model_2$coefficients[1],
+    slope = model_2$coefficients[2],
+    col = "blue"
+  )
+```
+
+There appears to be a slight difference between the lines but the lines more or less run the same. 
+
+
+# Obtaining the intercept and regression coefficient of variable estimated_length for a simple linear model fitted to data omitting influential outlier point
+
+```{r}
+project_3 <- project %>%
+  filter(X1 != 5) 
+```
+
+```{r}
+model_3 <- lm(formula = actual_length ~ estimated_length, data = project_3)
+
+model_3
+```
+
+Coefficients:
+     (Intercept)  estimated_length  
+           4.381             1.011  
+
+The intercept and estimated_length values have changed after omitting "5" the influnetial data point. intercept has increased and estimated_length has gone down by even greater values than the non-influential outliers
+
+
+# Plotting all the data points, the regression lines omitting "18" and "5" and the regression line for the full data set
+
+```{r}
+project %>%
+  ggplot(aes(x = estimated_length)) +
+  geom_point(aes(y = actual_length)) +
+  geom_abline(
+    intercept = model_1$coefficients[1],
+    slope = model_1$coefficients[2],
+    col = "red"
+  ) +
+   geom_abline(
+    intercept = model_2$coefficients[1],
+    slope = model_2$coefficients[2],
+    col = "blue"
+  ) +
+   geom_abline(
+    intercept = model_3$coefficients[1],
+    slope = model_3$coefficients[2],
+    col = "green"
+  )
+```
+
+# Returning to the fitted model for the complete data set (model_1) and commenting on the Residuals vs Fitted, Normal Q-Q and Scale-Location diagnostic plots
+
+```{r}
+autoplot(model_1)
+```
+
+Res vs Fit - residuals aren't independant and are not scattered around 0 - there's a pattern
+normal qq - all residuals are close to the line
+scale- location - line seems to be fairly horizontal, residuals are in fixed position above x axis
+
+The res v fit suggests the regression assumptions are not reasonably satisfied
