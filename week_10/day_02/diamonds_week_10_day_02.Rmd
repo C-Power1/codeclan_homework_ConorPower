@@ -1,0 +1,193 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading in libraries
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(ggiraphExtra)
+library(GGally)
+library(fastDummies)
+```
+
+# 1. Reading in data and exploring 
+
+```{r}
+diamonds <- read_csv("diamonds.csv")
+
+glimpse(diamonds)
+```
+
+# 2. Using ggpairs() to identify if there are strong correlations between x, y, z variables and carat variable
+
+```{r}
+ggpairs(diamonds)
+```
+
+It appears there is a strong correlation between the letter variables and carat
+
+# 3. Dropping x, y, z variables (as carat can be used to describe size)
+
+```{r}
+diamonds_clean <- diamonds %>% 
+  select(-c("x", "y", "z"))
+```
+
+# 4. (i) Using ggpairs() to determine whether there is a storng correlation between price and predictor variables and then (ii) plotting any significant correlations found
+
+```{r}
+ggpairs(diamonds_clean)
+```
+
+Very strong correlation between price and carat (0.922)
+
+```{r}
+diamonds_clean %>% 
+  ggplot() +
+  aes(x = carat, y = price) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Much smaller correlation value between price and table (0.127)
+
+```{r}
+diamonds_clean %>% 
+  ggplot() +
+  aes(x = table, y = price) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Negative correlation value for depth and price (-0.307) 
+
+```{r}
+diamonds_clean %>% 
+  ggplot() +
+  aes(x = depth, y = price) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+# Investigating the factor levels of the predictors - cut, clarity and color 
+
+```{r}
+diamonds_clean %>% 
+  distinct(cut)
+
+# its likely 5 dummy variables would be created for cut
+
+diamonds_clean %>% 
+  distinct(clarity)
+
+# its likely 8 dummy variables would be created for clarity
+
+diamonds_clean %>% 
+  distinct(color)
+
+# its likely 7 dummy variables would be created for color
+```
+
+# Using fastDummies and dummy_cols() to generate dummies for the predictors - cut, clarity and color 
+
+```{r}
+diamonds_dummy <- diamonds_clean %>% 
+  dummy_cols(select_columns = c("cut", "clarity", "color"),
+             remove_first_dummy = TRUE,
+             remove_selected_columns = TRUE)
+
+diamonds_dummy
+```
+
+# (i) Simple linear regression - regressing price on carat and then checking the regression diagnostics 
+
+```{r}
+
+
+model_diamonds <- lm(price ~ carat, data = diamonds_clean)
+
+summary(model_diamonds)
+```
+
+p-value is very low 0.00000000000000022 
+
+RSE is 1549 on 53938 degrees of freedom 
+
+# Running a regression with one or both of the predictor and response variables log() transformed and recheck the diagnostic
+
+```{r}
+model_diamonds2 <- lm(log(price) ~ log(carat) + log(depth) + log(table), data = diamonds_clean)
+
+summary(model_diamonds2)
+```
+
+RSE has gone down to 0.2584 on 53936 degrees of freedom from 1549 on 53938 degrees of freedom
+
+Multiple R-squared up from 0.8493 to 0.9351 
+
+p-value is lower 2.2e-16
+
+There is an imporvement so adding the log(depth) and log(table) is useful 
+
+
+# (iii) Using log() transformations of both predictor and response. Then adding a single categorical predictor into the model to determine which categorical predictor is best.
+
+## cut 
+```{r}
+model_diamonds3 <- lm(log(price) ~ log(carat) + cut, data = diamonds_clean)
+
+summary(model_diamonds3)
+```
+
+Multiple R-squared:  0.9371
+
+## clarity
+```{r}
+model_diamonds4 <- lm(log(price) ~ log(carat) + clarity, data = diamonds_clean)
+
+summary(model_diamonds4)
+```
+
+Multiple R-squared:  0.9654
+
+## color
+```{r}
+model_diamonds5 <- lm(log(price) ~ log(carat) + color, data = diamonds_clean)
+
+summary(model_diamonds5)
+```
+
+Multiple R-squared:  0.9454
+
+
+Clairty is the best categorical predictor as it has the highest R-squared value 
+
+
+# Interpreting the fitted coefficients for the levels of clarity - categorical predictor. Which level is the reference level? Which level shows the greatest difference in price from the reference level?
+
+```{r}
+diamonds_clean %>% 
+  ggplot(aes(x = log(price))) +
+  geom_histogram(aes(y = ..density..), col = "white", bins = 4)
+```
+
+```{r}
+model_diamonds6 <- lm(log(price) ~ clarity, data = diamonds_clean)
+
+summary(model_diamonds6)
+```
+
+```{r}
+diamonds_clean %>% 
+  ggplot(aes(y = log(price), x = clarity)) +
+  geom_boxplot()
+```
+
+The reference level is I1 (the first level in graph above) and the greatest difference in price from the reference level is IF - this is because from the boxplots above the two median values for these categories appear to be furthest away from each other and price has been logged)
+  
+   
+  
+  
