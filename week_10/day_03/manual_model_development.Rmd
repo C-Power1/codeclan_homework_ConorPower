@@ -1,0 +1,231 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Loading libraries 
+```{r}
+library(tidyverse)
+library(modelr)
+library(car)
+library(GGally)
+library(relaimpo)
+```
+
+# Reading in data and exploring 
+
+```{r}
+houses <- read.csv("data/kc_house_data.csv")
+
+glimpse(houses)
+
+summary(houses)
+```
+
+```{r}
+houses$waterfront
+```
+
+
+# Tidying houses data 
+
+```{r}
+houses_clean <- houses %>% 
+  dplyr::select(-c("id", "date", "sqft_living15", "sqft_lot15", "zipcode")) %>% 
+  mutate(waterfront = as.numeric(waterfront),
+         condition = as.factor(condition),
+         grade = as.factor(grade)) %>% 
+  mutate(renovated = ifelse(yr_renovated > 0, TRUE, FALSE)) %>%
+  dplyr::select(-yr_renovated)
+
+glimpse(houses_clean)
+```
+
+The "id", "date", "sqft_living15", "sqft_lot15", "zipcode" variables are deemed not useful in creating a model for price and so are removed. 
+
+"waterfront" is converted to numeric and "condition" and "grade" are converted to factors as they ordinal data types.
+
+yr_renovated is mutated to a logical variable called renovated and yr_renovated is then removed.
+
+
+# Checking for alias variables 
+
+```{r}
+
+alias(lm(price ~ ., data = houses_clean))
+
+```
+
+"sqft_basement" can be dropped as it is computed the same as "sqft_living" and computed also as not sqft_above - its an alias variable.
+
+
+## Removing "sqft_basement" as it is alias variable
+```{r}
+houses_trim <- houses_clean %>% 
+  dplyr::select(- sqft_basement)
+```
+
+## Rechecking for alias varibales 
+
+```{r}
+
+alias(lm(price ~ ., data = houses_trim))
+```
+
+No alias variables detected after removing "sqft_basement"
+
+# Building a regression model
+
+## Splitting the data into numeric and non-numeric so the data can 
+
+```{r}
+houses_trim_numeric <- houses_trim %>%
+  select_if(is.numeric)
+
+houses_trim_nonnumeric <- houses_trim %>%
+  select_if(function(x) !is.numeric(x))
+
+houses_trim_nonnumeric$price <- houses_trim$price
+
+```
+
+```{r}
+houses_trim_numeric_plot <- ggpairs(houses_trim_numeric)
+ggsave("houses_trim_numeric_plot.pdf")
+
+```
+
+```{r}
+houses_trim_non_numeric_plot <- houses_trim_nonnumeric %>% 
+  ggpairs()
+
+houses_trim_non_numeric_plot
+```
+
+"sqft_living" and ""sqft_above" have strong correlations with price -  values of 0.702 and 0.606 respectively
+
+"grade" boxplot in the non_numeric data shows some separation indicating potential for association as does "condition".
+
+
+1st effect - "sqft_living"
+
+```{r}
+mod1a <- lm(price ~ sqft_living, data = houses_trim)
+summary(mod1a)
+```
+
+Residual standard error: 261500 on 21611 degrees of freedom
+Multiple R-squared:  0.4929
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod1a)
+```
+
+2nd effect 
+
+```{r}
+price_remaining_num_resid <- houses_trim_numeric  %>% 
+  add_residuals(mod1a) %>% 
+  dplyr::select(-c(price, sqft_living))
+```
+
+```{r}
+price_remaining_num_resid_plot <- ggpairs(price_remaining_num_resid)
+ggsave("price_remaining_num_resid_plot.pdf")
+```
+
+After subtracting off the systematic variation in price in the houses_trim_numeric, it appears that "lat" has the highest correlation value - 0.379
+
+```{r}
+mod2a <- lm(price ~ sqft_living + lat, data = houses_trim)
+summary(mod2a)
+```
+
+Residual standard error: 241900 on 21610 degrees of freedom
+Multiple R-squared:  0.566
+
+Both figures are up from mod1a
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod2a)
+```
+
+Testing "grade"
+
+```{r}
+mod2b <- lm(price ~ sqft_living + grade, data = houses_trim)
+summary(mod2b)
+```
+
+Residual standard error: 237500 on 21600 degrees of freedom
+Multiple R-squared:  0.5817
+
+
+Both r2 figures for mod2 models are up from mod1a but mod2b has a higher value and lower RSE.
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod2b)
+```
+
+price ~ sqft_living + grade
+
+## Comparing the two models using ANOVA
+
+```{r}
+anova(mod2a, mod2b)
+```
+
+
+3rd Effect 
+
+```{r}
+price_remaining_nonnum_resid <- houses_trim  %>% 
+  add_residuals(mod2b) %>% 
+  dplyr::select(-c(price, sqft_living, grade))
+```
+
+```{r}
+price_remaining_nonnum_resid_plot <- ggpairs(price_remaining_nonnum_resid)
+ggsave("price_remaining_nonnum_resid.pdf")
+```
+
+when looking at the other options and result from the anova above, the 3rd predictor should be "lat"
+
+
+```{r}
+mod3 <- lm(price ~ sqft_living + grade + lat, data = houses_trim)
+summary(mod3)
+```
+
+Residual standard error: 219000 on 21599 degrees of freedom
+Multiple R-squared:  0.6443
+
+RSE down and r-squared up -  meaning model is better fit 
+
+price ~ sqft_living + grade + lat
+
+#4th effect
+
+going back to the houses_trim_non_numeric_plot "condition" also looks to have separtion in the boxplot meaning possible association.
+
+
+```{r}
+mod4 <- lm(price ~ sqft_living + grade + lat + condition, data = houses_trim)
+summary(mod4)
+```
+
+Residual standard error: 215100 on 21595 degrees of freedom
+Multiple R-squared:  0.657
+
+RSE down and r-squared up -  meaning model is better fit than mod3
+
+Extension 
+
+```{r}
+calc.relimp(mod4, type = "lmg", rela = TRUE)
+
+#grade is the most important factor
+```
+
