@@ -1,0 +1,207 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading libraries 
+```{r}
+library(tidyverse)
+library(modelr)
+library(car)
+library(GGally)
+library(relaimpo)
+library(janitor)
+```
+
+# Reading in data and exploring 
+
+```{r}
+avocado_data <- read.csv("data/avocado.csv") %>%
+  clean_names()
+
+glimpse(avocado_data)
+
+view(avocado_data)
+
+view(unique(avocado_data$region))
+```
+
+I have chosen to build an explanatory model for the average_price.
+
+#Tidying avocado_data
+
+
+```{r}
+avocado_data_clean <- avocado_data %>% 
+  dplyr::select(-c(x, date, year)) %>% 
+  mutate(region = as.character(region)) %>% 
+  mutate(region = if_else(str_detect(region,
+ "Albany|BaltimoreWashington|BuffaloRochester|Boston|Charlotte|Detroit|HarrisburgScranton|HartfordSpringfield|Indianapolis|Jacksonville|Nashville|NewYork|Northeast|NorthernNewEngland|Orlando|Philadelphia|Pittsburgh|RichmondNorfolk|Roanoke|SouthCarolina|Southeast|Syracuse|Tampa|MiamiFtLauderdale|Atlanta"), "East", region)) %>% 
+  mutate(region = if_else(str_detect(region,
+ "Chicago|CincinnatiDayton|DallasFtWorth|Denver|Houston|Columbus|GreatLakes|Louisville|GrandRapids|Midsouth|NewOrleansMobile|Plains|StLouis"), "Midwest", region)) %>% 
+   mutate(region = if_else(str_detect(region,
+ "Boise|California|DallasFtWorth|Denver|Houston|LasVegas|LosAngeles|PhoenixTucson|Portland|RaleighGreensboro|Sacramento|SanDiego|SanFrancisco|Seattle|SouthCentral|Spokane|WestTexNewMexico"), "West", region)) %>% 
+  mutate(region = as.factor(region))
+
+glimpse(avocado_data_clean)
+  
+```
+
+# Checking if TotalUS equates to all the other region categories added together
+```{r}
+
+avocado_data_clean %>% 
+  filter(region == "TotalUS") %>%
+  summarise(sum(total_volume))
+
+avocado_data_clean %>% 
+  filter(region != "TotalUS") %>%
+  summarise(sum(total_volume))
+
+# Doesn't appear to be the case 
+```
+
+```{r}
+avocado_data %>% 
+  ggplot(aes(x = region, y = average_price)) +
+  geom_boxplot()
+
+#Boxplot shows that region doesn't look like an important factor (not much separation between variable types) so it will be dropped 
+```
+
+```{r}
+avocado_data_clean <- avocado_data_clean %>% 
+  dplyr::select(-region)
+```
+```{r}
+glimpse(avocado_data_clean)
+```
+```{r}
+dim(avocado_data_clean)
+
+avocado_trim <- avocado_data_clean %>% 
+  drop_na()
+dim(avocado_trim)
+```
+
+Looking at the distribution for average_price
+```{r}
+avocado_trim %>% 
+  ggplot(aes(average_price))+
+  geom_histogram()
+```
+
+
+# Checking for alias variables 
+
+```{r}
+alias(average_price ~ ., data = avocado_trim)
+```
+
+No alias variables in avocado_data_clean
+
+# Finding correlation between variables and average_price
+
+```{r}
+ggpairs(avocado_trim)
+```
+Few of numeric variables show particularly strong correlation with average_price.
+
+The highest correlation value is x4046 - 0.208 followed by total_volume - 0.193
+
+The boxplot for type and average price shows separation between the two variable types.
+
+#Building model
+
+## 1st predictor
+
+x4046 and average_price model 
+
+```{r}
+mod1a <- mod1a <- lm(average_price ~ x4046, data = avocado_trim)
+summary(mod1a)
+```
+
+Residual standard error: 0.3939 on 18247 degrees of freedom
+Multiple R-squared:  0.0434
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod1a)
+```
+
+The res v fit and scale-location plots show clear patterns, two distinct clusters in both.
+
+total_volume and average_price model 
+
+```{r}
+mod1b <- mod1b <- lm(average_price ~ total_volume, data = avocado_trim)
+summary(mod1b)
+```
+
+Residual standard error: 0.3951 on 18247 degrees of freedom
+Multiple R-squared:  0.03715
+
+Higher RSE and lower r-sq value than mod1a
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod1b)
+```
+
+Again the res v fit and scale-location plots show clear patterns, two disctinct clusters in both.
+
+I will proceed with x4046
+
+## 2nd Predictor
+
+Adding residuals from mod1a and removing average_price and x4046
+
+```{r}
+avocado_resid <- avocado_trim  %>% 
+  add_residuals(mod1a) %>% 
+  dplyr::select(-c(average_price, x4046))
+```
+
+```{r}
+ggpairs(avocado_resid)
+```
+
+There appears to be no other variable that correlates particularly with the residuals apart from type.
+
+```{r}
+mod2 <- lm(average_price ~ x4046 + type, data = avocado_trim)
+summary(mod2)
+```
+
+Residual standard error: 0.316 on 18246 degrees of freedom
+Multiple R-squared:  0.3843
+
+RSE is down from mod1a and r-sq value is greater too indicating a better model
+
+```{r}
+par(mfrow = c(2,2))
+plot(mod2)
+```
+
+Plots show points in vertical line due to categorical data type.
+
+#Adding interaction
+
+```{r}
+mod3 <- lm(average_price ~ x4046 + type + x4046:type, data = avocado_trim)
+summary(mod3)
+```
+
+Residual standard error: 0.3148 on 18245 degrees of freedom
+Multiple R-squared:  0.3891
+
+RSE is down from mod2 and r-sq value is greater too, indicating better model.
+
+# Testing relative importance
+
+```{r}
+calc.relimp(mod3, type = "lmg", rela = TRUE)
+```
+
+type looks to be by far the most important factor in regards to average_price, lmg value is 92.5%
