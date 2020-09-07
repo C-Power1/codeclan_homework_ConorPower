@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Model Building Quiz
+
+**1. I want to predict how well 6 year-olds are going to do in their final school exams. Using the following variables am I likely under-fitting, fitting well or over-fitting? Postcode, gender, reading level, score in maths test, date of birth, family income.**
+
+
+Over-fitting - too many variables 
+
+
+**2. If I have two models, one with an AIC score of 34,902 and the other with an AIC score of 33,559 which model should I use?**
+
+
+The model with AIC score of 33,559 as smaller AIC values are desired
+
+**3. I have two models, the first with: r-squared: 0.44, adjusted r-squared: 0.43. The second with: r-squared: 0.47, adjusted r-squared: 0.41. Which one should I use?**
+
+The first one as the adjusted r squared value is higher. Adjusted r squared compensates for the addition of variables and only increases if the new predictor enhances the model 
+
+**4. I have a model with the following errors: RMSE error on test set: 10.3, RMSE error on training data: 10.4. Do you think this model is over-fitting?**
+
+
+
+**5. How does k-fold validation work?**
+
+When you have a limited amount of data and not enough to properly implement a test set you can use k-fold validation.
+
+This technique involves using all of the data available to you. A k value is chosen (commonly 10) and a model is reproduced "k" times. One of the folds is used as the test set and the remaining folds are used as the training set. Once this process is complete, the average error across all the test folds can be calculated, giving an accurate measure of the model's performance.
+
+**6. What is a validation set? When do you need one?**
+
+A validation set is data that has not be used for training or to compare models against each other. It gives you a conclusive estimate of the expected performance of the model.
+
+You may need a validation set when you are undertaking a complex model building process or comparing several model types.
+
+**7. Describe how backwards selection works.**
+
+Backwards selection is when you begin with a model containing all possible predictors and at each step check all the predictors to see which one lowers the r-sq value when it is removed. Predictors are removed one by one.
+
+**8. Describe how best subset selection works.**
+
+When at each size of model, all possible combinations of predictors are tried out for the model with highest r-sq value of that size.
+
+**9. It is estimated on 5% of model projects end up being deployed. What actions can you take to maximise the likelihood of your model being deployed? **
+
+- ensure the model makes intuitive sense
+- identify disallowed variables 
+- ensure explainability - is it easy to distinguish the most powerful variables?
+- check validity for all situations  
+- make sure it will work on production data
+- ensure you have enough documentation
+
+**10. What metric could you use to confirm that the recent population is similar to the development population?**
+
+Population Stability Index (PSI) and Characteristic Stability Index (CSI)
+
+**11. How is the Population Stability Index defined? What does this mean in words?**
+
+Population Stability Index (PSI) compares predicted probability in the scoring data set to a training data set that was used in developing the model.
+
+**12. Above what PSI value might we need to start to consider rebuilding or recalibrating the model**
+
+0.2 
+
+**13. What are the common errors that can crop up when implementing a model?**
+
+
+
+**14. After performance monitoring, if we find that the discrimination is still satisfactory but the accuracy has deteriorated, what is the recommended action?**
+
+Plans should be put in place to rebuild or recalibrate the model, however as discrimnation is still satisfactory it can be used in the meantime.
+
+**15. Why is it important to have a unique model identifier for each model?**
+
+To ensure that each model can be uniquely identified
+
+**16. Why is it important to document the modelling rationale and approach?**
+
+It gives the business context in which the model was developed and the limitations of your modeL. 

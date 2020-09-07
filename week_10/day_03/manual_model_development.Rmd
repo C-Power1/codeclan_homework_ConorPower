@@ -10,7 +10,7 @@ library(car)
 library(GGally)
 library(relaimpo)
 ```
-
+ 
 # Reading in data and exploring 
 
 ```{r}
