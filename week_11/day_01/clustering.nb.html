@@ -1946,16 +1946,6 @@ clusterings</code></pre>
   group_by(.cluster) %&gt;%
   summarise(mean(ram), mean(hd))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCB1bmdyb3VwaW5nIG91dHB1dCAob3ZlcnJpZGUgd2l0aCBgLmdyb3Vwc2AgYXJndW1lbnQpXG4ifQ== -->
-<pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MywibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMlN2MDdETUJERzNhWXBOSUtxRW9pQko2QkNqZHIwTDF1RkVEc0lVRmVUdXJUZ09wWGpBaElMRzNPZmg0V0hRUXdzSU1IQWxIQkpmSmFhd2ZiUDUvTjMvbXlmbjR6YXpzZ2hoRmpFS2tOdkF4TDc4dUswTVNDa1ZJUkpnWlJJSlJrZllYa256U1RXTm96WllqcXVKWlk1dTJjOEJLcEIyOFh0TFFRUG9ZM1FRZWdpOUJENkNBT0VJdzNGVnROUXk1Qm5xRzJvWTZocnFHZW9iMmhneU5Ud21qbHp0czlwaU42TTR3bjFWU0NCSW1qVlpPT3d1VHI3UGZ6YUgrNnRQbSs5NzNjVGY3bDYrM3Y5aUlhaDdCOXYvVHpsNVFXZE01UzNkSERUOWZreVZFenFlV1hPcURpUWRGN0hoRFF3SGRkemFoVVpQTGlvbUQ3Wk0zUnhIRWRab2hYbmpEaGpxcWc3QVdtV21WbVQyd2dXYWhZSUVDc20vOERPYlM3SVhLQzJGRW54Y2NPZkxzVmRBMTRKS3VoUFEvU0o5QWN5YkdVMVMzZ3lHNitZaVp1WllIaE5uRjR6cmlkVmNKbWFkQmR5SmhSYWdXam9xa0JSekhQOGdHTWtlNm5vSCtpVHRHLy9BZ0FBIn0= -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[".cluster"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["mean(ram)"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean(hd)"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"16.567657","3":"746.8442"},{"1":"2","2":"5.642496","3":"311.1385"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>I think the clustering worked to an extent. The data when plotted originally showed potential for 2/3 clusters and further analysis showed that 2 clusters were likely to be present within the data. This is further supported when looking at the mean values for each cluster - it is clear there is a distinct difference between the two. However, there appears to be several outliers within the data so maybe utlising k-medoids clustering analysis would be a better option.</p>
