@@ -1,0 +1,127 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+#Loading in Libraries 
+```{r}
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
+library(GGally)
+library(broom)
+library(janitor)
+library(modelr)
+library(yardstick)
+
+titanic_set <- read_csv('data/titanic_decision_tree_data.csv')
+
+shuffle_index <- sample(1:nrow(titanic_set))
+
+# shuffle the data so class order isn't in order - need this for training/testing split later on 
+titanic_set <- titanic_set[shuffle_index, ]
+```
+
+```{r}
+summary(titanic_set)
+```
+
+# Cleaning the titanic data
+
+```{r}
+clean_titanic_set <- titanic_set %>%
+  filter(survived %in% c(0, 1)) %>%
+  select(-c(X1, passenger_id, name, ticket, fare, cabin)) %>% 
+  mutate_if(is.character, as.factor) %>% 
+  mutate(pclass = factor(pclass, levels = c(3, 2, 1), labels = c("Lower", "Middle", "Upper")),
+         survived = factor(survived, levels = c(0, 1), labels = c("No", "Yes")),
+         age = as.numeric(as.integer(age)),
+         age_status = as.factor(if_else(age <= 16, "child", "adult"))) %>% 
+  na.omit()
+
+clean_titanic_set
+  
+```
+
+# Having an initial look at potentially siginificant variables
+
+```{r}
+ggpairs(clean_titanic_set, progress = FALSE)
+```
+
+"pclass", "sex" and "parch" could all potentially be important variables.  The above shows there is disparity between the box sizes in both pclass and sex with survived plots.
+
+```{r}
+dim(clean_titanic_set)
+```
+
+# Creating the test and training data - 20/80 split
+
+```{r}
+n_data <- nrow(clean_titanic_set)
+
+#get an index
+test_index <- sample(1:n_data, size = n_data * 0.2)
+
+#get those rows from the actual data
+titanic_test <- slice(clean_titanic_set, test_index)
+
+# get the training dataset
+titanic_train <- slice(clean_titanic_set, -test_index)
+```
+
+```{r}
+titanic_test %>% 
+  tabyl(survived)
+```
+
+```{r}
+titanic_train %>% 
+  tabyl(survived)
+```
+
+The 80/20 split was chosen as its one of the most common split percentages and there is enough data in the data set to do so. Additionally the 80/20 split follows Pareto principle (roughly 80% of the effects come from 20% of the causes for many events).
+
+output tables show a fair balance
+
+
+#Plotting decision tree
+```{r}
+titanic_fit <- rpart(survived ~ .,
+                     data = titanic_train,
+                     method = "class")
+```
+
+
+
+```{r}
+rpart.plot(titanic_fit, yesno = 2)
+```
+
+The decision tree shows the important factors are sex, pclass, age and sib_sp in determining whether a passenger survives.
+
+The first node shows that there is a 0.41 probability that a passenger did not survive from 100% of training data. The primary important factor is identified as sex. The second nodes in the hierarchy show that if you are not male you have a 0.76 probability of surviving (38% of training set) and if you are  
+male you have a 0.21 probability of not surviving (62% of training set). 
+
+Interesting points
+
+- If you are female and pclass != lower then you have a 0.94 probablity of surviving (23% of the pop)
+- if you are male and under age 13 and have 2 or more siblings you have a 0.94 probabilty of surviving (3% of the pop)
+- if you are a female traveling lower class and below 28 years old with no siblings you have 0.71 chance of surviving (6% of pop)
+- if you are male over 13 years old you have 0.17 probility of not surviving (57% of pop)
+- if you are male, younger than 13 with 2 or more sibilings your probability of survival is the lowest (0.09) and makes up 2% of the population.
+
+
+```{r}
+titanic_test_pred <- titanic_test %>% 
+  add_predictions(titanic_fit, type = "class")
+```
+
+```{r}
+conf_matrix <- titanic_test_pred %>% 
+  conf_mat(truth = survived, estimate = pred)
+```
+
+The confusion matrix shows that the decision tree identified correctly that 32 people survived and 85 did not.
+It predicted incorrectly 20 people surviving and 5 not surviving.
+
+
