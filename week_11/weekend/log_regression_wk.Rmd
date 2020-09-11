@@ -1,0 +1,207 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+#Loading Libraries
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(GGally)
+library(modelr)
+library(broom)
+library(pROC)
+library(glmulti)
+library(caret)
+```
+
+# Reading in data
+
+```{r}
+orange_juice <- read_csv("data/orange_juice.csv") %>% 
+  clean_names()
+  
+```
+
+# Cleaning data
+
+```{r}
+orange_juice_clean <- orange_juice %>%
+  mutate(purchase_mm = if_else(purchase == "MM", TRUE, FALSE),
+         store_id = as.factor(store_id),
+         special_ch = as.logical(special_ch),
+         special_mm = as.logical(special_mm),
+         pct_disc_mm = round(pct_disc_mm, digits = 2),
+         pct_disc_ch = round(pct_disc_ch, digits = 2),
+         disc_ch = if_else(disc_ch == 0, "no", "yes"),
+         disc_mm = if_else(disc_mm == 0, "no", "yes")) %>% 
+    mutate(weekof_purchase = sort(weekof_purchase, decreasing = FALSE)) %>% 
+  mutate(quarter = ifelse(between(weekof_purchase, 227, 239), "q1", # taking weekof_purchase and dividing it into quarters of the year
+                          ifelse(between(weekof_purchase, 240, 252), "q2",
+                              ifelse(between(weekof_purchase, 253, 265), "q3", "q4")))) %>% 
+  mutate(quarter = as.factor(quarter)) %>% 
+  select(-store, -store7, -loyal_ch, -list_price_diff,-weekof_purchase, -purchase, -price_diff, -store_id)
+
+  
+```
+
+#Checking for Alias Variables
+
+```{r}
+alias(purchase_mm ~ ., data = orange_juice_clean)
+```
+
+No alias variables present
+
+# Splitting data into train and test
+
+Choosing 80:20 split
+
+```{r}
+n_data <- nrow(orange_juice_clean)
+test_index <- sample(1:n_data, size = n_data * 0.2)
+
+test  <- slice(orange_juice_clean, test_index)
+train <- slice(orange_juice_clean, -test_index)
+
+#Check test and train data adds up
+nrow(test) + nrow(train) == n_data
+```
+
+# Creating best logsistic regression model 
+
+```{r}
+glmulti_all_vars <- glmulti(
+  purchase_mm ~ ., 
+  data = train,
+  level = 1,               
+  method = "h",         
+  crit = "bic",            
+  confsetsize = 10,        
+  plotty = F, 
+  report = T,             
+  fitfunction = "glm",     
+  family = binomial(link = "logit")) 
+
+summary(glmulti_all_vars)
+
+```
+
+purchase_mm ~ 1 + quarter + disc_mm + sale_price_mm + sale_price_ch is the best model
+
+```{r}
+glmulti_all_with_interaction <- glmulti(
+  purchase_mm ~ 1 + quarter + disc_mm + sale_price_mm + sale_price_ch, 
+  data = train,
+  level = 2,               
+  method = "h",            
+  crit = "bic",            
+  confsetsize = 10,        
+  marginality = TRUE,      
+  minsize = 6,             
+  maxsize = 6,             
+  plotty = F, 
+  report = T,              
+  fitfunction = "glm",    
+  family = binomial(link = "logit")) 
+
+summary(glmulti_all_with_interaction)
+```
+
+purchase_mm ~ 1 + quarter + disc_mm + sale_price_mm + sale_price_ch + sale_price_mm:disc_mm + sale_price_ch:sale_price_mm is the best model with interactions
+
+
+# Identitfying best classifier
+
+```{r}
+orange_juice_model1_quarter <- glm(purchase_mm ~  quarter, data = orange_juice_clean, family = binomial(link = "logit"))
+
+orange_juice_model2_disc_mm <- glm(purchase_mm ~  disc_mm, data = orange_juice_clean, family = binomial(link = "logit"))
+
+orange_juice_model3_sale_price_mm <- glm(purchase_mm ~  sale_price_mm, data = orange_juice_clean, family = binomial(link = "logit"))
+
+orange_juice_model4_sale_price_ch <- glm(purchase_mm ~  sale_price_ch, data = orange_juice_clean, family = binomial(link = "logit"))
+
+orange_juice_model5_sale_price_mm_disc_mm <- glm(purchase_mm ~  sale_price_mm:disc_mm, data = orange_juice_clean, family = binomial(link = "logit"))
+
+orange_juice_model6_sale_price_ch_sale_price_mm <- glm(purchase_mm ~  sale_price_ch:sale_price_mm, data = orange_juice_clean, family = binomial(link = "logit"))
+
+
+```
+
+## Adding predictions
+
+```{r}
+orange_juice_model1_quarter_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model1_quarter, type = "response")
+
+orange_juice_model2_disc_mm_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model2_disc_mm, type = "response")
+
+orange_juice_model3_sale_price_mm_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model3_sale_price_mm, type = "response")
+
+orange_juice_model4_sale_price_ch_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model4_sale_price_ch, type = "response")
+
+orange_juice_model5_sale_price_mm_disc_mm_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model5_sale_price_mm_disc_mm, type = "response")
+
+orange_juice_model6_sale_price_ch_sale_price_mm_pred <- orange_juice_clean %>% 
+  add_predictions(orange_juice_model6_sale_price_ch_sale_price_mm, type = "response")
+
+```
+
+## Creating ROC objects
+
+```{r}
+roc_obj_mod1 <- orange_juice_model1_quarter_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+roc_obj_mod2 <- orange_juice_model2_disc_mm_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+roc_obj_mod3 <- orange_juice_model3_sale_price_mm_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+roc_obj_mod4 <- orange_juice_model4_sale_price_ch_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+roc_obj_mod5 <- orange_juice_model5_sale_price_mm_disc_mm_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+roc_obj_mod6 <- orange_juice_model6_sale_price_ch_sale_price_mm_pred %>%
+  roc(response = purchase_mm, predictor = pred)
+
+```
+
+## Visualising ROC Curves
+
+```{r}
+roc_curve <- ggroc(
+  data = list(
+    mod1 = roc_obj_mod1, 
+    mod2 = roc_obj_mod2,
+    mod3 = roc_obj_mod3,
+    mod4 = roc_obj_mod4,
+    mod5 = roc_obj_mod3
+  ), 
+  legacy.axes = TRUE) +
+  coord_fixed()
+
+roc_curve
+```
+
+## Checking AUC Values
+
+```{r}
+auc(roc_obj_mod1)
+auc(roc_obj_mod2)
+auc(roc_obj_mod3)
+auc(roc_obj_mod4)
+auc(roc_obj_mod5)
+
+```
+
+Quarter is the best classifier with an area under the curve value of 0.6839
+
