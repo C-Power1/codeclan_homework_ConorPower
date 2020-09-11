@@ -1,0 +1,189 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Loading in Libraries 
+```{r}
+library(tidyverse)
+library(cluster)
+library(factoextra)
+library(dendextend)
+library(broom)
+library(animation)
+library(janitor)
+library(cluster)
+library(GGally)
+```
+
+# Reading in and Cleaning data
+
+```{r}
+mall_data <- read_csv("mall_customers.csv") %>% 
+  clean_names() %>% 
+  rename(spending_score = spending_score_1_100,
+         annual_income = annual_income_k)
+```
+
+# Initial Exploratory Analysis of Data
+
+```{r}
+summary(mall_data)
+head(mall_data)
+
+mall_data %>% 
+  group_by(gender) %>% 
+  summarise(n())
+
+mall_data %>% 
+  summarise(max(age))
+
+mall_data %>% 
+  summarise(min(age))
+
+ggplot(mall_data) +
+  aes(x = age) +
+  geom_histogram(bins = 10)
+```
+
+There are 5 columns, customer_id appears to be just an id column. The data also seems to be already scaled as the annual_income has been divided by 1000. There appears to be an unbalance between female and male customers.The customer age range is 18-70 and there's a fairly bimodal distribution of these ages.
+
+
+# Plotting data
+
+```{r}
+ggpairs(mall_data, progress = FALSE)
+```
+
+```{r}
+ggplot(mall_data) +
+  aes(x = spending_score, y = annual_income) +
+  geom_point()
+```
+
+There is potential evidence of clustering after plotting spending_score and annual_income. K-means clustering is an ideal technique to try identfify meaningful clusters in the data to target the customers.
+
+# Selecting only spending_score and annual_income 
+
+```{r}
+mall_data_trim <- mall_data %>% 
+  select(annual_income, spending_score)
+```
+
+# Choosing a k_value
+
+3 methods will be used to identitfy the optimal k value - elbow method, silhoulette coefficient and gap statistic.
+
+## Elbow
+
+```{r}
+fviz_nbclust(mall_data_trim, kmeans, method = "wss", nstart = 25)
+```
+
+The elbow indicates that the optimal k-value could be either 3 or 5.
+
+## Silhouette 
+
+```{r}
+fviz_nbclust(mall_data_trim, kmeans, method = "silhouette", nstart = 25)
+```
+
+The Silhouette method indicates that the optimal k-value is 5.
+
+## Gap
+
+```{r}
+fviz_nbclust(mall_data_trim, kmeans, method = "gap_stat", nstart = 25, k.max = 10)
+```
+
+Gap statistic shows that 1 should be the k-value 
+
+
+Based on results from all 3 methods, 5 is the most common number to have been identified as optimal so I will proceed with this number.
+
+
+# K means clustering 
+
+```{r}
+clustered_mall_data <- kmeans(mall_data_trim, 5, nstart = 25)
+
+clustered_mall_data$size
+
+clustered_mall_data$centers
+```
+
+# K means visualisation
+
+```{r}
+clusters <- augment(clustered_mall_data, mall_data)
+
+ggplot(clusters, aes(x = spending_score, y = annual_income, colour = .cluster)) +
+  geom_point() + 
+  labs(x = "Spending Score (out of 100)", y = "Annual Income (k)")
+```
+
+From the visualisation it can be said there is evidence that the among the customer data there are 5 distinct groupings. Generally there appears to be little spread of data points within each cluster and this indicates that the clustering is a good fit.
+
+
+# Labelling cluster 5
+
+Within all 5 clusters there looks to be a commonality in attributes but this is particularly evident in the central purple cluster, cluster 5. 
+
+# Labelling Cluster 5
+
+```{r}
+cluster_5 <- clusters %>% 
+  filter(.cluster == "5")
+
+```
+
+```{r}
+cluster_5 %>% 
+  summarise(max_age = max(age),
+            min_age = min(age),
+            max_income = max(annual_income),
+            min_income = min(annual_income)
+            )
+```
+
+
+```{r}
+cluster_5_gender <- cluster_5 %>% 
+  group_by(gender) %>% 
+  summarise(count = n()) %>% 
+  mutate(gender_percent = round(count/sum(count), digits = 3) * 100)
+
+cluster_5_gender
+```
+
+```{r}
+cluster_5_averages <- cluster_5 %>% 
+  summarise(average_age = round(mean(age), digits = 1),
+            average_income = round(mean(annual_income), digits = 2),
+            average_spending_score = round(mean(spending_score), digits = 1))
+
+cluster_5_averages
+```
+
+```{r}
+mode_age <- cluster_5 %>% 
+  group_by(age) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  head(3)
+```
+
+
+Cluster 5 
+
+- 59.3% are female and 40.7% are male 
+- Age range is 18-70, average age is 42.7, most frequent ages are 19 and 49
+- Annual income range is 34k - 76k
+- Average spending score is 49.5
+
+
+
+
+
+
+
+

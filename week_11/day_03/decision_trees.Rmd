@@ -33,7 +33,7 @@ clean_titanic_set <- titanic_set %>%
   select(-c(X1, passenger_id, name, ticket, fare, cabin)) %>% 
   mutate_if(is.character, as.factor) %>% 
   mutate(pclass = factor(pclass, levels = c(3, 2, 1), labels = c("Lower", "Middle", "Upper")),
-         survived = factor(survived, levels = c(0, 1), labels = c("No", "Yes")),
+         survived = factor(survived, levels = c(0, 1), labels = c("did not survive", "survived")),
          age = as.numeric(as.integer(age)),
          age_status = as.factor(if_else(age <= 16, "child", "adult"))) %>% 
   na.omit()
